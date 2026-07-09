@@ -6,5 +6,6 @@ public class TestDataLoader {
 
     public static void carregar() {
         PaisTestData.carregar();
+        ProvinciaTestData.carregar();
     }
 }
