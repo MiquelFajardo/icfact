@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.geografia.model;
 
+import cat.informaticassa.icfact.infraestructura.converter.SetStringConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.Set;
@@ -23,8 +24,7 @@ public class Poblacio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "provincia_id", nullable = false)
+    @Column(nullable = false, length = 100)
     private String nom;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -32,5 +32,6 @@ public class Poblacio {
     private Provincia provincia;
 
     @Builder.Default
+    @Convert(converter = SetStringConverter.class)
     private Set<String> codiPostal = new TreeSet<>();
 }
