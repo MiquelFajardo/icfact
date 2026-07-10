@@ -9,5 +9,7 @@ public class TestDataLoader {
         ProvinciaTestData.carregar();
         PoblacioTestData.carregar();
         AdrecaTestData.carregar();
+
+        EmpresaTestData.carregar();
     }
 }
