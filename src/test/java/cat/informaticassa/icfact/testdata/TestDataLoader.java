@@ -8,5 +8,6 @@ public class TestDataLoader {
         PaisTestData.carregar();
         ProvinciaTestData.carregar();
         PoblacioTestData.carregar();
+        AdrecaTestData.carregar();
     }
 }
