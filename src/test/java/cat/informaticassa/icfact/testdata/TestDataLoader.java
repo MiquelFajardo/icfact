@@ -16,5 +16,7 @@ public class TestDataLoader {
 
         IvaTestData.carregar();
         ProducteTestData.carregar();
+        PressupostTestData.carregar();
+        LiniaPressupostTestData.carregar();
     }
 }
