@@ -48,6 +48,23 @@ public class ClientServiceTest extends BaseRepositoryTest {
     }
 
     @Test
+    void buscarTots() {
+        assertEquals(3, new BuscarClientService().buscarTots().size());
+    }
+
+    @Test
+    void buscarActius() {
+        assertEquals(3, new BuscarClientService().buscarActius().size());
+    }
+
+    @Test
+    void buscarInactius() {
+        Client client = repository.buscarPerNif("12345678A").orElseThrow();
+        new DesactivarClientService().executar(client);
+        assertEquals(1, new BuscarClientService().buscarInactius().size());
+    }
+
+    @Test
     void buscarClientPerNif() {
         Client client = new BuscarClientService().buscarPerNif("12345678A");
         assertNotNull(client);

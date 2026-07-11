@@ -57,10 +57,19 @@ public class ClientRepository implements Repository<Client, Long> {
         }
     }
 
-    public List<Client> buscarTotsActius() {
+    public List<Client> buscarActius() {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM Client WHERE actiu = true ORDER BY nom", Client.class)
                     .list();
+        }
+    }
+
+    public List<Client> buscarInactius() {
+        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                    "FROM Client WHERE actiu = false ORDER BY nom",
+                    Client.class
+            ).list();
         }
     }
 

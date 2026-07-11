@@ -4,6 +4,8 @@ import cat.informaticassa.icfact.client.exception.ClientNoExisteixException;
 import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.client.repository.ClientRepository;
 
+import java.util.List;
+
 public class BuscarClientService {
 
     private final ClientRepository repository = new ClientRepository();
@@ -19,4 +21,17 @@ public class BuscarClientService {
                 .orElseThrow(() ->
                         new ClientNoExisteixException("El client no existeix."));
     }
+
+    public List<Client> buscarTots() {
+        return repository.buscarTots();
+    }
+
+    public List<Client> buscarActius() {
+        return repository.buscarActius();
+    }
+
+    public List<Client> buscarInactius() {
+        return repository.buscarInactius();
+    }
+
 }

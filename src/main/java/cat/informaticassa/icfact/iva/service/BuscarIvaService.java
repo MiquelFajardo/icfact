@@ -5,6 +5,7 @@ import cat.informaticassa.icfact.iva.model.Iva;
 import cat.informaticassa.icfact.iva.repository.IvaRepository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class BuscarIvaService {
     private final IvaRepository repository = new IvaRepository();
@@ -20,4 +21,17 @@ public class BuscarIvaService {
                 .orElseThrow(() ->
                         new IvaNoExisteixException("L'IVA no existeix."));
     }
+
+    public List<Iva> buscarTots() {
+        return repository.buscarTots();
+    }
+
+    public List<Iva> buscarActius() {
+        return repository.buscarActius();
+    }
+
+    public List<Iva> buscarInactius() {
+        return repository.buscarInactius();
+    }
+
 }

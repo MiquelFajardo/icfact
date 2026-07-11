@@ -77,4 +77,13 @@ public class IvaRepository implements Repository<Iva, Long> {
             ).list();
         }
     }
+
+    public List<Iva> buscarInactius() {
+        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                    "FROM Iva WHERE actiu = false ORDER BY percentatge",
+                    Iva.class
+            ).list();
+        }
+    }
 }

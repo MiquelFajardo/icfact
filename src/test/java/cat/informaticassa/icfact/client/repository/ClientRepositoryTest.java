@@ -40,8 +40,16 @@ class ClientRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void buscarTotsElsClientsActius() {
-        List<Client> clients = repository.buscarTotsActius();
+        List<Client> clients = repository.buscarActius();
         assertEquals(3, clients.size());
+    }
+
+    @Test
+    void buscarInactius() {
+        Client client = repository.buscarPerNif("12345678A").orElseThrow();
+        repository.eliminar(client);
+        List<Client> clients = repository.buscarInactius();
+        assertEquals(1, clients.size());
     }
 
     @Test

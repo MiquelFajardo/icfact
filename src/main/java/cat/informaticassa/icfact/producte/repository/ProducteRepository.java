@@ -82,4 +82,14 @@ public class ProducteRepository implements Repository<Producte, Long> {
                     .list();
         }
     }
+
+    public List<Producte> buscarInactius() {
+        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery(
+                    "FROM Producte WHERE actiu = false ORDER BY nom",
+                    Producte.class
+            ).list();
+        }
+    }
+
 }

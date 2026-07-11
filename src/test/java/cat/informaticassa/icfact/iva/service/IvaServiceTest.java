@@ -7,6 +7,7 @@ import cat.informaticassa.icfact.iva.repository.IvaRepository;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -68,5 +69,14 @@ public class IvaServiceTest extends BaseRepositoryTest {
         new ActivarIvaService().executar(iva);
         Iva resultat = repository.buscarPerPercentatge(new BigDecimal("4.00")).orElseThrow();
         assertTrue(resultat.getActiu());
+    }
+
+    @Test
+    void buscarInactius() {
+        Iva iva = repository.buscarPerPercentatge(new BigDecimal("4.00")).orElseThrow();
+        repository.eliminar(iva);
+        List<Iva> ivaInactius = repository.buscarInactius();
+        assertEquals(1, ivaInactius.size());
+
     }
 }
