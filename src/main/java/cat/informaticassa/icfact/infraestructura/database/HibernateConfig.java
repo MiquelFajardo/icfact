@@ -2,6 +2,8 @@ package cat.informaticassa.icfact.infraestructura.database;
 
 import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.empresa.model.Empresa;
+import cat.informaticassa.icfact.factura.model.Factura;
+import cat.informaticassa.icfact.factura.model.LiniaFactura;
 import cat.informaticassa.icfact.geografia.model.Adreca;
 import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.geografia.model.Poblacio;
@@ -42,6 +44,9 @@ public final class HibernateConfig {
         configuration.addAnnotatedClass(Producte.class);
         configuration.addAnnotatedClass(Pressupost.class);
         configuration.addAnnotatedClass(LiniaPressupost.class);
+
+        configuration.addAnnotatedClass(Factura.class);
+        configuration.addAnnotatedClass(LiniaFactura.class);
 
         return configuration;
     }

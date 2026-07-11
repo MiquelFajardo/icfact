@@ -18,5 +18,8 @@ public class TestDataLoader {
         ProducteTestData.carregar();
         PressupostTestData.carregar();
         LiniaPressupostTestData.carregar();
+
+        FacturaTestData.carregar();
+        LiniaFacturaTestData.carregar();
     }
 }
