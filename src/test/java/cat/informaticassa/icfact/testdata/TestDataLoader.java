@@ -13,5 +13,8 @@ public class TestDataLoader {
         EmpresaTestData.carregar();
 
         ClientTestData.carregar();
+
+        IvaTestData.carregar();
+        ProducteTestData.carregar();
     }
 }

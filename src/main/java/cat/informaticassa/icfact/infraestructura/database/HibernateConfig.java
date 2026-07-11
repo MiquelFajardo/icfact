@@ -6,6 +6,8 @@ import cat.informaticassa.icfact.geografia.model.Adreca;
 import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.geografia.model.Poblacio;
 import cat.informaticassa.icfact.geografia.model.Provincia;
+import cat.informaticassa.icfact.iva.model.Iva;
+import cat.informaticassa.icfact.producte.model.Producte;
 import org.hibernate.cfg.Configuration;
 
 public final class HibernateConfig {
@@ -33,6 +35,9 @@ public final class HibernateConfig {
         configuration.addAnnotatedClass(Empresa.class);
 
         configuration.addAnnotatedClass(Client.class);
+
+        configuration.addAnnotatedClass(Iva.class);
+        configuration.addAnnotatedClass(Producte.class);
 
         return configuration;
     }
