@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.infraestructura.database;
-import cat.informaticassa.icfact.app.AppConfig;
+
+import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.geografia.model.Adreca;
 import cat.informaticassa.icfact.geografia.model.Pais;
@@ -30,6 +31,8 @@ public final class HibernateConfig {
         configuration.addAnnotatedClass(Adreca.class);
 
         configuration.addAnnotatedClass(Empresa.class);
+
+        configuration.addAnnotatedClass(Client.class);
 
         return configuration;
     }

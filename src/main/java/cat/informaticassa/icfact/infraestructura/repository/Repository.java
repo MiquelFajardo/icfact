@@ -14,4 +14,6 @@ public interface Repository <T,ID>{
 
     void eliminar(T entitat);
 
+    void activar(T enitat);
+
 }

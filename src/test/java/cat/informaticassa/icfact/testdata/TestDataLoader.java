@@ -11,5 +11,7 @@ public class TestDataLoader {
         AdrecaTestData.carregar();
 
         EmpresaTestData.carregar();
+
+        ClientTestData.carregar();
     }
 }
