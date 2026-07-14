@@ -29,8 +29,6 @@ public abstract class BaseRepositoryTest {
         TestDataLoader.carregar();
     }
 
-
-
     @AfterEach
     void finalitzar() {
         HibernateUtil.shutdown();

@@ -27,7 +27,7 @@ public class BuscarClientService {
     }
 
     public List<Client> buscarActius() {
-        return repository.buscarActius();
+        return repository.buscarTots();
     }
 
     public List<Client> buscarInactius() {

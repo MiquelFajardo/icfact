@@ -12,7 +12,7 @@ public class ActivarClientService {
 
     public void executar(Client client) {
 
-        repository.buscarPerId(client.getId())
+        repository.buscarPerIdIncloentInactius(client.getId())
                 .orElseThrow(() ->
                         new ClientNoExisteixException("El client no existeix."));
 

@@ -16,7 +16,7 @@ public class LiniaFacturaRepositoryTest extends BaseRepositoryTest {
     @Test
     void buscarPerFactura() {
         Long id = facturaRepository
-                .buscarPerNumero("F-2026-000001")
+                .buscarPerNumero("F2026000001")
                 .orElseThrow()
                 .getId();
         List<LiniaFactura> linies = repository.buscarPerFactura(id);
@@ -31,7 +31,7 @@ public class LiniaFacturaRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void buscarTotesActives() {
-        List<LiniaFactura> linies = repository.buscarTotsActius();
+        List<LiniaFactura> linies = repository.buscarTots();
         assertEquals(2, linies.size());
     }
 
@@ -48,7 +48,7 @@ public class LiniaFacturaRepositoryTest extends BaseRepositoryTest {
     void desactivar() {
         LiniaFactura linia = repository.buscarTots().getFirst();
         repository.eliminar(linia);
-        LiniaFactura resultat = repository.buscarPerId(linia.getId()).orElseThrow();
+        LiniaFactura resultat = repository.buscarPerIdIncloentInactius(linia.getId()).orElseThrow();
         assertFalse(resultat.getActiu());
     }
 

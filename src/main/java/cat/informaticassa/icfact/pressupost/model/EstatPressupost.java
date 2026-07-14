@@ -4,5 +4,6 @@ public enum EstatPressupost {
     ESBORRANY,
     ENVIAT,
     ACCEPTAT,
+    FACTURAT,
     REBUTJAT
 }

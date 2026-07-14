@@ -11,7 +11,7 @@ public class DesactivarClientService {
     private final ClientRepository repository = new ClientRepository();
 
     public void executar(Client client) {
-        repository.buscarPerId(client.getId())
+        repository.buscarPerIdIncloentInactius(client.getId())
                 .orElseThrow(() ->
                         new ClientNoExisteixException("El client no existeix."));
 

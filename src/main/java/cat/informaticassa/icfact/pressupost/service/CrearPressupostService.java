@@ -1,30 +1,39 @@
 package cat.informaticassa.icfact.pressupost.service;
 
-import cat.informaticassa.icfact.client.model.Client;
-import cat.informaticassa.icfact.pressupost.model.EstatPressupost;
+import cat.informaticassa.icfact.infraestructura.model.TipusDocument;
+import cat.informaticassa.icfact.infraestructura.service.GenerarNumeroDocumentService;
+import cat.informaticassa.icfact.infraestructura.service.ObtenirSeguentNumeroDocumentService;
+import cat.informaticassa.icfact.pressupost.model.LiniaPressupost;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
+import cat.informaticassa.icfact.pressupost.repository.LiniaPressupostRepository;
 import cat.informaticassa.icfact.pressupost.repository.PressupostRepository;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Year;
 
 public class CrearPressupostService {
+
     private final PressupostRepository repository = new PressupostRepository();
+    private final ObtenirSeguentNumeroDocumentService numeroService = new ObtenirSeguentNumeroDocumentService();
+    private final RecalcularPressupostService recalcularService = new RecalcularPressupostService();
+    private final ValidarPressupostService validarService = new ValidarPressupostService();
 
-    public Pressupost crear(String numero, Client client) {
+    public Pressupost executar(Pressupost pressupost) {
+        validarService.executar(pressupost);
+        recalcularService.executar(pressupost);
 
-        Pressupost pressupost = Pressupost.builder()
-                .numero(numero)
-                .client(client)
-                .data(LocalDate.now())
-                .estat(EstatPressupost.ESBORRANY)
-                .subtotal(BigDecimal.ZERO)
-                .iva(BigDecimal.ZERO)
-                .total(BigDecimal.ZERO)
-                .dataCreacio(LocalDateTime.now())
-                .dataModificacio(LocalDateTime.now())
-                .build();
+        long numero = numeroService.obtenir(
+                Year.now().getValue(),
+                TipusDocument.PRESSUPOST);
+
+        pressupost.setNumero(GenerarNumeroDocumentService.generar("P", numero));
+        pressupost.setActiu(true);
+        pressupost.setDataCreacio(LocalDateTime.now());
+        pressupost.setDataModificacio(LocalDateTime.now());
+
+        for (LiniaPressupost linia : pressupost.getLinies()) {
+            linia.setPressupost(pressupost);
+        }
+
 
         repository.guardar(pressupost);
 

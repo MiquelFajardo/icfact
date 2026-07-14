@@ -20,6 +20,7 @@ public class EmpresaTestData {
 
         Empresa empresa = Empresa.builder()
                 .nom("Informaticassa")
+                .descripcio("Serveis informàtics")
                 .nif("12345678A")
                 .adreca(adreca)
                 .telefon("600123123")
@@ -27,6 +28,7 @@ public class EmpresaTestData {
                 .web("https://informaticassa.cat")
                 .iban("ES2100000000000000000000")
                 .logo("logo.png")
+                .color("#2563EB")
                 .peuPdf("Gràcies per confiar en nosaltres.")
                 .dataCreacio(LocalDateTime.now())
                 .dataModificacio(LocalDateTime.now())

@@ -81,7 +81,7 @@ public class ClientServiceTest extends BaseRepositoryTest {
     void desactivarClient() {
         Client client = repository.buscarPerNif("12345678A").orElseThrow();
         new DesactivarClientService().executar(client);
-        Client resultat = repository.buscarPerNif("12345678A").orElseThrow();
+        Client resultat = repository.buscarPerIdIncloentInactius(client.getId()).orElseThrow();
         assertFalse(resultat.getActiu());
     }
 
@@ -90,7 +90,7 @@ public class ClientServiceTest extends BaseRepositoryTest {
         Client client = repository.buscarPerNif("12345678A").orElseThrow();
         new DesactivarClientService().executar(client);
         new ActivarClientService().executar(client);
-        Client resultat = repository.buscarPerNif("12345678A").orElseThrow();
+        Client resultat = repository.buscarPerIdIncloentInactius(client.getId()).orElseThrow();
         assertTrue(resultat.getActiu());
     }
 }

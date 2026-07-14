@@ -24,8 +24,8 @@ public class LiniaPressupost {
     @JoinColumn(name = "pressupost_id", nullable = false)
     private Pressupost pressupost;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "producte_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "producte_id")
     private Producte producte;
 
     @Column(nullable = false, columnDefinition = "TEXT")

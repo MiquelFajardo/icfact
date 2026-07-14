@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact.factura.repository;
 
-
 import cat.informaticassa.icfact.BaseRepositoryTest;
 import cat.informaticassa.icfact.factura.model.Factura;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ public class FacturaRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void buscarPerNumero() {
-        Optional<Factura> resultat = repository.buscarPerNumero("F-2026-000001");
+        Optional<Factura> resultat = repository.buscarPerNumero("F2026000001");
         assertTrue(resultat.isPresent());
     }
 
@@ -35,33 +34,35 @@ public class FacturaRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void buscarTotesActives() {
-        List<Factura> factures = repository.buscarTotsActius();
+        List<Factura> factures = repository.buscarActius();
         assertEquals(2, factures.size());
     }
 
     @Test
     void actualitzar() {
-        Factura factura = repository.buscarPerNumero("F-2026-000001").orElseThrow();
+        Factura factura = repository.buscarPerNumero("F2026000001").orElseThrow();
         factura.setObservacions("Factura modificada");
         repository.actualitzar(factura);
-        Factura resultat = repository.buscarPerNumero("F-2026-000001").orElseThrow();
+        Factura resultat = repository.buscarPerNumero("F2026000001").orElseThrow();
         assertEquals("Factura modificada", resultat.getObservacions());
     }
 
     @Test
     void desactivar() {
-        Factura factura = repository.buscarPerNumero("F-2026-000001").orElseThrow();
+        Factura factura = repository.buscarPerNumero("F2026000001").orElseThrow();
         repository.eliminar(factura);
-        Factura resultat = repository.buscarPerNumero("F-2026-000001").orElseThrow();
+        Factura resultat = repository.buscarPerIdIncloentInactius(factura.getId()).orElseThrow();
         assertFalse(resultat.getActiu());
     }
 
     @Test
     void activar() {
-        Factura factura = repository.buscarPerNumero("F-2026-000001").orElseThrow();
+        Factura factura = repository.buscarPerNumero("F2026000001").orElseThrow();
         repository.eliminar(factura);
-        repository.activar(factura);
-        Factura resultat = repository.buscarPerNumero("F-2026-000001").orElseThrow();
-        assertTrue(resultat.getActiu());
+        Factura inactiva = repository.buscarPerIdIncloentInactius(factura.getId()).orElseThrow();
+        assertFalse(inactiva.getActiu());
+        repository.activar(inactiva);
+        Factura activa = repository.buscarPerId(factura.getId()).orElseThrow();
+        assertTrue(activa.getActiu());
     }
 }

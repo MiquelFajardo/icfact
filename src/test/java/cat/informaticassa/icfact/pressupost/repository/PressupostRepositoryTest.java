@@ -16,7 +16,7 @@ public class PressupostRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void buscarPerNumero() {
-        Optional<Pressupost> resultat = repository.buscarPerNumero("P-2026-000001");
+        Optional<Pressupost> resultat = repository.buscarPerNumero("P2026000001");
         assertTrue(resultat.isPresent());
     }
 
@@ -34,33 +34,33 @@ public class PressupostRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void buscarTotsActius() {
-        List<Pressupost> pressupostos = repository.buscarTotsActius();
+        List<Pressupost> pressupostos = repository.buscarTots();
         assertEquals(2, pressupostos.size());
     }
 
     @Test
     void actualitzar() {
-        Pressupost pressupost = repository.buscarPerNumero("P-2026-000001").orElseThrow();
+        Pressupost pressupost = repository.buscarPerNumero("P2026000001").orElseThrow();
         pressupost.setObservacions("Observacions modificades");
         repository.actualitzar(pressupost);
-        Pressupost resultat = repository.buscarPerNumero("P-2026-000001").orElseThrow();
+        Pressupost resultat = repository.buscarPerNumero("P2026000001").orElseThrow();
         assertEquals("Observacions modificades", resultat.getObservacions());
     }
 
     @Test
     void desactivar() {
-        Pressupost pressupost = repository.buscarPerNumero("P-2026-000001").orElseThrow();
+        Pressupost pressupost = repository.buscarPerNumero("P2026000001").orElseThrow();
         repository.eliminar(pressupost);
-        Pressupost resultat = repository.buscarPerNumero("P-2026-000001").orElseThrow();
+        Pressupost resultat = repository.buscarPerIdIncloentInactius(pressupost.getId()).orElseThrow();
         assertFalse(resultat.getActiu());
     }
 
     @Test
     void activar() {
-        Pressupost pressupost = repository.buscarPerNumero("P-2026-000001").orElseThrow();
+        Pressupost pressupost = repository.buscarPerNumero("P2026000001").orElseThrow();
         repository.eliminar(pressupost);
         repository.activar(pressupost);
-        Pressupost resultat = repository.buscarPerNumero("P-2026-000001").orElseThrow();
+        Pressupost resultat = repository.buscarPerIdIncloentInactius(pressupost.getId()).orElseThrow();
         assertTrue(resultat.getActiu());
     }
 }
