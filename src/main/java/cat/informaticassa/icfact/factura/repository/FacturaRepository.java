@@ -66,6 +66,7 @@ public class FacturaRepository implements Repository<Factura, Long> {
                 SELECT DISTINCT f
                 FROM Factura f
                 LEFT JOIN FETCH f.client
+                LEFT JOIN FETCH p.formaPagament
                 LEFT JOIN FETCH f.linies l
                 LEFT JOIN FETCH l.iva
                 LEFT JOIN FETCH l.producte

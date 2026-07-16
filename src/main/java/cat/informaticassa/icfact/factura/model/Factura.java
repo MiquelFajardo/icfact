@@ -1,6 +1,7 @@
 package cat.informaticassa.icfact.factura.model;
 
 import cat.informaticassa.icfact.client.model.Client;
+import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -57,6 +58,10 @@ public class Factura {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "forma_pagament_id")
+    private FormaPagament formaPagament;
 
     @Builder.Default
     @Column(nullable = false)

@@ -2,6 +2,8 @@ package cat.informaticassa.icfact.testdata;
 
 import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.client.repository.ClientRepository;
+import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
+import cat.informaticassa.icfact.formaPagament.repository.FormaPagamentRepository;
 import cat.informaticassa.icfact.iva.model.Iva;
 import cat.informaticassa.icfact.iva.repository.IvaRepository;
 import cat.informaticassa.icfact.producte.model.Producte;
@@ -23,6 +25,7 @@ public final class PressupostTestData {
     private static final ProducteRepository producteRepository = new ProducteRepository();
     private static final IvaRepository ivaRepository = new IvaRepository();
     private static final RecalcularPressupostService recalcularService = new RecalcularPressupostService();
+    private static final FormaPagamentRepository formaPagamentRepository = new FormaPagamentRepository();
 
     private PressupostTestData() {
     }
@@ -31,6 +34,8 @@ public final class PressupostTestData {
 
         Client client1 = clientRepository.buscarPerNif("12345678A").orElseThrow();
         Client client2 = clientRepository.buscarPerNif("B12345678").orElseThrow();
+
+        FormaPagament transferencia = formaPagamentRepository.buscarPerNom("Transferència").orElseThrow();
 
         Producte manteniment = producteRepository.buscarPerCodi("P0001").orElseThrow();
         Producte windows = producteRepository.buscarPerCodi("P0002").orElseThrow();
@@ -45,6 +50,7 @@ public final class PressupostTestData {
                 .actiu(true)
                 .dataCreacio(LocalDateTime.now())
                 .dataModificacio(LocalDateTime.now())
+                .formaPagament(transferencia)
                 .build();
 
         pressupost1.getLinies().add(
@@ -85,6 +91,7 @@ public final class PressupostTestData {
                 .actiu(true)
                 .dataCreacio(LocalDateTime.now())
                 .dataModificacio(LocalDateTime.now())
+                .formaPagament(transferencia)
                 .build();
 
         recalcularService.executar(pressupost2);

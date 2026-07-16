@@ -23,7 +23,7 @@ class GenerarPdfPressupostServiceTest extends BaseRepositoryTest {
                 .orElseThrow();
 
         Path carpeta = Path.of("pressupostos");
-   //     Path pdf = Path.of("P2026000001.pdf");
+        //     Path pdf = Path.of("P2026000001.pdf");
 
         Path fitxer = carpeta.resolve(pressupost.getNumero() + ".pdf");
 
@@ -32,6 +32,6 @@ class GenerarPdfPressupostServiceTest extends BaseRepositoryTest {
         assertTrue(Files.exists(fitxer));
         assertTrue(Files.size(fitxer) > 0);
 
-      //  Files.deleteIfExists(pdf);
+        //  Files.deleteIfExists(pdf);
     }
 }

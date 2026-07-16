@@ -116,6 +116,7 @@ public class PressupostRepository implements Repository<Pressupost, Long> {
                     SELECT DISTINCT p
                     FROM Pressupost p
                     LEFT JOIN FETCH p.client
+                    LEFT JOIN FETCH p.formaPagament
                     LEFT JOIN FETCH p.linies l
                     LEFT JOIN FETCH l.iva
                     WHERE p.id = :id

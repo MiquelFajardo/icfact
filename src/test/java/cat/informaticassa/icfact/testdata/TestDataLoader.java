@@ -17,6 +17,7 @@ public class TestDataLoader {
         ClientTestData.carregar();
 
         IvaTestData.carregar();
+        FormaPagamentTestData.carregar();
         ProducteTestData.carregar();
 
         PressupostTestData.carregar();

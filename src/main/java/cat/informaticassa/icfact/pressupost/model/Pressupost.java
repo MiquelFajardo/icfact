@@ -1,6 +1,7 @@
 package cat.informaticassa.icfact.pressupost.model;
 
 import cat.informaticassa.icfact.client.model.Client;
+import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -56,6 +57,10 @@ public class Pressupost {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "forma_pagament_id")
+    private FormaPagament formaPagament;
 
     @Column(nullable = false)
     private LocalDateTime dataCreacio;

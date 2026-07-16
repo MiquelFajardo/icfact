@@ -7,6 +7,8 @@ import cat.informaticassa.icfact.factura.model.Factura;
 import cat.informaticassa.icfact.factura.model.LiniaFactura;
 import cat.informaticassa.icfact.factura.repository.FacturaRepository;
 import cat.informaticassa.icfact.factura.service.RecalcularFacturaService;
+import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
+import cat.informaticassa.icfact.formaPagament.repository.FormaPagamentRepository;
 import cat.informaticassa.icfact.iva.model.Iva;
 import cat.informaticassa.icfact.iva.repository.IvaRepository;
 import cat.informaticassa.icfact.producte.model.Producte;
@@ -23,6 +25,7 @@ public final class FacturaTestData {
     private static final ProducteRepository producteRepository = new ProducteRepository();
     private static final IvaRepository ivaRepository = new IvaRepository();
     private static final RecalcularFacturaService recalcularService = new RecalcularFacturaService();
+    private static final FormaPagamentRepository formaPagamentRepository = new FormaPagamentRepository();
 
     private FacturaTestData() {
     }
@@ -31,6 +34,8 @@ public final class FacturaTestData {
 
         Client client1 = clientRepository.buscarPerNif("12345678A").orElseThrow();
         Client client2 = clientRepository.buscarPerNif("B12345678").orElseThrow();
+
+        FormaPagament transferencia = formaPagamentRepository.buscarPerNom("Transferència").orElseThrow();
 
         Producte manteniment = producteRepository.buscarPerCodi("P0001").orElseThrow();
         Producte windows = producteRepository.buscarPerCodi("P0002").orElseThrow();
@@ -45,6 +50,7 @@ public final class FacturaTestData {
                 .actiu(true)
                 .dataCreacio(LocalDateTime.now())
                 .dataModificacio(LocalDateTime.now())
+                .formaPagament(transferencia)
                 .build();
 
         factura1.getLinies().add(
@@ -85,6 +91,7 @@ public final class FacturaTestData {
                 .actiu(true)
                 .dataCreacio(LocalDateTime.now())
                 .dataModificacio(LocalDateTime.now())
+                .formaPagament(transferencia)
                 .build();
 
         recalcularService.executar(factura2);
