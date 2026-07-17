@@ -23,5 +23,6 @@ public class TestDataLoader {
         PressupostTestData.carregar();
 
         FacturaTestData.carregar();
+        PagamentTestData.carregar();
     }
 }

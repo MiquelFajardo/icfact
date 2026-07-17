@@ -10,6 +10,7 @@ import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.geografia.model.Poblacio;
 import cat.informaticassa.icfact.geografia.model.Provincia;
 import cat.informaticassa.icfact.iva.model.Iva;
+import cat.informaticassa.icfact.pagament.model.Pagament;
 import cat.informaticassa.icfact.pressupost.model.LiniaPressupost;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
 import cat.informaticassa.icfact.producte.model.Producte;
@@ -49,7 +50,7 @@ public final class HibernateConfig {
 
         configuration.addAnnotatedClass(Factura.class);
         configuration.addAnnotatedClass(LiniaFactura.class);
-
+        configuration.addAnnotatedClass(Pagament.class);
         return configuration;
     }
 }

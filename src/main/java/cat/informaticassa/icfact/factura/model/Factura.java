@@ -2,6 +2,7 @@ package cat.informaticassa.icfact.factura.model;
 
 import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
+import cat.informaticassa.icfact.pagament.model.Pagament;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -62,6 +63,10 @@ public class Factura {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "forma_pagament_id")
     private FormaPagament formaPagament;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "factura",cascade = CascadeType.ALL, orphanRemoval = false)
+    private List<Pagament> pagaments = new ArrayList<>();
 
     @Builder.Default
     @Column(nullable = false)
