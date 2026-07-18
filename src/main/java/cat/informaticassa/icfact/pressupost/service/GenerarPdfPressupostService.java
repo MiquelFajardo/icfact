@@ -11,7 +11,6 @@ import cat.informaticassa.icfact.pdf.BasePdfPageEvent;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 
-import java.awt.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,7 +19,7 @@ import java.nio.file.Path;
 
 public class GenerarPdfPressupostService {
 
-    private final PressupostRepository repository = new PressupostRepository();
+    private final PressupostRepository pressupostRepository = new PressupostRepository();
     private final EmpresaRepository empresaRepository = new EmpresaRepository();
     private final PdfCapcaleraPressupost pdfCapcalera = new PdfCapcaleraPressupost();
     private final PdfLiniesPressupost pdfLinies = new PdfLiniesPressupost();
@@ -49,7 +48,7 @@ public class GenerarPdfPressupostService {
     }
 
     private Pressupost obtenirPressupost(Long pressupostId) {
-        return repository.buscarPerIdAmbLinies(pressupostId).orElseThrow(() -> new PressupostNoExisteixException("El pressupost no existeix."));
+        return pressupostRepository.buscarPerIdAmbLinies(pressupostId).orElseThrow(() -> new PressupostNoExisteixException("El pressupost no existeix."));
     }
 
     private Path crearFitxer(Pressupost pressupost) {

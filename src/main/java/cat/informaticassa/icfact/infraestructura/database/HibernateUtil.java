@@ -19,29 +19,22 @@ public final class HibernateUtil {
     public static SessionFactory getSessionFactory() {
 
         if (sessionFactory == null) {
-
             if (nomBaseDades == null) {
                 throw new IllegalStateException("Base de dades no configurada.");
             }
 
             Configuration configuration = HibernateConfig.getConfiguration(nomBaseDades);
 
-            sessionFactory = configuration.buildSessionFactory(
-                    new StandardServiceRegistryBuilder()
-                            .applySettings(configuration.getProperties())
-                            .build()
-            );
+            sessionFactory = configuration.buildSessionFactory(new StandardServiceRegistryBuilder()
+                            .applySettings(configuration.getProperties()).build());
         }
-
         return sessionFactory;
     }
 
     public static void shutdown() {
-
         if (sessionFactory != null) {
             sessionFactory.close();
             sessionFactory = null;
         }
-
     }
 }

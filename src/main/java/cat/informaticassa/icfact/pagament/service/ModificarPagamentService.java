@@ -6,8 +6,8 @@ import cat.informaticassa.icfact.pagament.repository.PagamentRepository;
 public class ModificarPagamentService {
 
     private final PagamentRepository repository = new PagamentRepository();
-    private final ActualitzarEstatFacturaPagamentService actualitzarService =
-            new ActualitzarEstatFacturaPagamentService();
+    private final ModificarEstatFacturaPagamentService actualitzarService =
+            new ModificarEstatFacturaPagamentService();
 
     public void executar(Pagament pagament) {
 

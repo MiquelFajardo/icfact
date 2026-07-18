@@ -21,7 +21,7 @@ public class IvaServiceTest extends BaseRepositoryTest {
                 .percentatge(new BigDecimal("15.00"))
                 .build();
 
-        new GuardarIvaService().executar(iva);
+        new CrearIvaService().executar(iva);
         assertTrue(repository.buscarPerPercentatge(new BigDecimal("15.00")).isPresent());
     }
 
@@ -29,14 +29,14 @@ public class IvaServiceTest extends BaseRepositoryTest {
     void guardarIvaQuanJaExisteix() {
         Iva iva = repository.buscarPerPercentatge(new BigDecimal("21.00")).orElseThrow();
         assertThrows(IvaJaExisteixException.class,
-                () -> new GuardarIvaService().executar(iva));
+                () -> new CrearIvaService().executar(iva));
     }
 
     @Test
     void actualitzarIva() {
         Iva iva = repository.buscarPerPercentatge(new BigDecimal("10.00")).orElseThrow();
         iva.setNom("IVA Reduït");
-        new ActualitzarIvaService().executar(iva);
+        new ModificarIvaService().executar(iva);
         Iva resultat = repository.buscarPerPercentatge(new BigDecimal("10.00")).orElseThrow();
         assertEquals("IVA Reduït", resultat.getNom());
     }

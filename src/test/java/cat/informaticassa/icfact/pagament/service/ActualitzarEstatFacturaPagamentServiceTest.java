@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ActualitzarEstatFacturaPagamentServiceTest extends BaseRepositoryTest {
 
-    private final ActualitzarEstatFacturaPagamentService service =
-            new ActualitzarEstatFacturaPagamentService();
+    private final ModificarEstatFacturaPagamentService service =
+            new ModificarEstatFacturaPagamentService();
 
     private final FacturaRepository facturaRepository =
             new FacturaRepository();

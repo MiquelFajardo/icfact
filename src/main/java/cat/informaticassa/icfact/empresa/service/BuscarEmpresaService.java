@@ -8,8 +8,6 @@ public class BuscarEmpresaService {
     private final EmpresaRepository repository = new EmpresaRepository();
 
     public Empresa executar() {
-        return repository.buscar()
-                .orElseThrow(() ->
-                        new EmpresaNoExisteixException("No existeix cap empresa."));
+        return repository.buscar().orElseThrow(() -> new EmpresaNoExisteixException("No existeix cap empresa."));
     }
 }

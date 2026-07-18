@@ -28,7 +28,7 @@ public final class HibernateConfig {
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.community.dialect.SQLiteDialect");
 
-        configuration.setProperty("hibernate.hbm2ddl.auto", "create");
+        configuration.setProperty("hibernate.hbm2ddl.auto", "update");  // Create esborra dades || update es poden afegir taules || validate no modifica taules
 
         configuration.setProperty("hibernate.show_sql", "true");
         configuration.setProperty("hibernate.format_sql", "true");

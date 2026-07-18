@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class EmpresaServiceTest extends BaseRepositoryTest {
 
-    private final GuardarEmpresaService service = new GuardarEmpresaService();
+    private final CrearEmpresaService service = new CrearEmpresaService();
     private final EmpresaRepository repository = new EmpresaRepository();
 
     @Test
@@ -25,7 +25,7 @@ public class EmpresaServiceTest extends BaseRepositoryTest {
     void actualitzarEmpresa() {
         Empresa empresa = repository.buscar().orElseThrow();
         empresa.setTelefon("972123456");
-        new ActualitzarEmpresaService().executar(empresa);
+        new ModificarEmpresaService().executar(empresa);
         Empresa resultat = repository.buscar().orElseThrow();
         assertEquals("972123456", resultat.getTelefon());
     }
