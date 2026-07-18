@@ -51,6 +51,7 @@ public final class PressupostTestData {
                 .dataCreacio(LocalDateTime.now())
                 .dataModificacio(LocalDateTime.now())
                 .formaPagament(transferencia)
+                .observacions("Validesa 30 dies")
                 .build();
 
         pressupost1.getLinies().add(
@@ -92,6 +93,7 @@ public final class PressupostTestData {
                 .dataCreacio(LocalDateTime.now())
                 .dataModificacio(LocalDateTime.now())
                 .formaPagament(transferencia)
+                .observacions("Validesa 30 dies")
                 .build();
 
         recalcularService.executar(pressupost2);

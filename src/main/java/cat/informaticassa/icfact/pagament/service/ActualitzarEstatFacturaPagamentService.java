@@ -20,10 +20,13 @@ public class ActualitzarEstatFacturaPagamentService {
 
         if (importPagat.compareTo(factura.getTotal()) >= 0) {
             factura.setEstat(EstatFactura.COBRADA);
+            if (factura.getDataCobrament() == null) {
+                factura.setDataCobrament(java.time.LocalDate.now());
+            }
         } else {
             factura.setEstat(EstatFactura.EMESA);
+            factura.setDataCobrament(null);
         }
-
         facturaRepository.actualitzar(factura);
     }
 }

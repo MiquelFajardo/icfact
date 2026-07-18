@@ -2,11 +2,12 @@ package cat.informaticassa.icfact.pressupost.service;
 
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.empresa.repository.EmpresaRepository;
+import cat.informaticassa.icfact.pdf.PdfObservacions;
 import cat.informaticassa.icfact.pdf.pressupost.*;
 import cat.informaticassa.icfact.pressupost.exception.PressupostNoExisteixException;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
 import cat.informaticassa.icfact.pressupost.repository.PressupostRepository;
-import cat.informaticassa.icfact.pdf.PressupostPdfPageEvent;
+import cat.informaticassa.icfact.pdf.BasePdfPageEvent;
 import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfWriter;
 
@@ -26,6 +27,7 @@ public class GenerarPdfPressupostService {
     private final PdfTotalsPressupost pdfTotals = new PdfTotalsPressupost();
     private final PdfFormaPagamentPressupost pdfFormaPagament = new PdfFormaPagamentPressupost();
     private final PdfAcceptacioPressupost pdfAcceptacio = new PdfAcceptacioPressupost();
+    private final PdfObservacions pdfObservacions = new PdfObservacions();
 
     public Path executar(Long pressupostId) {
         Empresa empresa = obtenirEmpresa();
@@ -33,9 +35,8 @@ public class GenerarPdfPressupostService {
         Path fitxer = crearFitxer(pressupost);
 
         try {
-            Document document = crearDocument(fitxer, empresa);
+            Document document = crearDocument(fitxer, empresa, pressupost);
             generarContingut(document, pressupost, empresa);
-
             document.close();
             return fitxer;
         } catch (Exception e) {
@@ -43,18 +44,12 @@ public class GenerarPdfPressupostService {
         }
     }
 
-
     private Empresa obtenirEmpresa() {
-        return empresaRepository.buscar()
-                .orElseThrow(() ->
-                        new RuntimeException("No existeix cap empresa."));
+        return empresaRepository.buscar().orElseThrow(() -> new RuntimeException("No existeix cap empresa."));
     }
 
     private Pressupost obtenirPressupost(Long pressupostId) {
-        return repository.buscarPerIdAmbLinies(pressupostId)
-                .orElseThrow(() ->
-                        new PressupostNoExisteixException(
-                                "El pressupost no existeix."));
+        return repository.buscarPerIdAmbLinies(pressupostId).orElseThrow(() -> new PressupostNoExisteixException("El pressupost no existeix."));
     }
 
     private Path crearFitxer(Pressupost pressupost) {
@@ -62,18 +57,16 @@ public class GenerarPdfPressupostService {
         try {
             Files.createDirectories(carpeta);
         } catch (IOException e) {
-            throw new RuntimeException(
-                    "No s'ha pogut crear la carpeta de pressupostos.",
-                    e);
+            throw new RuntimeException("No s'ha pogut crear la carpeta de pressupostos.", e);
         }
         return carpeta.resolve(pressupost.getNumero() + ".pdf");
     }
 
-    private Document crearDocument(Path fitxer, Empresa empresa) {
+    private Document crearDocument(Path fitxer, Empresa empresa, Pressupost pressupost) {
         try {
             Document document = new Document(PageSize.A4);
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fitxer.toFile()));
-            writer.setPageEvent(new PressupostPdfPageEvent(empresa));
+            writer.setPageEvent(new BasePdfPageEvent(empresa));
             document.open();
             return document;
         } catch (Exception e) {
@@ -86,6 +79,7 @@ public class GenerarPdfPressupostService {
         pdfLinies.afegir(document, pressupost, empresa);
         pdfTotals.afegir(document, pressupost, empresa);
         pdfFormaPagament.afegir(document, pressupost, empresa);
+        pdfObservacions.afegir(document, pressupost.getObservacions(), empresa);
         pdfAcceptacio.afegir(document, empresa);
     }
 

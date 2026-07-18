@@ -68,6 +68,9 @@ public class Factura {
     @OneToMany(mappedBy = "factura",cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Pagament> pagaments = new ArrayList<>();
 
+    @Column
+    private LocalDate dataCobrament;
+
     @Builder.Default
     @Column(nullable = false)
     private Boolean actiu = true;

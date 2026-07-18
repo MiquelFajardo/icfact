@@ -51,6 +51,7 @@ public final class FacturaTestData {
                 .dataCreacio(LocalDateTime.now())
                 .dataModificacio(LocalDateTime.now())
                 .formaPagament(transferencia)
+                .observacions("Pagament a 30 dies")
                 .build();
 
         factura1.getLinies().add(
@@ -92,6 +93,7 @@ public final class FacturaTestData {
                 .dataCreacio(LocalDateTime.now())
                 .dataModificacio(LocalDateTime.now())
                 .formaPagament(transferencia)
+                .observacions("Pagament a 60 dies")
                 .build();
 
         recalcularService.executar(factura2);
