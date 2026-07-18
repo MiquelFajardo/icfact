@@ -62,16 +62,18 @@ public class FacturaRepository implements Repository<Factura, Long> {
 
     public Optional<Factura> buscarPerIdAmbLinies(Long id) {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("""
-                SELECT DISTINCT f
-                FROM Factura f
-                LEFT JOIN FETCH f.client
-                LEFT JOIN FETCH p.formaPagament
-                LEFT JOIN FETCH f.linies l
-                LEFT JOIN FETCH l.iva
-                LEFT JOIN FETCH l.producte
-                WHERE f.id = :id
-                AND f.actiu = true
+            return session.createQuery("""              
+              SELECT DISTINCT f
+              FROM Factura f
+              LEFT JOIN FETCH f.client c
+              LEFT JOIN FETCH c.adreca a
+              LEFT JOIN FETCH a.poblacio
+              LEFT JOIN FETCH f.formaPagament
+              LEFT JOIN FETCH f.linies l
+              LEFT JOIN FETCH l.iva
+              LEFT JOIN FETCH l.producte
+              WHERE f.id = :id
+              AND f.actiu = true
                 """, Factura.class)
                     .setParameter("id", id)
                     .uniqueResultOptional();
@@ -117,7 +119,10 @@ public class FacturaRepository implements Repository<Factura, Long> {
             return session.createQuery("""
                 SELECT DISTINCT f
                 FROM Factura f
-                LEFT JOIN FETCH f.client
+                LEFT JOIN FETCH f.client c
+                LEFT JOIN FETCH c.adreca a
+                LEFT JOIN FETCH a.poblacio
+                LEFT JOIN FETCH f.formaPagament
                 LEFT JOIN FETCH f.linies l
                 LEFT JOIN FETCH l.iva
                 LEFT JOIN FETCH l.producte

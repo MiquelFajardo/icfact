@@ -2,8 +2,10 @@ package cat.informaticassa.icfact.pdf.pressupost;
 
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.pdf.PdfFonts;
-import com.lowagie.text.*;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
 import com.lowagie.text.Font;
+import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 
@@ -20,7 +22,7 @@ public class PdfAcceptacioPressupost {
             Font negreta = PdfFonts.etiqueta(colorEmpresa);
 
             Paragraph espai = new Paragraph();
-            espai.setSpacingBefore(100f);
+            espai.setSpacingBefore(50f);
             document.add(espai);
 
             document.add(new Paragraph("ACCEPTACIÓ DEL PRESSUPOST", titol));
