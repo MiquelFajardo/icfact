@@ -9,7 +9,7 @@ public class GenerarNumeroDocumentService {
     public static String generar(String prefix, long numero) {
 
         return String.format(
-                "%s-%d-%06d",
+                "%s%d%06d",
                 prefix,
                 Year.now().getValue(),
                 numero

@@ -24,7 +24,14 @@ public class EmpresaRepository {
 
     public Optional<Empresa> buscar() {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Empresa", Empresa.class)
+            return session.createQuery("""
+                SELECT e
+                FROM Empresa e
+                LEFT JOIN FETCH e.adreca a
+                LEFT JOIN FETCH a.poblacio p
+                LEFT JOIN FETCH p.provincia pr
+                LEFT JOIN FETCH pr.pais
+                """, Empresa.class)
                     .setMaxResults(1)
                     .uniqueResultOptional();
         }

@@ -37,4 +37,13 @@ public class Adreca {
 
     @Column(nullable = false, length = 10)
     private String codiPostal;
+
+    public String getAdrecaCompleta() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(carrer);
+        if (numero != null) {sb.append(", ").append(numero);}
+        if (pis != null && !pis.isBlank()) {sb.append(" ").append(pis);}
+        if (porta != null && !porta.isBlank()) {sb.append(" ").append(porta);}
+        return sb.toString();
+    }
 }

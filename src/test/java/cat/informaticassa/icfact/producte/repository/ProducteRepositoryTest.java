@@ -40,6 +40,14 @@ public class ProducteRepositoryTest extends BaseRepositoryTest {
     }
 
     @Test
+    void buscarTotsInactius() {
+        Producte producte = repository.buscarPerCodi("P0001").orElseThrow();
+        repository.eliminar(producte);
+        List<Producte> productes = repository.buscarInactius();
+        assertEquals(1, productes.size());
+    }
+
+    @Test
     void actualitzarProducte() {
         Producte producte = repository.buscarPerCodi("P0001").orElseThrow();
         producte.setPreu(producte.getPreu().add(java.math.BigDecimal.TEN));

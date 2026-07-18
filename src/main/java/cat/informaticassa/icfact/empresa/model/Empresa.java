@@ -21,6 +21,9 @@ public class Empresa {
     @Column(nullable = false, length = 150)
     private String nom;
 
+    @Column(nullable = false, length = 150)
+    private String descripcio;
+
     @Column(nullable = false, unique = true, length = 9)
     private String nif;
 
@@ -42,6 +45,9 @@ public class Empresa {
 
     @Column(length = 255)
     private String logo;
+
+    @Column(length = 7)
+    private String color;
 
     @Column(columnDefinition = "TEXT")
     private String peuPdf;

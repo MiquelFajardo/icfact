@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ClientRepository implements Repository<Client, Long> {
+
     @Override
     public void guardar(Client client) {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
@@ -29,13 +30,23 @@ public class ClientRepository implements Repository<Client, Long> {
     @Override
     public Optional<Client> buscarPerId(Long id) {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.find(Client.class, id));
+            return session.createQuery("""
+                    FROM Client
+                    WHERE id = :id
+                    AND actiu = true
+                    """, Client.class)
+                    .setParameter("id", id)
+                    .uniqueResultOptional();
         }
     }
 
     public Optional<Client> buscarPerNif(String nif) {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Client WHERE nif = :nif", Client.class)
+            return session.createQuery("""
+                    FROM Client
+                    WHERE nif = :nif
+                    AND actiu = true
+                    """, Client.class)
                     .setParameter("nif", nif)
                     .uniqueResultOptional();
         }
@@ -43,7 +54,12 @@ public class ClientRepository implements Repository<Client, Long> {
 
     public List<Client> buscarPerNom(String nom) {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Client WHERE lower(nom) like lower(:nom) ORDER BY nom", Client.class)
+            return session.createQuery("""
+                    FROM Client
+                    WHERE lower(nom) LIKE lower(:nom)
+                    AND actiu = true
+                    ORDER BY nom
+                    """, Client.class)
                     .setParameter("nom", "%" + nom + "%")
                     .list();
         }
@@ -52,15 +68,29 @@ public class ClientRepository implements Repository<Client, Long> {
     @Override
     public List<Client> buscarTots() {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Client ORDER BY nom", Client.class)
+            return session.createQuery("""
+                    FROM Client
+                    WHERE actiu = true
+                    ORDER BY nom
+                    """, Client.class)
                     .list();
         }
     }
 
-    public List<Client> buscarTotsActius() {
+    public List<Client> buscarInactius() {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM Client WHERE actiu = true ORDER BY nom", Client.class)
+            return session.createQuery("""
+                    FROM Client
+                    WHERE actiu = false
+                    ORDER BY nom
+                    """, Client.class)
                     .list();
+        }
+    }
+
+    public Optional<Client> buscarPerIdIncloentInactius(Long id) {
+        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+            return Optional.ofNullable(session.find(Client.class, id));
         }
     }
 

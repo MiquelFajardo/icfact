@@ -30,26 +30,58 @@ public class LiniaFacturaRepository implements Repository<LiniaFactura, Long> {
     @Override
     public Optional<LiniaFactura> buscarPerId(Long id) {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.find(LiniaFactura.class, id));
+            return session.createQuery("""
+                    FROM LiniaFactura
+                    WHERE id = :id
+                    AND actiu = true
+                    """, LiniaFactura.class)
+                    .setParameter("id", id)
+                    .uniqueResultOptional();
+        }
+    }
+
+    public Optional<LiniaFactura> buscarPerIdIncloentInactius(Long id) {
+        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("""
+                    FROM LiniaFactura
+                    WHERE id = :id
+                    """, LiniaFactura.class)
+                    .setParameter("id", id)
+                    .uniqueResultOptional();
         }
     }
 
     @Override
     public List<LiniaFactura> buscarTots() {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery(
-                    "FROM LiniaFactura ORDER BY id",
-                    LiniaFactura.class
-            ).list();
+            return session.createQuery("""
+                    FROM LiniaFactura
+                    WHERE actiu = true
+                    ORDER BY id
+                    """, LiniaFactura.class)
+                    .list();
         }
     }
 
-    public List<LiniaFactura> buscarTotsActius() {
+    public List<LiniaFactura> buscarActius() {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("FROM LiniaFactura WHERE actiu = true ORDER BY id",
-                    LiniaFactura.class
-            ).list();
+            return session.createQuery("""
+                    FROM LiniaFactura
+                    WHERE actiu = true
+                    ORDER BY id
+                    """, LiniaFactura.class)
+                    .list();
+        }
+    }
 
+    public List<LiniaFactura> buscarInactius() {
+        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("""
+                    FROM LiniaFactura
+                    WHERE actiu = false
+                    ORDER BY id
+                    """, LiniaFactura.class)
+                    .list();
         }
     }
 

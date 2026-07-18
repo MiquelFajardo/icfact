@@ -25,8 +25,8 @@ public class LiniaFactura {
     @JoinColumn(name = "factura_id", nullable = false)
     private Factura factura;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "producte_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "producte_id")
     private Producte producte;
 
     @Column(nullable = false, columnDefinition = "TEXT")

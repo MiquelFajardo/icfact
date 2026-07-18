@@ -16,7 +16,7 @@ public class LiniaPressupostRepositoryTest extends BaseRepositoryTest {
     @Test
     void buscarPerPressupost() {
         Long id = pressupostRepository
-                .buscarPerNumero("P-2026-000001")
+                .buscarPerNumero("P2026000001")
                 .orElseThrow()
                 .getId();
         List<LiniaPressupost> linies = repository.buscarPerPressupost(id);
@@ -31,7 +31,7 @@ public class LiniaPressupostRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void buscarTotesActives() {
-        List<LiniaPressupost> linies = repository.buscarTotsActius();
+        List<LiniaPressupost> linies = repository.buscarTots();
         assertEquals(2, linies.size());
     }
 
@@ -48,7 +48,7 @@ public class LiniaPressupostRepositoryTest extends BaseRepositoryTest {
     void desactivar() {
         LiniaPressupost linia = repository.buscarTots().getFirst();
         repository.eliminar(linia);
-        LiniaPressupost resultat = repository.buscarPerId(linia.getId()).orElseThrow();
+        LiniaPressupost resultat = repository.buscarPerIdIncloentInactius(linia.getId()).orElseThrow();
         assertFalse(resultat.getActiu());
     }
 
@@ -57,7 +57,7 @@ public class LiniaPressupostRepositoryTest extends BaseRepositoryTest {
         LiniaPressupost linia = repository.buscarTots().getFirst();
         repository.eliminar(linia);
         repository.activar(linia);
-        LiniaPressupost resultat = repository.buscarPerId(linia.getId()).orElseThrow();
+        LiniaPressupost resultat = repository.buscarPerIdIncloentInactius(linia.getId()).orElseThrow();
         assertTrue(resultat.getActiu());
     }
 }

@@ -4,11 +4,13 @@ import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.factura.model.Factura;
 import cat.informaticassa.icfact.factura.model.LiniaFactura;
+import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
 import cat.informaticassa.icfact.geografia.model.Adreca;
 import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.geografia.model.Poblacio;
 import cat.informaticassa.icfact.geografia.model.Provincia;
 import cat.informaticassa.icfact.iva.model.Iva;
+import cat.informaticassa.icfact.pagament.model.Pagament;
 import cat.informaticassa.icfact.pressupost.model.LiniaPressupost;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
 import cat.informaticassa.icfact.producte.model.Producte;
@@ -42,12 +44,13 @@ public final class HibernateConfig {
 
         configuration.addAnnotatedClass(Iva.class);
         configuration.addAnnotatedClass(Producte.class);
+        configuration.addAnnotatedClass(FormaPagament.class);
         configuration.addAnnotatedClass(Pressupost.class);
         configuration.addAnnotatedClass(LiniaPressupost.class);
 
         configuration.addAnnotatedClass(Factura.class);
         configuration.addAnnotatedClass(LiniaFactura.class);
-
+        configuration.addAnnotatedClass(Pagament.class);
         return configuration;
     }
 }
