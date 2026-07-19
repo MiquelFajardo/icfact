@@ -97,7 +97,5 @@ public class AltaEmpresaView extends BorderPane {
         BorderPane.setMargin(card, new Insets(15));
 
         new AltaEmpresaController(this, navegador);
-
     }
-
 }

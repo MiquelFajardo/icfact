@@ -22,6 +22,12 @@ public class CrearEmpresaService {
             empresa.setContrasenyaHash(BCrypt.hashpw(empresa.getContrasenyaHash(), BCrypt.gensalt()));
         }
 
+        String color = empresa.getColor();
+        if (color == null || color.isBlank()) {
+            color = "#2563EB"; // Blau per defecte d'ICFact
+        }
+        empresa.setColor(color);
+
         repository.guardar(empresa);
     }
 }

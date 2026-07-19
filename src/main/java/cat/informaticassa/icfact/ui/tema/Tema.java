@@ -28,6 +28,7 @@ public final class Tema {
     public static final Color ERROR = Color.web("#DC2626");
     public static final Color EXIT = Color.web("#16A34A");
     public static final Color BORDER = Color.web("#D1D5DB");
+    public static final Color SIDEBAR = Color.web("#1F2937");
     /*
      * Fonts
      */

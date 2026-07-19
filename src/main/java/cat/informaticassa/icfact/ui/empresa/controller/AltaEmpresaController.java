@@ -24,6 +24,8 @@ public class AltaEmpresaController {
     }
 
     private void inicialitzar() {
+        view.getBotoCrear().setDefaultButton(true);
+        view.getContrasenya().setOnAction(e -> crearEmpresa());
         view.getBotoCrear().setOnAction(event -> crearEmpresa());
     }
 
@@ -47,6 +49,7 @@ public class AltaEmpresaController {
         try {
             crearEmpresaService.executar(empresa);
             Alerta.informacio(view.getScene().getWindow(),"Empresa creada", "L'empresa s'ha creat correctament");
+            navegador.setEmpresa(empresa);
             navegador.mostrarPrincipal();
         } catch (EmpresaJaExisteixException e) {
             Alerta.error(view.getScene().getWindow(),e.getMessage());

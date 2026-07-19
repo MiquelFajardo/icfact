@@ -33,7 +33,6 @@ public final class Alerta {
         alert.setTitle(titol);
         alert.setHeaderText(null);
         alert.setContentText(missatge);
-
         return alert.showAndWait().filter(button -> button == ButtonType.OK).isPresent();
     }
 }

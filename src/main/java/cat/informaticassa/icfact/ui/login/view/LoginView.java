@@ -30,25 +30,24 @@ public class LoginView extends BorderPane {
     private void inicialitzar() {
         setBackground(new Background(new BackgroundFill(Tema.FONS, CornerRadii.EMPTY, Insets.EMPTY)));
         AppHeader header = new AppHeader(empresa.getNom(), empresa.getDescripcio());
+
         Card card = new Card();
         Label info = new Label("Introdueix la contrasenya per accedir a ICFact.");
         info.setFont(Tema.TEXT_NORMAL);
         info.setTextFill(Tema.TEXT_SECUNDARI);
         recuperar.setFont(Tema.TEXT_NORMAL);
-        botoEntrar.setMaxWidth(Double.MAX_VALUE);
-
+        contrasenya.setMaxWidth(320);
+        botoEntrar.setMaxWidth(320);
         card.add(header);
         card.add(info);
         card.add(contrasenya);
         card.add(botoEntrar);
         card.add(recuperar);
         card.add(new FooterInformaticassa());
-
         StackPane contenidor = new StackPane(card);
         contenidor.setAlignment(Pos.CENTER);
         setCenter(contenidor);
         BorderPane.setMargin(contenidor, new Insets(15));
-
         new LoginController(this, navegador, empresa);
     }
 }
