@@ -29,13 +29,13 @@ class FormaPagamentRepositoryTest extends BaseRepositoryTest {
     @Test
     void eliminar() {
         FormaPagament forma = repository.buscarPerNom("Bizum").orElseThrow();
-        repository.eliminar(forma);
+        repository.desactivar(forma);
         assertTrue(repository.buscarPerNom("Bizum").isEmpty());    }
 
     @Test
     void activar() {
         FormaPagament forma = repository.buscarPerNom("Bizum").orElseThrow();
-        repository.eliminar(forma);
+        repository.desactivar(forma);
         repository.activar(forma);
         assertTrue(repository.buscarPerNom("Bizum").isPresent());
     }

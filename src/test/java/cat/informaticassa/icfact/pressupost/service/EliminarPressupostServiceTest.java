@@ -22,7 +22,7 @@ class EliminarPressupostServiceTest extends BaseRepositoryTest {
 
         assertFalse(repository.buscarPerIdIncloentInactius(1L)
                 .orElseThrow()
-                .getActiu());
+                .isActiu());
 
         liniaRepository.buscarPerPressupost(1L)
                 .forEach(l -> fail("No hi hauria d'haver línies actives."));

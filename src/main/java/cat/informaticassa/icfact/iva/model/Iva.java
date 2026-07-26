@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.iva.model;
 
+import cat.informaticassa.icfact.infraestructura.model.Activable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
                 @UniqueConstraint(columnNames = "percentatge")
         }
 )
-public class Iva {
+public class Iva implements Activable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +33,7 @@ public class Iva {
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean actiu = true;
+    private boolean actiu = true;
 
     @Column(nullable = false)
     private LocalDateTime dataCreacio;

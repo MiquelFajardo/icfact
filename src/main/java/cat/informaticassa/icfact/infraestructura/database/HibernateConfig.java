@@ -14,6 +14,7 @@ import cat.informaticassa.icfact.pagament.model.Pagament;
 import cat.informaticassa.icfact.pressupost.model.LiniaPressupost;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
 import cat.informaticassa.icfact.producte.model.Producte;
+import cat.informaticassa.icfact.tasca.model.Tasca;
 import org.hibernate.cfg.Configuration;
 
 public final class HibernateConfig {
@@ -28,7 +29,7 @@ public final class HibernateConfig {
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.community.dialect.SQLiteDialect");
 
-        configuration.setProperty("hibernate.hbm2ddl.auto", "create");
+        configuration.setProperty("hibernate.hbm2ddl.auto", "update");  // Create esborra dades || update es poden afegir taules || validate no modifica taules
 
         configuration.setProperty("hibernate.show_sql", "true");
         configuration.setProperty("hibernate.format_sql", "true");
@@ -51,6 +52,8 @@ public final class HibernateConfig {
         configuration.addAnnotatedClass(Factura.class);
         configuration.addAnnotatedClass(LiniaFactura.class);
         configuration.addAnnotatedClass(Pagament.class);
+
+        configuration.addAnnotatedClass(Tasca.class);
         return configuration;
     }
 }

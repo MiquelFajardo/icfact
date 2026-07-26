@@ -2,13 +2,15 @@ package cat.informaticassa.icfact.factura.repository;
 
 import cat.informaticassa.icfact.factura.model.Factura;
 import cat.informaticassa.icfact.infraestructura.database.HibernateUtil;
-import cat.informaticassa.icfact.infraestructura.repository.Repository;
-
+import cat.informaticassa.icfact.infraestructura.repository.AbstractActivableRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class FacturaRepository implements Repository<Factura, Long> {
+public class FacturaRepository extends AbstractActivableRepository<Factura, Long> {
+    protected String ordrePerDefecte() {
+        return "data DESC";
+    }
 
     @Override
     public void guardar(Factura factura) {
@@ -25,25 +27,8 @@ public class FacturaRepository implements Repository<Factura, Long> {
     }
 
     @Override
-    public void actualitzar(Factura factura) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            var tx = session.beginTransaction();
-            session.merge(factura);
-            tx.commit();
-        }
-    }
-
-    @Override
     public Optional<Factura> buscarPerId(Long id) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("""
-                    FROM Factura
-                    WHERE id = :id
-                    AND actiu = true
-                    """, Factura.class)
-                    .setParameter("id", id)
-                    .uniqueResultOptional();
-        }
+        return buscarPerIdAmbLinies(id);
     }
 
     public Optional<Factura> buscarPerIdIncloentInactius(Long id) {
@@ -80,40 +65,6 @@ public class FacturaRepository implements Repository<Factura, Long> {
         }
     }
 
-    @Override
-    public List<Factura> buscarTots() {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("""
-                    FROM Factura
-                    WHERE actiu = true
-                    ORDER BY data DESC
-                    """, Factura.class)
-                    .list();
-        }
-    }
-
-    public List<Factura> buscarActius() {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("""
-                    FROM Factura
-                    WHERE actiu = true
-                    ORDER BY data DESC
-                    """, Factura.class)
-                    .list();
-        }
-    }
-
-    public List<Factura> buscarInactius() {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("""
-                    FROM Factura
-                    WHERE actiu = false
-                    ORDER BY data DESC
-                    """, Factura.class)
-                    .list();
-        }
-    }
-
     public Optional<Factura> buscarPerNumero(String numero) {
         try (var session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("""
@@ -144,18 +95,6 @@ public class FacturaRepository implements Repository<Factura, Long> {
                     .setParameter("data", data)
                     .list();
         }
-    }
-
-    @Override
-    public void eliminar(Factura factura) {
-        factura.setActiu(false);
-        actualitzar(factura);
-    }
-
-    @Override
-    public void activar(Factura factura) {
-        factura.setActiu(true);
-        actualitzar(factura);
     }
 
     public long obtenirSeguentNumero(int any) {

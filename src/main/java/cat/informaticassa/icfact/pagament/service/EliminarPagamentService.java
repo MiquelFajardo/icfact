@@ -6,13 +6,10 @@ import cat.informaticassa.icfact.pagament.repository.PagamentRepository;
 public class EliminarPagamentService {
 
     private final PagamentRepository repository = new PagamentRepository();
-    private final ActualitzarEstatFacturaPagamentService actualitzarService =
-            new ActualitzarEstatFacturaPagamentService();
+    private final ModificarEstatFacturaPagamentService actualitzarService = new ModificarEstatFacturaPagamentService();
 
     public void executar(Pagament pagament) {
-
-        repository.eliminar(pagament);
-
+        repository.desactivar(pagament);
         actualitzarService.executar(pagament.getFactura());
     }
 }

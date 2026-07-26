@@ -47,17 +47,17 @@ public class LiniaPressupostRepositoryTest extends BaseRepositoryTest {
     @Test
     void desactivar() {
         LiniaPressupost linia = repository.buscarTots().getFirst();
-        repository.eliminar(linia);
+        repository.desactivar(linia);
         LiniaPressupost resultat = repository.buscarPerIdIncloentInactius(linia.getId()).orElseThrow();
-        assertFalse(resultat.getActiu());
+        assertFalse(resultat.isActiu());
     }
 
     @Test
     void activar() {
         LiniaPressupost linia = repository.buscarTots().getFirst();
-        repository.eliminar(linia);
+        repository.desactivar(linia);
         repository.activar(linia);
         LiniaPressupost resultat = repository.buscarPerIdIncloentInactius(linia.getId()).orElseThrow();
-        assertTrue(resultat.getActiu());
+        assertTrue(resultat.isActiu());
     }
 }

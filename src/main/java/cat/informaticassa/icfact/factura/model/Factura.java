@@ -2,6 +2,7 @@ package cat.informaticassa.icfact.factura.model;
 
 import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
+import cat.informaticassa.icfact.infraestructura.model.Activable;
 import cat.informaticassa.icfact.pagament.model.Pagament;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "FACTURA")
-public class Factura {
+public class Factura implements Activable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,7 +74,7 @@ public class Factura {
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean actiu = true;
+    private boolean actiu = true;
 
     @Column(nullable = false)
     private LocalDateTime dataCreacio;

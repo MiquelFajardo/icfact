@@ -34,4 +34,9 @@ public class Poblacio {
     @Builder.Default
     @Convert(converter = SetStringConverter.class)
     private Set<String> codiPostal = new TreeSet<>();
+
+    @Override
+    public String toString() {
+        return nom;
+    }
 }

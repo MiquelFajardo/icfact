@@ -24,5 +24,7 @@ public class TestDataLoader {
 
         FacturaTestData.carregar();
         PagamentTestData.carregar();
+
+        TascaTestData.carregar();
     }
 }

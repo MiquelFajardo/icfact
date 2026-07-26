@@ -34,7 +34,7 @@ public class FacturaRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void buscarTotesActives() {
-        List<Factura> factures = repository.buscarActius();
+        List<Factura> factures = repository.buscarTots();
         assertEquals(2, factures.size());
     }
 
@@ -50,19 +50,19 @@ public class FacturaRepositoryTest extends BaseRepositoryTest {
     @Test
     void desactivar() {
         Factura factura = repository.buscarPerNumero("F2026000001").orElseThrow();
-        repository.eliminar(factura);
+        repository.desactivar(factura);
         Factura resultat = repository.buscarPerIdIncloentInactius(factura.getId()).orElseThrow();
-        assertFalse(resultat.getActiu());
+        assertFalse(resultat.isActiu());
     }
 
     @Test
     void activar() {
         Factura factura = repository.buscarPerNumero("F2026000001").orElseThrow();
-        repository.eliminar(factura);
+        repository.desactivar(factura);
         Factura inactiva = repository.buscarPerIdIncloentInactius(factura.getId()).orElseThrow();
-        assertFalse(inactiva.getActiu());
+        assertFalse(inactiva.isActiu());
         repository.activar(inactiva);
         Factura activa = repository.buscarPerId(factura.getId()).orElseThrow();
-        assertTrue(activa.getActiu());
+        assertTrue(activa.isActiu());
     }
 }

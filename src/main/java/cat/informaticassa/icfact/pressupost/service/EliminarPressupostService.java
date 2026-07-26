@@ -18,9 +18,9 @@ public class EliminarPressupostService {
                         new PressupostNoExisteixException("El pressupost no existeix."));
 
         for (LiniaPressupost linia : pressupost.getLinies()) {
-            liniaRepository.eliminar(linia);
+            liniaRepository.desactivar(linia);
         }
 
-        repository.eliminar(pressupost);
+        repository.desactivar(pressupost);
     }
 }

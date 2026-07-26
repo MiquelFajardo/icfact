@@ -27,8 +27,8 @@ public class Empresa {
     @Column(nullable = false, unique = true, length = 9)
     private String nif;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "adreca_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "adreca_id")
     private Adreca adreca;
 
     @Column(length = 20)
@@ -52,9 +52,27 @@ public class Empresa {
     @Column(columnDefinition = "TEXT")
     private String peuPdf;
 
+    @Column(name = "contrasenya_hash", length = 255)
+    private String contrasenyaHash;
+
     @Column(nullable = false)
     private LocalDateTime dataCreacio;
 
     @Column(nullable = false)
     private LocalDateTime dataModificacio;
+
+    public void actualitzarDades(Empresa altra) {
+        this.nom = altra.nom;
+        this.descripcio = altra.descripcio;
+        this.nif = altra.nif;
+        this.adreca = altra.adreca;
+        this.telefon = altra.telefon;
+        this.email = altra.email;
+        this.web = altra.web;
+        this.iban = altra.iban;
+        this.logo = altra.logo;
+        this.color = altra.color;
+        this.peuPdf = altra.peuPdf;
+    }
+
 }

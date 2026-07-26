@@ -7,14 +7,14 @@ import cat.informaticassa.icfact.iva.repository.IvaRepository;
 import java.time.LocalDateTime;
 
 public class ActivarIvaService {
+
     private final IvaRepository repository = new IvaRepository();
 
     public void executar(Iva iva) {
-        repository.buscarPerId(iva.getId())
+        Iva ivaBD = repository.buscarPerIdIncloentInactius(iva.getId())
                 .orElseThrow(() ->
                         new IvaNoExisteixException("L'IVA no existeix."));
-
-        iva.setDataModificacio(LocalDateTime.now());
-        repository.activar(iva);
+        ivaBD.setDataModificacio(LocalDateTime.now());
+        repository.activar(ivaBD);
     }
 }

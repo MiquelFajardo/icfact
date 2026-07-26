@@ -27,7 +27,7 @@ public class BuscarIvaService {
     }
 
     public List<Iva> buscarActius() {
-        return repository.buscarActius();
+        return repository.buscarTots();
     }
 
     public List<Iva> buscarInactius() {

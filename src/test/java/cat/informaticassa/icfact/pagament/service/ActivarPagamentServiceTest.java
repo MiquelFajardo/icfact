@@ -18,17 +18,11 @@ class ActivarPagamentServiceTest extends BaseRepositoryTest {
 
     @Test
     void activarPagament() {
-
         Pagament pagament = repository.buscarTots().getFirst();
-
-        repository.eliminar(pagament);
-
+        repository.desactivar(pagament);
         service.executar(pagament);
-
         assertTrue(repository.buscarPerId(pagament.getId()).isPresent());
-
         var factura = facturaRepository.buscarPerId(pagament.getFactura().getId()).orElseThrow();
-
         assertEquals(EstatFactura.COBRADA, factura.getEstat());
     }
 }

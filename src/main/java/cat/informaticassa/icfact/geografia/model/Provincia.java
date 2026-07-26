@@ -30,4 +30,9 @@ public class Provincia {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name ="pais_id", nullable = false)
     private Pais pais;
+
+    @Override
+    public String toString() {
+        return nom;
+    }
 }

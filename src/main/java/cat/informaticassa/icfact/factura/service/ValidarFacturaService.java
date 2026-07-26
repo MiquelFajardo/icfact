@@ -28,7 +28,7 @@ public class ValidarFacturaService {
             throw new IllegalArgumentException("La factura ha de tenir un client.");
         }
 
-        if (!Boolean.TRUE.equals(client.getActiu())) {
+        if (!client.isActiu()) {
             throw new IllegalArgumentException("El client està inactiu.");
         }
     }

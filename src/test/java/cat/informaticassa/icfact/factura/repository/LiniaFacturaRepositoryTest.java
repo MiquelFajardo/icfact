@@ -47,17 +47,17 @@ public class LiniaFacturaRepositoryTest extends BaseRepositoryTest {
     @Test
     void desactivar() {
         LiniaFactura linia = repository.buscarTots().getFirst();
-        repository.eliminar(linia);
+        repository.desactivar(linia);
         LiniaFactura resultat = repository.buscarPerIdIncloentInactius(linia.getId()).orElseThrow();
-        assertFalse(resultat.getActiu());
+        assertFalse(resultat.isActiu());
     }
 
     @Test
     void activar() {
         LiniaFactura linia = repository.buscarTots().getFirst();
-        repository.eliminar(linia);
+        repository.desactivar(linia);
         repository.activar(linia);
         LiniaFactura resultat = repository.buscarPerId(linia.getId()).orElseThrow();
-        assertTrue(resultat.getActiu());
+        assertTrue(resultat.isActiu());
     }
 }

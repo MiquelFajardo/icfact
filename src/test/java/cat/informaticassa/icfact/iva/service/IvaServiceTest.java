@@ -21,7 +21,7 @@ public class IvaServiceTest extends BaseRepositoryTest {
                 .percentatge(new BigDecimal("15.00"))
                 .build();
 
-        new GuardarIvaService().executar(iva);
+        new CrearIvaService().executar(iva);
         assertTrue(repository.buscarPerPercentatge(new BigDecimal("15.00")).isPresent());
     }
 
@@ -29,14 +29,14 @@ public class IvaServiceTest extends BaseRepositoryTest {
     void guardarIvaQuanJaExisteix() {
         Iva iva = repository.buscarPerPercentatge(new BigDecimal("21.00")).orElseThrow();
         assertThrows(IvaJaExisteixException.class,
-                () -> new GuardarIvaService().executar(iva));
+                () -> new CrearIvaService().executar(iva));
     }
 
     @Test
     void actualitzarIva() {
         Iva iva = repository.buscarPerPercentatge(new BigDecimal("10.00")).orElseThrow();
         iva.setNom("IVA Reduït");
-        new ActualitzarIvaService().executar(iva);
+        new ModificarIvaService().executar(iva);
         Iva resultat = repository.buscarPerPercentatge(new BigDecimal("10.00")).orElseThrow();
         assertEquals("IVA Reduït", resultat.getNom());
     }
@@ -58,8 +58,8 @@ public class IvaServiceTest extends BaseRepositoryTest {
     void desactivarIva() {
         Iva iva = repository.buscarPerPercentatge(new BigDecimal("4.00")).orElseThrow();
         new DesactivarIvaService().executar(iva);
-        Iva resultat = repository.buscarPerPercentatge(new BigDecimal("4.00")).orElseThrow();
-        assertFalse(resultat.getActiu());
+        Iva resultat = repository.buscarPerIdIncloentInactius(iva.getId()).orElseThrow();
+        assertFalse(resultat.isActiu());
     }
 
     @Test
@@ -67,14 +67,14 @@ public class IvaServiceTest extends BaseRepositoryTest {
         Iva iva = repository.buscarPerPercentatge(new BigDecimal("4.00")).orElseThrow();
         new DesactivarIvaService().executar(iva);
         new ActivarIvaService().executar(iva);
-        Iva resultat = repository.buscarPerPercentatge(new BigDecimal("4.00")).orElseThrow();
-        assertTrue(resultat.getActiu());
+        Iva resultat = repository.buscarPerId(iva.getId()).orElseThrow();
+        assertTrue(resultat.isActiu());
     }
 
     @Test
     void buscarInactius() {
         Iva iva = repository.buscarPerPercentatge(new BigDecimal("4.00")).orElseThrow();
-        repository.eliminar(iva);
+        repository.desactivar(iva);
         List<Iva> ivaInactius = repository.buscarInactius();
         assertEquals(1, ivaInactius.size());
 

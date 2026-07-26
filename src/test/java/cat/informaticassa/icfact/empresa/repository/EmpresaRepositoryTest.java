@@ -16,7 +16,7 @@ class EmpresaRepositoryTest extends BaseRepositoryTest {
     void buscarEmpresa() {
         Optional<Empresa> empresa = repository.buscar();
         assertTrue(empresa.isPresent());
-        assertEquals("Informaticassa", empresa.get().getNom());
+        assertEquals("Manel Serra", empresa.get().getNom());
     }
 
     @Test

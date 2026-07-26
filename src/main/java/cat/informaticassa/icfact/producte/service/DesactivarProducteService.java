@@ -16,6 +16,6 @@ public class DesactivarProducteService {
                         new ProducteNoExisteixException("El producte no existeix."));
 
         producte.setDataModificacio(LocalDateTime.now());
-        repository.eliminar(producte);
+        repository.desactivar(producte);
     }
 }

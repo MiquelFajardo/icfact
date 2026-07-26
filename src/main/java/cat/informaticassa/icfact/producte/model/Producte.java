@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.producte.model;
 
+import cat.informaticassa.icfact.infraestructura.model.Activable;
 import cat.informaticassa.icfact.iva.model.Iva;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
                 @UniqueConstraint(columnNames = "codi")
         }
 )
-public class Producte {
+public class Producte implements Activable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,7 +44,7 @@ public class Producte {
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean actiu = true;
+    private boolean actiu = true;
 
     @Column(nullable = false)
     private LocalDateTime dataCreacio;

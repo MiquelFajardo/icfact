@@ -16,6 +16,6 @@ public class DesactivarClientService {
                         new ClientNoExisteixException("El client no existeix."));
 
         client.setDataModificacio(LocalDateTime.now());
-        repository.eliminar(client);
+        repository.desactivar(client);
     }
 }

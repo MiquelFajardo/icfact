@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ActualitzarEstatFacturaPagamentServiceTest extends BaseRepositoryTest {
 
-    private final ActualitzarEstatFacturaPagamentService service =
-            new ActualitzarEstatFacturaPagamentService();
+    private final ModificarEstatFacturaPagamentService service =
+            new ModificarEstatFacturaPagamentService();
 
     private final FacturaRepository facturaRepository =
             new FacturaRepository();
@@ -40,7 +40,7 @@ class ActualitzarEstatFacturaPagamentServiceTest extends BaseRepositoryTest {
 
         Pagament pagament = pagamentRepository.buscarPerFactura(factura).getFirst();
 
-        pagamentRepository.eliminar(pagament);
+        pagamentRepository.desactivar(pagament);
 
         service.executar(factura);
 

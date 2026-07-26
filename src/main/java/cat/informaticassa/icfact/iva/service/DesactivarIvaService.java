@@ -15,6 +15,6 @@ public class DesactivarIvaService {
                         new IvaNoExisteixException("L'IVA no existeix."));
 
         iva.setDataModificacio(LocalDateTime.now());
-        repository.eliminar(iva);
+        repository.desactivar(iva);
     }
 }

@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.pressupost.model;
 
+import cat.informaticassa.icfact.infraestructura.model.Activable;
 import cat.informaticassa.icfact.iva.model.Iva;
 import cat.informaticassa.icfact.producte.model.Producte;
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "LINIA_PRESSUPOST")
-public class LiniaPressupost {
+public class LiniaPressupost implements Activable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -53,5 +54,5 @@ public class LiniaPressupost {
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean actiu = true;
+    private boolean actiu = true;
 }
