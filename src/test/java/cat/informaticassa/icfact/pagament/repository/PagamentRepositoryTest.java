@@ -40,33 +40,24 @@ class PagamentRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void eliminar() {
-
         Pagament pagament = repository.buscarTots().getFirst();
-
-        repository.eliminar(pagament);
-
+        repository.desactivar(pagament);
         assertTrue(repository.buscarPerId(pagament.getId()).isEmpty());
     }
 
     @Test
     void activar() {
-
         Pagament pagament = repository.buscarTots().getFirst();
-
-        repository.eliminar(pagament);
+        repository.desactivar(pagament);
         repository.activar(pagament);
-
         assertTrue(repository.buscarPerId(pagament.getId()).isPresent());
     }
 
     @Test
     void calcularImportPagatSensePagaments() {
-
         Factura factura = facturaRepository.buscarPerNumero("F2026000001").orElseThrow();
-
         Pagament pagament = repository.buscarTots().getFirst();
-        repository.eliminar(pagament);
-
+        repository.desactivar(pagament);
         assertEquals(BigDecimal.ZERO, repository.calcularImportPagat(factura));
     }
 }

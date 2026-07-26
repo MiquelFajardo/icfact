@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact;
 
-
 import cat.informaticassa.icfact.app.AppConfig;
 import cat.informaticassa.icfact.infraestructura.database.HibernateUtil;
 import cat.informaticassa.icfact.testdata.TestDataLoader;
@@ -12,20 +11,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public abstract class BaseRepositoryTest {
-
     @BeforeEach
     void inicialitzar() {
-        if (AppConfig.ESBORRAR_BD_TEST) {
+        if (AppConfig.esborrarBaseDadesTest()) {
             try {
-                Files.deleteIfExists(Path.of(AppConfig.NOM_BASE_DADES_TEST));
+                Files.deleteIfExists(Path.of(AppConfig.getBaseDadesTest()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-
-        HibernateUtil.configurarBaseDades(AppConfig.NOM_BASE_DADES_TEST);
+        HibernateUtil.configurarTest();
         HibernateUtil.getSessionFactory();
-
         TestDataLoader.carregar();
     }
 

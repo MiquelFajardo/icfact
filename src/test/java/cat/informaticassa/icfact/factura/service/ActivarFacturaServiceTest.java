@@ -26,6 +26,6 @@ class ActivarFacturaServiceTest extends BaseRepositoryTest {
         Factura activada = repository.buscarPerId(factura.getId())
                 .orElseThrow();
 
-        assertTrue(activada.getActiu());
+        assertTrue(activada.isActiu());
     }
 }

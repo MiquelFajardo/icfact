@@ -1,47 +1,18 @@
 package cat.informaticassa.icfact.client.repository;
 
 import cat.informaticassa.icfact.client.model.Client;
-import cat.informaticassa.icfact.infraestructura.database.HibernateUtil;
-import cat.informaticassa.icfact.infraestructura.repository.Repository;
-
+import cat.informaticassa.icfact.infraestructura.repository.AbstractActivableRepository;
 import java.util.List;
 import java.util.Optional;
 
-public class ClientRepository implements Repository<Client, Long> {
-
+public class ClientRepository extends AbstractActivableRepository<Client, Long> {
     @Override
-    public void guardar(Client client) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            var tx = session.beginTransaction();
-            session.persist(client);
-            tx.commit();
-        }
-    }
-
-    @Override
-    public void actualitzar(Client client) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            var tx = session.beginTransaction();
-            session.merge(client);
-            tx.commit();
-        }
-    }
-
-    @Override
-    public Optional<Client> buscarPerId(Long id) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("""
-                    FROM Client
-                    WHERE id = :id
-                    AND actiu = true
-                    """, Client.class)
-                    .setParameter("id", id)
-                    .uniqueResultOptional();
-        }
+    protected String ordrePerDefecte() {
+        return "nom";
     }
 
     public Optional<Client> buscarPerNif(String nif) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+        try (var session = obrirSessio()) {
             return session.createQuery("""
                     FROM Client
                     WHERE nif = :nif
@@ -53,7 +24,7 @@ public class ClientRepository implements Repository<Client, Long> {
     }
 
     public List<Client> buscarPerNom(String nom) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+        try (var session = obrirSessio()) {
             return session.createQuery("""
                     FROM Client
                     WHERE lower(nom) LIKE lower(:nom)
@@ -63,46 +34,5 @@ public class ClientRepository implements Repository<Client, Long> {
                     .setParameter("nom", "%" + nom + "%")
                     .list();
         }
-    }
-
-    @Override
-    public List<Client> buscarTots() {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("""
-                    FROM Client
-                    WHERE actiu = true
-                    ORDER BY nom
-                    """, Client.class)
-                    .list();
-        }
-    }
-
-    public List<Client> buscarInactius() {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("""
-                    FROM Client
-                    WHERE actiu = false
-                    ORDER BY nom
-                    """, Client.class)
-                    .list();
-        }
-    }
-
-    public Optional<Client> buscarPerIdIncloentInactius(Long id) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-            return Optional.ofNullable(session.find(Client.class, id));
-        }
-    }
-
-    @Override
-    public void eliminar(Client client) {
-        client.setActiu(false);
-        actualitzar(client);
-    }
-
-    @Override
-    public void activar(Client client) {
-        client.setActiu(true);
-        actualitzar(client);
     }
 }

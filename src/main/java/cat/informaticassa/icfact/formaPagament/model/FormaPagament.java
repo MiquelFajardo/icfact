@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.formaPagament.model;
 
+import cat.informaticassa.icfact.infraestructura.model.Activable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "FORMA_PAGAMENT")
-public class FormaPagament {
+public class FormaPagament implements Activable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +30,7 @@ public class FormaPagament {
     private Boolean mostrarIban;
 
     @Column(nullable = false)
-    private Boolean actiu;
+    private boolean actiu;
 
     @Column(nullable = false)
     private LocalDateTime dataCreacio;

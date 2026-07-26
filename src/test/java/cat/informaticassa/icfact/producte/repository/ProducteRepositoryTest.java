@@ -35,14 +35,14 @@ public class ProducteRepositoryTest extends BaseRepositoryTest {
 
     @Test
     void buscarProductesActius() {
-        List<Producte> productes = repository.buscarActius();
+        List<Producte> productes = repository.buscarTots();
         assertEquals(3, productes.size());
     }
 
     @Test
     void buscarTotsInactius() {
         Producte producte = repository.buscarPerCodi("P0001").orElseThrow();
-        repository.eliminar(producte);
+        repository.desactivar(producte);
         List<Producte> productes = repository.buscarInactius();
         assertEquals(1, productes.size());
     }
@@ -60,19 +60,17 @@ public class ProducteRepositoryTest extends BaseRepositoryTest {
     @Test
     void desactivarProducte() {
         Producte producte = repository.buscarPerCodi("P0002").orElseThrow();
-        repository.eliminar(producte);
-        Optional<Producte> resultat = repository.buscarPerCodi("P0002");
-        assertTrue(resultat.isPresent());
-        assertFalse(resultat.get().getActiu());
+        repository.desactivar(producte);
+        Producte resultat = repository.buscarPerIdIncloentInactius(producte.getId()).orElseThrow();
+        assertFalse(resultat.isActiu());
     }
 
     @Test
     void activarProducte() {
         Producte producte = repository.buscarPerCodi("P0003").orElseThrow();
-        repository.eliminar(producte);
+        repository.desactivar(producte);
         repository.activar(producte);
-        Optional<Producte> resultat = repository.buscarPerCodi("P0003");
-        assertTrue(resultat.isPresent());
-        assertTrue(resultat.get().getActiu());
+        Producte resultat = repository.buscarPerId(producte.getId()).orElseThrow();
+        assertTrue(resultat.isActiu());
     }
 }

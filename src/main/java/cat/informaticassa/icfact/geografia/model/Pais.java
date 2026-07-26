@@ -20,4 +20,9 @@ public class Pais {
 
     @Column(nullable = false, unique = true, length = 2)
     private String codiIso;
+
+    @Override
+    public String toString() {
+        return nom;
+    }
 }

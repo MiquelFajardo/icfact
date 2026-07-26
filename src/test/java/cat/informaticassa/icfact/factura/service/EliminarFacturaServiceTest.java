@@ -17,14 +17,10 @@ class EliminarFacturaServiceTest extends BaseRepositoryTest {
 
         Factura factura = repository.buscarPerNumero("F2026000001")
                 .orElseThrow();
-
         service.executar(factura.getId());
-
         assertTrue(repository.buscarPerId(factura.getId()).isEmpty());
-
         Factura eliminada = repository.buscarPerIdIncloentInactius(factura.getId())
                 .orElseThrow();
-
-        assertFalse(eliminada.getActiu());
+        assertFalse(eliminada.isActiu());
     }
 }

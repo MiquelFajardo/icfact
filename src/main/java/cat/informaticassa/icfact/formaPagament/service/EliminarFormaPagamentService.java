@@ -8,6 +8,6 @@ public class EliminarFormaPagamentService {
     private final FormaPagamentRepository repository = new FormaPagamentRepository();
 
     public void executar(FormaPagament formaPagament) {
-        repository.eliminar(formaPagament);
+        repository.desactivar(formaPagament);
     }
 }

@@ -19,19 +19,17 @@ public class Sidebar extends VBox {
     private final SidebarButton botoClients;
     private final SidebarButton botoArticles;
     private final SidebarButton botoInformes;
+    private final SidebarButton botoTasca;
+    private final SidebarButton botoCopiaSeguretat;
     private final SidebarButton botoConfiguracio;
     private final SidebarButton botoSobre;
 
     public Sidebar(Consumer<MenuPrincipal> onMenuClick) {
-
         setPrefWidth(240);
         setMinWidth(240);
         setMaxWidth(240);
-
         setSpacing(6);
         setPadding(new Insets(15));
-
-
         setBackground(new Background(new BackgroundFill(Tema.SIDEBAR, CornerRadii.EMPTY, Insets.EMPTY)));
 
         botoInici = new SidebarButton("Inici", "home.png");
@@ -40,11 +38,13 @@ public class Sidebar extends VBox {
         botoClients = new SidebarButton("Clients", "clients.png");
         botoArticles = new SidebarButton("Articles", "articles.png");
         botoInformes = new SidebarButton("Informes", "informes.png");
+        botoTasca = new SidebarButton("Tasques", "tasca.png");
+
+        botoCopiaSeguretat = new SidebarButton("Còpia de seguretat", "copia_seguretat.png");
         botoConfiguracio = new SidebarButton("Configuració", "configuracio.png");
         botoSobre = new SidebarButton("Sobre ICFact", "sobre.png");
 
         botoInici.seleccionar(true);
-
         Region espai = new Region();
         VBox.setVgrow(espai, Priority.ALWAYS);
 
@@ -55,7 +55,9 @@ public class Sidebar extends VBox {
                 botoClients,
                 botoArticles,
                 botoInformes,
+                botoTasca,
                 espai,
+                botoCopiaSeguretat,
                 botoConfiguracio,
                 botoSobre
         );
@@ -90,6 +92,16 @@ public class Sidebar extends VBox {
             onMenuClick.accept(MenuPrincipal.INFORMES);
         });
 
+        botoTasca.setOnAction(e -> {
+            seleccionarBoto(botoTasca);
+            onMenuClick.accept(MenuPrincipal.TASCA);
+        });
+
+        botoCopiaSeguretat.setOnAction(e -> {
+            seleccionarBoto(botoCopiaSeguretat);
+            onMenuClick.accept(MenuPrincipal.COPIA_SEGURETAT);
+        });
+
         botoConfiguracio.setOnAction(e -> {
             seleccionarBoto(botoConfiguracio);
             onMenuClick.accept(MenuPrincipal.CONFIGURACIO);
@@ -101,7 +113,6 @@ public class Sidebar extends VBox {
         });
     }
 
-
     private void seleccionarBoto(SidebarButton seleccionat) {
         botoInici.seleccionar(false);
         botoFactures.seleccionar(false);
@@ -109,9 +120,9 @@ public class Sidebar extends VBox {
         botoClients.seleccionar(false);
         botoArticles.seleccionar(false);
         botoInformes.seleccionar(false);
+        botoTasca.seleccionar(false);
         botoConfiguracio.seleccionar(false);
         botoSobre.seleccionar(false);
         seleccionat.seleccionar(true);
     }
-
 }

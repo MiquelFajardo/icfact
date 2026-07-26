@@ -5,27 +5,37 @@ import cat.informaticassa.icfact.ui.main.components.Sidebar;
 import cat.informaticassa.icfact.ui.main.components.TopBar;
 import cat.informaticassa.icfact.ui.main.components.WorkArea;
 import cat.informaticassa.icfact.ui.main.controller.MainController;
+import cat.informaticassa.icfact.ui.main.pagines.PaginaConfiguracio;
 import cat.informaticassa.icfact.ui.main.pagines.PaginaInici;
+import cat.informaticassa.icfact.ui.tema.Tema;
 import cat.informaticassa.icfact.ui.util.MenuPrincipal;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import lombok.Getter;
 
+@Getter
 public class MainView extends BorderPane {
     private final WorkArea workArea = new WorkArea();
+    private final TopBar topBar;
 
     public MainView(Empresa empresa) {
-        TopBar topBar = new TopBar(empresa);
-        Sidebar sidebar = new Sidebar(this::canviarPagina);
+        if (empresa.getColor() != null && !empresa.getColor().isBlank()) {
+            Tema.setColorPrincipal(Color.web(empresa.getColor()));
+        }
+        topBar = new TopBar(empresa.getNom());
+        MainController controller = new MainController(this);
+        topBar.setOnSortir(controller::sortirAplicacio);
+        Sidebar sidebar = new Sidebar(controller::canviarPagina);
         setTop(topBar);
         setLeft(sidebar);
         setCenter(workArea);
-        canviarPagina(MenuPrincipal.INICI);
-        new MainController(this);
+        mostrarPagina(MenuPrincipal.INICI);
     }
 
-    private void canviarPagina(MenuPrincipal pagina) {
-
+    public void mostrarPagina(MenuPrincipal pagina){
         switch (pagina) {
             case INICI -> workArea.mostrar(new PaginaInici());
+            case CONFIGURACIO -> workArea.mostrar(new PaginaConfiguracio());
             default -> workArea.mostrar(new PaginaInici());
         }
     }

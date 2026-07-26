@@ -2,6 +2,7 @@ package cat.informaticassa.icfact.pressupost.model;
 
 import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
+import cat.informaticassa.icfact.infraestructura.model.Activable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,7 +20,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "PRESSUPOST")
-public class Pressupost {
+public class Pressupost implements Activable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -70,5 +71,5 @@ public class Pressupost {
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean actiu = true;
+    private boolean actiu = true;
 }

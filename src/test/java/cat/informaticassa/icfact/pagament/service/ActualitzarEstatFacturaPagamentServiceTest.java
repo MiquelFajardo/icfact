@@ -40,7 +40,7 @@ class ActualitzarEstatFacturaPagamentServiceTest extends BaseRepositoryTest {
 
         Pagament pagament = pagamentRepository.buscarPerFactura(factura).getFirst();
 
-        pagamentRepository.eliminar(pagament);
+        pagamentRepository.desactivar(pagament);
 
         service.executar(factura);
 

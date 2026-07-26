@@ -7,6 +7,8 @@ public enum MenuPrincipal {
     CLIENTS,
     ARTICLES,
     INFORMES,
+    TASCA,
+    COPIA_SEGURETAT,
     CONFIGURACIO,
     SOBRE
 }

@@ -3,7 +3,7 @@ package cat.informaticassa.icfact.ui.navigation;
 import cat.informaticassa.icfact.BuildInfo;
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.empresa.service.BuscarEmpresaService;
-import cat.informaticassa.icfact.ui.empresa.view.AltaEmpresaView;
+import cat.informaticassa.icfact.ui.altaEmpresa.view.AltaEmpresaView;
 import cat.informaticassa.icfact.ui.login.view.LoginView;
 import cat.informaticassa.icfact.ui.main.view.MainView;
 import javafx.scene.Parent;

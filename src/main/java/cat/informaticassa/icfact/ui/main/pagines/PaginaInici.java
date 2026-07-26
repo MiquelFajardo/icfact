@@ -2,9 +2,9 @@ package cat.informaticassa.icfact.ui.main.pagines;
 
 
 import cat.informaticassa.icfact.BuildInfo;
+import cat.informaticassa.icfact.ui.components.Card;
 import cat.informaticassa.icfact.ui.main.components.ActionCard;
-import cat.informaticassa.icfact.ui.main.components.Card;
-import cat.informaticassa.icfact.ui.main.components.InfoCard;
+import cat.informaticassa.icfact.ui.main.components.TasquesPendentsCardView;
 import cat.informaticassa.icfact.ui.tema.Tema;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -50,33 +50,24 @@ public class PaginaInici extends VBox {
         graellaAccions.add(nouClient, 2, 0);
         graellaAccions.add(nouArticle, 2, 1);
 
-        Card cardAccions = new Card(null, graellaAccions);
+       Card cardAccions = new Card(null, graellaAccions);
 
         //--------------------------------------------------
-        // Resum
+        // Tasques
         //--------------------------------------------------
 
-        GridPane graellaResum = new GridPane();
-        graellaResum.setHgap(20);
+        Card cardTasques = new Card("Tasques pendents",new TasquesPendentsCardView());
 
-        graellaResum.add(new InfoCard("Clients", 0), 0, 0);
-        graellaResum.add(new InfoCard("Articles", 0), 1, 0);
-        graellaResum.add(new InfoCard("Pressupostos", 0), 2, 0);
-        graellaResum.add(new InfoCard("Factures", 0), 3, 0);
-
-        Card cardResum = new Card("Resum", graellaResum);
-
+        // Visualització
         Region espai = new Region();
         VBox.setVgrow(espai, Priority.ALWAYS);
-
         Label versio = new Label("Versió " + BuildInfo.getVersio());
         versio.setStyle("-fx-text-fill: gray;");
-
         getChildren().addAll(
                 titol,
                 subtitol,
                 cardAccions,
-                cardResum,
+                cardTasques,
                 espai,
                 versio
         );

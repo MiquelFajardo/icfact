@@ -1,5 +1,7 @@
 package cat.informaticassa.icfact.ui.tema;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -18,8 +20,7 @@ public final class Tema {
     /*
      * Colors
      */
-    @Getter
-    private static Color colorPrincipal = Color.web("#2563EB");
+    private static final ObjectProperty<Color> colorPrincipal = new SimpleObjectProperty<>(Color.web("#2563EB"));
     public static final Color FONS = Color.web("#F5F7FA");
     public static final Color CARD = Color.WHITE;
     public static final Color TEXT = Color.web("#1F2937");
@@ -48,10 +49,11 @@ public final class Tema {
     /*
     * Cards
      */
+    public static final Font TITOL_CARD = Font.font("Inter", FontWeight.BOLD, 20);
     public static final double CARD_WIDTH = 650;
     public static final double CARD_RADIUS = 18;
-    public static final double CARD_SPACING = 18;
-    public static final Insets CARD_PADDING = new Insets(28);
+    public static final double CARD_SPACING = 28;
+    public static final Insets CARD_PADDING = new Insets(36);
     public static final Color CARD_BACKGROUND = Color.WHITE;
     public static final double LOGO_SIZE = 72;
     public static final double TEXTFIELD_HEIGHT = 44;
@@ -59,9 +61,17 @@ public final class Tema {
     public static final Insets WINDOW_PADDING = new Insets(20);
 
 
+    public static Color getColorPrincipal() {
+        return colorPrincipal.get();
+    }
+
+    public static ObjectProperty<Color> colorPrincipalProperty() {
+        return colorPrincipal;
+    }
+
     public static void setColorPrincipal(Color color) {
         if (color != null) {
-            colorPrincipal = color;
+            colorPrincipal.set(color);
         }
     }
 }

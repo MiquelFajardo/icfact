@@ -50,17 +50,17 @@ public class PressupostRepositoryTest extends BaseRepositoryTest {
     @Test
     void desactivar() {
         Pressupost pressupost = repository.buscarPerNumero("P2026000001").orElseThrow();
-        repository.eliminar(pressupost);
+        repository.desactivar(pressupost);
         Pressupost resultat = repository.buscarPerIdIncloentInactius(pressupost.getId()).orElseThrow();
-        assertFalse(resultat.getActiu());
+        assertFalse(resultat.isActiu());
     }
 
     @Test
     void activar() {
         Pressupost pressupost = repository.buscarPerNumero("P2026000001").orElseThrow();
-        repository.eliminar(pressupost);
+        repository.desactivar(pressupost);
         repository.activar(pressupost);
         Pressupost resultat = repository.buscarPerIdIncloentInactius(pressupost.getId()).orElseThrow();
-        assertTrue(resultat.getActiu());
+        assertTrue(resultat.isActiu());
     }
 }

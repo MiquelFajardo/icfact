@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.factura.model;
 
+import cat.informaticassa.icfact.infraestructura.model.Activable;
 import cat.informaticassa.icfact.iva.model.Iva;
 import cat.informaticassa.icfact.producte.model.Producte;
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "LINIA_FACTURA")
-public class LiniaFactura {
+public class LiniaFactura implements Activable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,5 +55,5 @@ public class LiniaFactura {
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean actiu = true;
+    private boolean actiu = true;
 }

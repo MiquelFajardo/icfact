@@ -14,15 +14,10 @@ class ActivarFormaPagamentServiceTest extends BaseRepositoryTest {
 
     @Test
     void activarFormaPagament() {
-
         FormaPagament forma = repository.buscarPerNom("Bizum").orElseThrow();
-
-        repository.eliminar(forma);
-
+        repository.desactivar(forma);
         forma = repository.buscarPerIdIncloentInactius(forma.getId()).orElseThrow();
-
         service.executar(forma);
-
         assertTrue(repository.buscarPerNom("Bizum").isPresent());
     }
 }

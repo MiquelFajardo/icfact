@@ -27,7 +27,7 @@ public class BuscarProducteService {
     }
 
     public List<Producte> buscarActius() {
-        return repository.buscarActius();
+        return repository.buscarTots();
     }
 
     public List<Producte> buscarInactius() {

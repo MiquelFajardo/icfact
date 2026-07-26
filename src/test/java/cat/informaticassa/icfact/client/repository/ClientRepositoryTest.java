@@ -47,7 +47,7 @@ class ClientRepositoryTest extends BaseRepositoryTest {
     @Test
     void buscarInactius() {
         Client client = repository.buscarPerNif("12345678A").orElseThrow();
-        repository.eliminar(client);
+        repository.desactivar(client);
         List<Client> clients = repository.buscarInactius();
         assertEquals(1, clients.size());
     }
@@ -65,19 +65,19 @@ class ClientRepositoryTest extends BaseRepositoryTest {
     @Test
     void desactivarClient() {
         Client client = repository.buscarPerNif("45678912C").orElseThrow();
-        repository.eliminar(client);
+        repository.desactivar(client);
         Optional<Client> resultat = repository.buscarPerIdIncloentInactius(client.getId());
         assertTrue(resultat.isPresent());
-        assertFalse(resultat.get().getActiu());
+        assertFalse(resultat.get().isActiu());
     }
 
     @Test
     void activarClient() {
         Client client = repository.buscarPerNif("45678912C").orElseThrow();
-        repository.eliminar(client);
+        repository.desactivar(client);
         repository.activar(client);
         Optional<Client> resultat = repository.buscarPerIdIncloentInactius(client.getId());
         assertTrue(resultat.isPresent());
-        assertTrue(resultat.get().getActiu());
+        assertTrue(resultat.get().isActiu());
     }
 }

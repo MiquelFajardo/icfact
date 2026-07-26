@@ -26,15 +26,15 @@ class ActivarPressupostServiceTest extends BaseRepositoryTest {
         Pressupost desactivat = repository.buscarPerIdIncloentInactius(pressupost.getId())
                 .orElseThrow();
 
-        assertFalse(desactivat.getActiu());
-        assertTrue(desactivat.getLinies().stream().noneMatch(LiniaPressupost::getActiu));
+        assertFalse(desactivat.isActiu());
+        assertTrue(desactivat.getLinies().stream().noneMatch(LiniaPressupost::isActiu));
 
         activarService.executar(pressupost.getId());
 
         Pressupost resultat = repository.buscarPerIdAmbLinies(pressupost.getId())
                 .orElseThrow();
 
-        assertTrue(resultat.getActiu());
-        assertTrue(resultat.getLinies().stream().allMatch(LiniaPressupost::getActiu));
+        assertTrue(resultat.isActiu());
+        assertTrue(resultat.getLinies().stream().allMatch(LiniaPressupost::isActiu));
     }
 }

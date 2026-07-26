@@ -3,6 +3,7 @@ package cat.informaticassa.icfact.pagament.model;
 
 import cat.informaticassa.icfact.factura.model.Factura;
 import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
+import cat.informaticassa.icfact.infraestructura.model.Activable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "PAGAMENT")
-public class Pagament {
+public class Pagament implements Activable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +47,7 @@ public class Pagament {
 
     @Builder.Default
     @Column(nullable = false)
-    private Boolean actiu = true;
+    private boolean actiu = true;
 
     @Column(nullable = false)
     private LocalDateTime dataCreacio;

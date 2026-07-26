@@ -6,10 +6,18 @@ import javafx.scene.layout.StackPane;
 public class WorkArea extends StackPane {
 
     public WorkArea() {
+
         setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
 
     public void mostrar(Node pagina) {
         getChildren().setAll(pagina);
+    }
+
+    public Node getPaginaActual() {
+        if (getChildren().isEmpty()) {
+            return null;
+        }
+        return getChildren().getFirst();
     }
 }

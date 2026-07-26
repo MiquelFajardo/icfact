@@ -14,6 +14,6 @@ public class EliminarFacturaService {
                 .orElseThrow(() ->
                         new FacturaNoExisteixException("La factura no existeix."));
 
-        repository.eliminar(factura);
+        repository.desactivar(factura);
     }
 }
