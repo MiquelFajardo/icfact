@@ -1,8 +1,8 @@
 package cat.informaticassa.icfact.ui.dialogs;
 
 import cat.informaticassa.icfact.geografia.model.Pais;
-import cat.informaticassa.icfact.ui.main.components.geografia.PaisEvents;
-import cat.informaticassa.icfact.ui.main.components.geografia.PaisPane;
+import cat.informaticassa.icfact.ui.main.components.geografia.pais.PaisEvents;
+import cat.informaticassa.icfact.ui.main.components.geografia.pais.PaisPane;
 import lombok.Getter;
 import lombok.Setter;
 

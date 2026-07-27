@@ -11,14 +11,10 @@ public class CrearProvinciaService {
     private final ValidarProvincia validarProvincia = new ValidarProvincia();
 
     public void executar(Provincia provincia) {
-
         validarProvincia.executar(provincia);
-
-        repository.buscarPerNom(provincia.getNom())
+        repository.buscarPerNom(provincia.getPais(), provincia.getNom()                )
                 .ifPresent(p -> {
-                    throw new ProvinciaJaExisteixException("Ja existeix una província amb aquest nom.");
-                });
-
+                    throw new ProvinciaJaExisteixException("Ja existeix una província amb aquest nom.");});
         repository.guardar(provincia);
     }
 }

@@ -1,6 +1,7 @@
 package cat.informaticassa.icfact.geografia.service.provincia;
 
 import cat.informaticassa.icfact.geografia.exception.ProvinciaNoExisteixException;
+import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.geografia.model.Provincia;
 import cat.informaticassa.icfact.geografia.repository.ProvinciaRepository;
 
@@ -13,8 +14,8 @@ public class BuscarProvinciaService {
                 .orElseThrow(() -> new ProvinciaNoExisteixException("La província no existeix."));
     }
 
-    public Provincia buscarPerNom(String nom) {
-        return repository.buscarPerNom(nom)
+    public Provincia buscarPerNom(Pais pais, String nom) {
+        return repository.buscarPerNom(pais, nom)
                 .orElseThrow(() -> new ProvinciaNoExisteixException("La província no existeix."));
     }
 }

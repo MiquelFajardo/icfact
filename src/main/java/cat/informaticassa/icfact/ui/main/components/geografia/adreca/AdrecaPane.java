@@ -1,16 +1,12 @@
-package cat.informaticassa.icfact.ui.main.components.geografia;
+package cat.informaticassa.icfact.ui.main.components.geografia.adreca;
 
 import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.geografia.model.Poblacio;
 import cat.informaticassa.icfact.geografia.model.Provincia;
 import cat.informaticassa.icfact.ui.main.components.FormLabel;
 import cat.informaticassa.icfact.geografia.model.Adreca;
-import cat.informaticassa.icfact.geografia.model.Pais;
-import cat.informaticassa.icfact.geografia.model.Poblacio;
-import cat.informaticassa.icfact.geografia.model.Provincia;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyBindings;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyTracker;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -99,35 +95,32 @@ public class AdrecaPane extends GridPane {
     }
 
     public void mostrar(Adreca adreca) {
-        System.out.println(">>> AdrecaPane.mostrar()");
         txtCarrer.setText(adreca.getCarrer());
         txtNumero.setText(adreca.getNumero());
         txtPis.setText(adreca.getPis());
         txtPorta.setText(adreca.getPorta());
         txtCodiPostal.setText(adreca.getCodiPostal());
 
-        Poblacio poblacio = adreca.getPoblacio();
-        Provincia provincia = poblacio.getProvincia();
-        Pais pais = provincia.getPais();
-
-        for (Pais p : cmbPais.getItems()) {
-            System.out.println(p.getId() + " - " + p.getNom());
+        if (adreca.getPais() != null) {
+            cmbPais.getItems().stream()
+                    .filter(p -> p.getId().equals(adreca.getPais().getId()))
+                    .findFirst()
+                    .ifPresent(cmbPais::setValue);
         }
 
-        cmbPais.getItems().stream()
-                .filter(p -> p.getId().equals(pais.getId()))
-                .findFirst()
-                .ifPresent(cmbPais::setValue);
+        if (adreca.getProvincia() != null) {
+            cmbProvincia.getItems().stream()
+                    .filter(p -> p.getId().equals(adreca.getProvincia().getId()))
+                    .findFirst()
+                    .ifPresent(cmbProvincia::setValue);
+        }
 
-        cmbProvincia.getItems().stream()
-                .filter(p -> p.getId().equals(provincia.getId()))
-                .findFirst()
-                .ifPresent(cmbProvincia::setValue);
-
-        cmbPoblacio.getItems().stream()
-                .filter(p -> p.getId().equals(poblacio.getId()))
-                .findFirst()
-                .ifPresent(cmbPoblacio::setValue);
+        if (adreca.getPoblacio() != null) {
+            cmbPoblacio.getItems().stream()
+                    .filter(p -> p.getId().equals(adreca.getPoblacio().getId()))
+                    .findFirst()
+                    .ifPresent(cmbPoblacio::setValue);
+        }
     }
 
     public void actualitzar(Adreca adreca) {
@@ -136,6 +129,8 @@ public class AdrecaPane extends GridPane {
         adreca.setPis(txtPis.getText());
         adreca.setPorta(txtPorta.getText());
         adreca.setCodiPostal(txtCodiPostal.getText());
+        adreca.setPais(cmbPais.getValue());
+        adreca.setProvincia(cmbProvincia.getValue());
         adreca.setPoblacio(cmbPoblacio.getValue());
     }
 

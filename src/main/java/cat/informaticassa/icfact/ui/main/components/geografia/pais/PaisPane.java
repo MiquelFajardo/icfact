@@ -1,4 +1,4 @@
-package cat.informaticassa.icfact.ui.main.components.geografia;
+package cat.informaticassa.icfact.ui.main.components.geografia.pais;
 
 import cat.informaticassa.icfact.ui.main.components.FormLabel;
 import javafx.scene.control.TextField;

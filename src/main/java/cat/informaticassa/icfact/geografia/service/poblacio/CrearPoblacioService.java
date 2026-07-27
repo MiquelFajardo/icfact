@@ -11,16 +11,10 @@ public class CrearPoblacioService {
     private final ValidarPoblacio validar = new ValidarPoblacio();
 
     public void executar(Poblacio poblacio) {
-
         validar.executar(poblacio);
-
-        repository.buscarPerNom(poblacio.getNom())
+        repository.buscarPerNom(poblacio.getProvincia(), poblacio.getNom())
                 .ifPresent(p -> {
-                    throw new PoblacioJaExisteixException(
-                            "Ja existeix una població amb aquest nom."
-                    );
-                });
-
+                    throw new PoblacioJaExisteixException("Ja existeix una població amb aquest nom.");});
         repository.guardar(poblacio);
     }
 }

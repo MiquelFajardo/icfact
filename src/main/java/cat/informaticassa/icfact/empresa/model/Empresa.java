@@ -27,7 +27,7 @@ public class Empresa {
     @Column(nullable = false, unique = true, length = 9)
     private String nif;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "adreca_id")
     private Adreca adreca;
 
