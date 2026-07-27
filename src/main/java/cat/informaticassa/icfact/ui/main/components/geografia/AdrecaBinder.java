@@ -4,9 +4,9 @@ import cat.informaticassa.icfact.geografia.model.Adreca;
 import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.geografia.model.Poblacio;
 import cat.informaticassa.icfact.geografia.model.Provincia;
-import cat.informaticassa.icfact.geografia.service.BuscarPaisosService;
-import cat.informaticassa.icfact.geografia.service.BuscarPoblacionsPerProvinciaService;
-import cat.informaticassa.icfact.geografia.service.BuscarProvinciesPerPaisService;
+import cat.informaticassa.icfact.geografia.service.pais.BuscarPaisosService;
+import cat.informaticassa.icfact.geografia.service.poblacio.BuscarPoblacionsPerProvinciaService;
+import cat.informaticassa.icfact.geografia.service.provincia.BuscarProvinciesPerPaisService;
 
 public class AdrecaBinder {
     private final AdrecaPane vista;
@@ -16,6 +16,7 @@ public class AdrecaBinder {
 
     public AdrecaBinder(AdrecaPane vista) {
         this.vista = vista;
+        carregarPaisos();
     }
 
     public void carregar(Adreca adreca) {
@@ -26,9 +27,14 @@ public class AdrecaBinder {
         vista.getCmbProvincia().getItems().setAll(buscarProvinciesPerPaisService.executar(pais));
         vista.getCmbPoblacio().getItems().setAll(buscarPoblacionsPerProvinciaService.executar(provincia));
         vista.mostrar(adreca);
+
     }
 
     public void actualitzar(Adreca adreca) {
         vista.actualitzar(adreca);
+    }
+
+    public void carregarPaisos() {
+        vista.getCmbPais().getItems().setAll(buscarPaisosService.executar());
     }
 }

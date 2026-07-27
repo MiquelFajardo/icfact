@@ -1,7 +1,7 @@
 package cat.informaticassa.icfact.ui.main.components.geografia;
 
 import cat.informaticassa.icfact.geografia.model.Pais;
-import cat.informaticassa.icfact.geografia.service.CrearPaisService;
+import cat.informaticassa.icfact.geografia.service.pais.CrearPaisService;
 import cat.informaticassa.icfact.infraestructura.validacio.exception.ValidacioException;
 import cat.informaticassa.icfact.ui.dialogs.PaisDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
@@ -24,6 +24,7 @@ public class PaisEvents {
             Pais pais = new Pais();
             binder.actualitzar(pais);
             crearPaisService.executar(pais);
+            dialog.setPaisCreat(pais);
             dialog.close();
         } catch (ValidacioException e) {
             Alerta.error(e.getMessage());

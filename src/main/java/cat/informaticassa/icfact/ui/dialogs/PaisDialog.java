@@ -1,25 +1,20 @@
 package cat.informaticassa.icfact.ui.dialogs;
 
+import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.ui.main.components.geografia.PaisEvents;
 import cat.informaticassa.icfact.ui.main.components.geografia.PaisPane;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class PaisDialog extends DialogBase {
-
-    private static PaisPane crearFormulari() {
-        return new PaisPane();
-    }
-
-    private final PaisPane formulari;
+    private final PaisPane formulari = new PaisPane();
+    private Pais paisCreat;
 
     public PaisDialog() {
-        this(crearFormulari());
-    }
-
-    private PaisDialog(PaisPane formulari) {
-        super("Nou país", formulari);
-        this.formulari = formulari;
+        super("Nou país");
+        getRoot().setCenter(formulari);
         new PaisEvents(this);
     }
 }

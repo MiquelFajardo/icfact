@@ -52,6 +52,4 @@ public class FormulariEmpresa extends GridPane {
         color.registrarDirty(dirtyTracker);
         peuPdf.registrarDirty(dirtyTracker);
     }
-
-
 }

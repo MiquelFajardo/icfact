@@ -1,4 +1,4 @@
-package cat.informaticassa.icfact.geografia.service;
+package cat.informaticassa.icfact.geografia.service.validar;
 
 import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.infraestructura.validacio.Validador;

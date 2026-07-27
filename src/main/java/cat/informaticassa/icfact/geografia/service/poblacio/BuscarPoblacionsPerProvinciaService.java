@@ -1,4 +1,4 @@
-package cat.informaticassa.icfact.geografia.service;
+package cat.informaticassa.icfact.geografia.service.poblacio;
 
 import cat.informaticassa.icfact.geografia.model.Poblacio;
 import cat.informaticassa.icfact.geografia.model.Provincia;

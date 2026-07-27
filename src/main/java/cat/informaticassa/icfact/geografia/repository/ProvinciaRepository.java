@@ -42,7 +42,7 @@ public class ProvinciaRepository extends AbstractRepository<Provincia, Long> {
         }
     }
 
-    public Optional<Provincia> buscarPerNom(Pais pais, String nom) {
+    public Optional<Provincia> buscarPerNom(String nom) {
 
         try (var session = obrirSessio()) {
             return session.createQuery("""

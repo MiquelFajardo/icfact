@@ -43,10 +43,10 @@ public class PoblacioRepository extends AbstractRepository<Poblacio, Long> {
     }
 
     public Optional<Poblacio> buscarPerNomIProvincia(String nom, Provincia provincia) {
-        return buscarPerNom(provincia, nom);
+        return buscarPerNom(nom);
     }
 
-    public Optional<Poblacio> buscarPerNom(Provincia provincia, String nom) {
+    public Optional<Poblacio> buscarPerNom(String nom) {
 
         try (var session = obrirSessio()) {
             return session.createQuery("""

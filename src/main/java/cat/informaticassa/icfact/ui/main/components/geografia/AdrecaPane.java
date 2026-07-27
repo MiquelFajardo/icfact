@@ -99,17 +99,35 @@ public class AdrecaPane extends GridPane {
     }
 
     public void mostrar(Adreca adreca) {
+        System.out.println(">>> AdrecaPane.mostrar()");
         txtCarrer.setText(adreca.getCarrer());
         txtNumero.setText(adreca.getNumero());
         txtPis.setText(adreca.getPis());
         txtPorta.setText(adreca.getPorta());
         txtCodiPostal.setText(adreca.getCodiPostal());
+
         Poblacio poblacio = adreca.getPoblacio();
         Provincia provincia = poblacio.getProvincia();
         Pais pais = provincia.getPais();
-        cmbPais.setValue(pais);
-        cmbProvincia.setValue(provincia);
-        cmbPoblacio.setValue(poblacio);
+
+        for (Pais p : cmbPais.getItems()) {
+            System.out.println(p.getId() + " - " + p.getNom());
+        }
+
+        cmbPais.getItems().stream()
+                .filter(p -> p.getId().equals(pais.getId()))
+                .findFirst()
+                .ifPresent(cmbPais::setValue);
+
+        cmbProvincia.getItems().stream()
+                .filter(p -> p.getId().equals(provincia.getId()))
+                .findFirst()
+                .ifPresent(cmbProvincia::setValue);
+
+        cmbPoblacio.getItems().stream()
+                .filter(p -> p.getId().equals(poblacio.getId()))
+                .findFirst()
+                .ifPresent(cmbPoblacio::setValue);
     }
 
     public void actualitzar(Adreca adreca) {
@@ -133,6 +151,5 @@ public class AdrecaPane extends GridPane {
                 cmbProvincia,
                 cmbPoblacio
         );
-
     }
 }
