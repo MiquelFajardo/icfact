@@ -1,4 +1,4 @@
-package cat.informaticassa.icfact.ui.main.pagines;
+package cat.informaticassa.icfact.ui.main.pagines.empresa;
 
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.empresa.service.BuscarEmpresaService;

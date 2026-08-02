@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.ui.main.components.geografia.poblacio;
 
+import cat.informaticassa.icfact.geografia.model.Poblacio;
 import cat.informaticassa.icfact.geografia.model.Provincia;
 import cat.informaticassa.icfact.ui.main.components.FormLabel;
 import javafx.scene.control.ComboBox;
@@ -35,5 +36,24 @@ public class PoblacioPane extends GridPane {
         add(txtNom, 1, fila++);
         add(new FormLabel("Codi postal"), 0, fila);
         add(txtCodiPostal, 1, fila);
+    }
+
+    public void setProvincia(Provincia provincia) {
+        cmbProvincia.getItems().clear();
+        cmbProvincia.getItems().add(provincia);
+        cmbProvincia.getSelectionModel().select(0);
+    }
+
+    public void setPoblacio(Poblacio poblacio) {
+        if (poblacio == null) {
+            return;
+        }
+        setProvincia(poblacio.getProvincia());
+        txtNom.setText(poblacio.getNom());
+        txtCodiPostal.setText(
+                poblacio.getCodiPostal().isEmpty()
+                        ? ""
+                        : poblacio.getCodiPostal().iterator().next()
+        );
     }
 }

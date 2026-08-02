@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.ui.main.components.geografia.pais;
 
+import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.ui.main.components.FormLabel;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
@@ -21,9 +22,18 @@ public class PaisPane extends GridPane {
         getColumnConstraints().addAll(c1, c2);
         txtNom.setMaxWidth(Double.MAX_VALUE);
         txtCodiIso.setPrefWidth(80);
-        add(new FormLabel("Nom"),0,0);
-        add(txtNom,1,0);
-        add(new FormLabel("Codi ISO"),0,1);
-        add(txtCodiIso,1,1);
+        add(new FormLabel("Nom"), 0, 0);
+        add(txtNom, 1, 0);
+        add(new FormLabel("Codi ISO"), 0, 1);
+        add(txtCodiIso, 1, 1);
+    }
+
+    public void setPais(Pais pais) {
+        if (pais == null) {
+            return;
+        }
+
+        txtNom.setText(pais.getNom());
+        txtCodiIso.setText(pais.getCodiIso());
     }
 }

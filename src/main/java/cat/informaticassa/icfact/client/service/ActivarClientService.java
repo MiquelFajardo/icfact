@@ -10,13 +10,10 @@ public class ActivarClientService {
 
     private final ClientRepository repository = new ClientRepository();
 
-    public void executar(Client client) {
-
-        repository.buscarPerIdIncloentInactius(client.getId())
-                .orElseThrow(() ->
-                        new ClientNoExisteixException("El client no existeix."));
-
+    public void executar(Long id) {
+        Client client = repository.buscarPerId(id).orElseThrow(() -> new ClientNoExisteixException("El client no existeix."));
+        client.setActiu(true);
         client.setDataModificacio(LocalDateTime.now());
-        repository.activar(client);
+        repository.actualitzar(client);
     }
 }

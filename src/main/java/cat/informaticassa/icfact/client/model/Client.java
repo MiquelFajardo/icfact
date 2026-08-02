@@ -32,8 +32,8 @@ public class Client implements Activable {
     @Column(nullable = false, length = 20)
     private String nif;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "adreca_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "adreca_id")
     private Adreca adreca;
 
     @Column(length = 20)
@@ -54,5 +54,15 @@ public class Client implements Activable {
 
     @Column(nullable = false)
     private LocalDateTime dataModificacio;
+
+    public void actualitzarDades(Client altre) {
+        this.nom = altre.nom;
+        this.nif = altre.nif;
+        this.adreca = altre.adreca;
+        this.telefon = altre.telefon;
+        this.email = altre.email;
+        this.web = altre.web;
+        this.actiu = altre.actiu;
+    }
 
 }

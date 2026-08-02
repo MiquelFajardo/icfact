@@ -10,11 +10,25 @@ import lombok.Setter;
 @Setter
 public class PaisDialog extends DialogBase {
     private final PaisPane formulari = new PaisPane();
-    private Pais paisCreat;
+    private Pais pais;
 
     public PaisDialog() {
-        super("Nou país");
+        this(null);
+    }
+
+    public PaisDialog(Pais pais) {
+        super(pais == null ? "Nou país" : "Modificar país");
+        this.pais = pais;
         getRoot().setCenter(formulari);
+
+        if (pais != null) {
+            formulari.setPais(pais);
+        }
+
         new PaisEvents(this);
+    }
+
+    public boolean esEdicio() {
+        return pais != null;
     }
 }

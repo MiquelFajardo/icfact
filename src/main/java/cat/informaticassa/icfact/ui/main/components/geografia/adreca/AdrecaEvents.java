@@ -68,7 +68,7 @@ public class AdrecaEvents {
     private void nouPais() {
         PaisDialog dialog = new PaisDialog();
         dialog.showAndWait();
-        Pais pais = dialog.getPaisCreat();
+        Pais pais = dialog.getPais();
         if (pais == null) {
             return;
         }
@@ -84,10 +84,9 @@ public class AdrecaEvents {
             Alerta.error("Primer has de seleccionar un país.");
             return;
         }
-        ProvinciaDialog dialog = new ProvinciaDialog();
-        dialog.getEvents().mostrar(pais);
+        ProvinciaDialog dialog = new ProvinciaDialog(pais);
         dialog.showAndWait();
-        Provincia provincia = dialog.getProvinciaCreada();
+        Provincia provincia = dialog.getProvincia();
         if (provincia == null) {
             return;
         }
@@ -103,10 +102,9 @@ public class AdrecaEvents {
             Alerta.error("Primer has de seleccionar una província.");
             return;
         }
-        PoblacioDialog dialog = new PoblacioDialog();
-        dialog.getEvents().mostrar(provincia);
+        PoblacioDialog dialog = new PoblacioDialog(provincia);
         dialog.showAndWait();
-        Poblacio poblacio = dialog.getPoblacioCreada();
+        Poblacio poblacio = dialog.getPoblacio();
         if (poblacio == null) {
             return;
         }

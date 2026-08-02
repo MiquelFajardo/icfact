@@ -18,6 +18,7 @@ public class Sidebar extends VBox {
     private final SidebarButton botoPressupostos;
     private final SidebarButton botoClients;
     private final SidebarButton botoArticles;
+    private final SidebarButton botoGeografia;
     private final SidebarButton botoInformes;
     private final SidebarButton botoTasca;
     private final SidebarButton botoCopiaSeguretat;
@@ -37,6 +38,8 @@ public class Sidebar extends VBox {
         botoPressupostos = new SidebarButton("Pressupostos", "pressupost.png");
         botoClients = new SidebarButton("Clients", "clients.png");
         botoArticles = new SidebarButton("Articles", "articles.png");
+        botoGeografia = new SidebarButton("Geografia", "geografia.png");
+
         botoInformes = new SidebarButton("Informes", "informes.png");
         botoTasca = new SidebarButton("Tasques", "tasca.png");
 
@@ -56,6 +59,7 @@ public class Sidebar extends VBox {
                 botoArticles,
                 botoInformes,
                 botoTasca,
+                botoGeografia,
                 espai,
                 botoCopiaSeguretat,
                 botoConfiguracio,
@@ -85,6 +89,11 @@ public class Sidebar extends VBox {
         botoArticles.setOnAction(e -> {
             seleccionarBoto(botoArticles);
             onMenuClick.accept(MenuPrincipal.ARTICLES);
+        });
+
+        botoGeografia.setOnAction(e -> {
+            seleccionarBoto(botoGeografia);
+            onMenuClick.accept(MenuPrincipal.GEOGRAFIA);
         });
 
         botoInformes.setOnAction(e -> {
@@ -119,6 +128,7 @@ public class Sidebar extends VBox {
         botoPressupostos.seleccionar(false);
         botoClients.seleccionar(false);
         botoArticles.seleccionar(false);
+        botoGeografia.seleccionar(false);
         botoInformes.seleccionar(false);
         botoTasca.seleccionar(false);
         botoConfiguracio.seleccionar(false);

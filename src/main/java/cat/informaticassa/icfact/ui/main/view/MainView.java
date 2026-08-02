@@ -5,8 +5,11 @@ import cat.informaticassa.icfact.ui.main.components.Sidebar;
 import cat.informaticassa.icfact.ui.main.components.TopBar;
 import cat.informaticassa.icfact.ui.main.components.WorkArea;
 import cat.informaticassa.icfact.ui.main.controller.MainController;
-import cat.informaticassa.icfact.ui.main.pagines.PaginaConfiguracio;
+import cat.informaticassa.icfact.ui.main.pagines.client.PaginaClients;
+import cat.informaticassa.icfact.ui.main.pagines.client.fitxa.ClientFitxaPage;
+import cat.informaticassa.icfact.ui.main.pagines.empresa.PaginaConfiguracio;
 import cat.informaticassa.icfact.ui.main.pagines.PaginaInici;
+import cat.informaticassa.icfact.ui.main.pagines.geografia.PaginaGeografia;
 import cat.informaticassa.icfact.ui.tema.Tema;
 import cat.informaticassa.icfact.ui.util.MenuPrincipal;
 import javafx.scene.layout.BorderPane;
@@ -36,6 +39,8 @@ public class MainView extends BorderPane {
         switch (pagina) {
             case INICI -> workArea.mostrar(new PaginaInici());
             case CONFIGURACIO -> workArea.mostrar(new PaginaConfiguracio());
+            case CLIENTS -> workArea.mostrar(new PaginaClients());
+            case GEOGRAFIA -> workArea.mostrar(new PaginaGeografia());
             default -> workArea.mostrar(new PaginaInici());
         }
     }
