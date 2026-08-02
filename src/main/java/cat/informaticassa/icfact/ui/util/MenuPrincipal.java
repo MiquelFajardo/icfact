@@ -5,7 +5,7 @@ public enum MenuPrincipal {
     FACTURES,
     PRESSUPOSTOS,
     CLIENTS,
-    ARTICLES,
+    PRODUCTES,
     IVA,
     FORMA_DE_PAGAMENT,
     INFORMES,

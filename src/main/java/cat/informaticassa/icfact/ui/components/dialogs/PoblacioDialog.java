@@ -26,7 +26,7 @@ public class PoblacioDialog extends DialogBase {
     }
 
     public PoblacioDialog(Provincia provincia, Poblacio poblacio) {
-        super(poblacio == null ? "Nova població" : "Modificar població", false);
+        super(poblacio == null ? "Nova població" : "Modificar població", 500,250);
         this.provincia = provincia;
         this.poblacio = poblacio;
         getRoot().setCenter(formulari);

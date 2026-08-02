@@ -22,7 +22,7 @@ public class PaisDialog extends DialogBase {
     }
 
     public PaisDialog(Pais pais) {
-        super(pais == null ? "Nou país" : "Modificar país", false);
+        super(pais == null ? "Nou país" : "Modificar país", 500,250);
         this.pais = pais;
         getRoot().setCenter(formulari);
         if (pais != null) {

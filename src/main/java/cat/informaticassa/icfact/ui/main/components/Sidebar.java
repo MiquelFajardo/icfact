@@ -6,7 +6,6 @@ import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import lombok.Getter;
 
-import java.lang.invoke.SerializedLambda;
 import java.util.function.Consumer;
 
 @Getter
@@ -15,7 +14,7 @@ public class Sidebar extends VBox {
     private final SidebarButton botoFactures;
     private final SidebarButton botoPressupostos;
     private final SidebarButton botoClients;
-    private final SidebarButton botoArticles;
+    private final SidebarButton botoProductes;
     private final SidebarButton botoIva;
     private final SidebarButton botoFormaPagament;
     private final SidebarButton botoGeografia;
@@ -37,7 +36,7 @@ public class Sidebar extends VBox {
         botoFactures = new SidebarButton("Factures", "factura.png");
         botoPressupostos = new SidebarButton("Pressupostos", "pressupost.png");
         botoClients = new SidebarButton("Clients", "clients.png");
-        botoArticles = new SidebarButton("Articles", "articles.png");
+        botoProductes = new SidebarButton("Productes", "articles.png");
         botoIva = new SidebarButton("IVA", "iva.png");
         botoFormaPagament = new SidebarButton("Forma de pagament", "forma_pagament.png");
         botoGeografia = new SidebarButton("Geografia", "geografia.png");
@@ -58,7 +57,7 @@ public class Sidebar extends VBox {
                 botoFactures,
                 botoPressupostos,
                 botoClients,
-                botoArticles,
+                botoProductes,
                 botoIva,
                 botoFormaPagament,
                 botoInformes,
@@ -90,14 +89,19 @@ public class Sidebar extends VBox {
             onMenuClick.accept(MenuPrincipal.CLIENTS);
         });
 
-        botoArticles.setOnAction(e -> {
-            seleccionarBoto(botoArticles);
-            onMenuClick.accept(MenuPrincipal.ARTICLES);
+        botoProductes.setOnAction(e -> {
+            seleccionarBoto(botoProductes);
+            onMenuClick.accept(MenuPrincipal.PRODUCTES);
         });
 
         botoIva.setOnAction(e->{
             seleccionarBoto(botoIva);
             onMenuClick.accept(MenuPrincipal.IVA);
+        });
+
+        botoFormaPagament.setOnAction( e->{
+            seleccionarBoto(botoFormaPagament);
+            onMenuClick.accept(MenuPrincipal.FORMA_DE_PAGAMENT);
         });
 
         botoGeografia.setOnAction(e -> {
@@ -136,7 +140,9 @@ public class Sidebar extends VBox {
         botoFactures.seleccionar(false);
         botoPressupostos.seleccionar(false);
         botoClients.seleccionar(false);
-        botoArticles.seleccionar(false);
+        botoProductes.seleccionar(false);
+        botoIva.seleccionar(false);
+        botoFormaPagament.seleccionar(false);
         botoGeografia.seleccionar(false);
         botoInformes.seleccionar(false);
         botoTasca.seleccionar(false);

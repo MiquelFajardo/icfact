@@ -12,9 +12,7 @@ public class ModificarProducteService {
 
     public void executar(Producte producte) {
         repository.buscarPerId(producte.getId())
-                .orElseThrow(() ->
-                        new ProducteNoExisteixException("El producte no existeix."));
-
+                .orElseThrow(() -> new ProducteNoExisteixException("El producte no existeix."));
         producte.setDataModificacio(LocalDateTime.now());
         repository.actualitzar(producte);
     }

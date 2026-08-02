@@ -4,6 +4,7 @@ package cat.informaticassa.icfact.ui.main.pagines;
 import cat.informaticassa.icfact.BuildInfo;
 import cat.informaticassa.icfact.ui.components.Card;
 import cat.informaticassa.icfact.ui.components.dialogs.ClientDialog;
+import cat.informaticassa.icfact.ui.components.dialogs.ProducteDialog;
 import cat.informaticassa.icfact.ui.main.components.ActionCard;
 import cat.informaticassa.icfact.ui.main.components.TasquesPendentsCardView;
 import cat.informaticassa.icfact.ui.tema.Tema;
@@ -47,8 +48,12 @@ public class PaginaInici extends VBox {
             dialog.showAndWait();
         });
 
-        ActionCard nouArticle = new ActionCard("Nou article", "articles_card.png");
-
+        ActionCard nouArticle = new ActionCard("Nou producte", "articles_card.png");
+        nouArticle.setOnMouseClicked(e -> {
+            ProducteDialog dialog = new ProducteDialog();
+            dialog.initOwner((Stage) getScene().getWindow());
+            dialog.showAndWait();
+        });
 
         graellaAccions.add(nouPressupost, 0, 0);
         graellaAccions.add(novaFactura, 1, 0);

@@ -19,7 +19,7 @@ public class ClientDialog extends DialogBase {
     }
 
     public ClientDialog(Client client) {
-        super(client == null ? "Nou client" : "Modificar client", true);
+        super(client == null ? "Nou client" : "Modificar client", 950,800);
         this.client = client;
         getRoot().setCenter(formulari);
         formulari.registrarDirty(getDirtyTracker());

@@ -10,9 +10,7 @@ public class ModificarPagamentService {
             new ModificarEstatFacturaPagamentService();
 
     public void executar(Pagament pagament) {
-
         repository.actualitzar(pagament);
-
         actualitzarService.executar(pagament.getFactura());
     }
 }

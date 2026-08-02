@@ -24,7 +24,7 @@ public class ProvinciaDialog extends DialogBase {
     }
 
     public ProvinciaDialog(Pais pais, Provincia provincia) {
-        super(provincia == null ? "Nova província" : "Modificar província", false);
+        super(provincia == null ? "Nova província" : "Modificar província", 500,250);
         this.pais = pais;
         this.provincia = provincia;
         getRoot().setCenter(formulari);

@@ -29,8 +29,9 @@ public class FormaPagament implements Activable {
     @Column(nullable = false)
     private Boolean mostrarIban;
 
+    @Builder.Default
     @Column(nullable = false)
-    private boolean actiu;
+    private boolean actiu = true;
 
     @Column(nullable = false)
     private LocalDateTime dataCreacio;

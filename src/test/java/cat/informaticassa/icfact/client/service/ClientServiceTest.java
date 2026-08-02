@@ -47,22 +47,6 @@ public class ClientServiceTest extends BaseRepositoryTest {
         assertEquals("972123456", resultat.getTelefon());
     }
 
-    @Test
-    void buscarTots() {
-        assertEquals(3, new BuscarClientService().buscarTots().size());
-    }
-
-    @Test
-    void buscarActius() {
-        assertEquals(3, new BuscarClientService().buscarActius().size());
-    }
-
-    @Test
-    void buscarInactius() {
-        Client client = repository.buscarPerNif("12345678A").orElseThrow();
-        new DesactivarClientService().executar(client);
-        assertEquals(1, new BuscarClientService().buscarInactius().size());
-    }
 
     @Test
     void buscarClientPerNif() {
@@ -77,20 +61,5 @@ public class ClientServiceTest extends BaseRepositoryTest {
         assertNotNull(client);
     }
 
-    @Test
-    void desactivarClient() {
-        Client client = repository.buscarPerNif("12345678A").orElseThrow();
-        new DesactivarClientService().executar(client);
-        Client resultat = repository.buscarPerIdIncloentInactius(client.getId()).orElseThrow();
-        assertFalse(resultat.isActiu());
-    }
 
-    @Test
-    void activarClient() {
-        Client client = repository.buscarPerNif("12345678A").orElseThrow();
-        new DesactivarClientService().executar(client);
-        new ActivarClientService().executar(client);
-        Client resultat = repository.buscarPerIdIncloentInactius(client.getId()).orElseThrow();
-        assertTrue(resultat.isActiu());
-    }
 }

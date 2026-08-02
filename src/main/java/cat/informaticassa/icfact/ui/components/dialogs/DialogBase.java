@@ -9,12 +9,9 @@ import cat.informaticassa.icfact.ui.util.dirty.RespostaDirty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.Getter;
 
@@ -26,10 +23,10 @@ public abstract class DialogBase extends Stage {
     private final DirtyTracker dirtyTracker = new DirtyTracker();
 
     protected DialogBase(String titol) {
-        this(titol, false);
+        this(titol, 600, 350);
     }
 
-    protected DialogBase(String titol, boolean gran) {
+    protected DialogBase(String titol, double amplada, double alcada) {
         initModality(Modality.APPLICATION_MODAL);
         setTitle(titol);
         root.setPadding(new Insets(20));
@@ -40,31 +37,11 @@ public abstract class DialogBase extends Stage {
         Scene scene = new Scene(root);
         scene.setFill(Tema.FONS);
         setScene(scene);
-
-        if (gran) {
-            setMinWidth(900);
-            setMinHeight(700);
-            setOnShown(e -> {
-                double ample;
-                double alt;
-                if (getOwner() != null) {
-                    ample = getOwner().getWidth();
-                    alt = getOwner().getHeight();
-                } else {
-                    ample = Screen.getPrimary().getVisualBounds().getWidth();
-                    alt = Screen.getPrimary().getVisualBounds().getHeight();
-                }
-                setWidth(ample * 0.90);
-                setHeight(alt * 0.90);
-                centerOnScreen();
-            });
-        } else {
-            setWidth(600);
-            setHeight(350);
-            setMinWidth(500);
-            setMinHeight(250);
-            centerOnScreen();
-        }
+        setWidth(amplada);
+        setHeight(alcada);
+        setMinWidth(amplada);
+        setMinHeight(alcada);
+        centerOnScreen();
         botoCancelar.setOnAction(e -> tancar());
         setOnCloseRequest(e -> {
             if (!dirtyTracker.estaModificat()) {
@@ -81,15 +58,10 @@ public abstract class DialogBase extends Stage {
             return;
         }
         RespostaDirty resposta = Alerta.confirmarCanvis(this);
-
         switch (resposta) {
             case DESCARTAR -> close();
-            case CANCELAR -> {
-                // no fer res
-            }
-            case DESAR -> {
-                botoGuardar.fire();
-            }
+            case CANCELAR -> {}
+            case DESAR -> botoGuardar.fire();
         }
     }
 }

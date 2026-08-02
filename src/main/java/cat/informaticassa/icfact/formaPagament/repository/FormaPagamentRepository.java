@@ -24,4 +24,38 @@ public class FormaPagamentRepository extends AbstractActivableRepository<FormaPa
                     .uniqueResultOptional();
         }
     }
+
+    public List<FormaPagament> buscarActius() {
+        try (var session = obrirSessio()) {
+            return session.createQuery("""
+                FROM FormaPagament
+                WHERE actiu = true
+                ORDER BY nom
+                """, FormaPagament.class).list();
+        }
+    }
+
+    public List<FormaPagament> buscar(String text, boolean actius, boolean inactius) {
+        try (var session = obrirSessio()) {
+            StringBuilder hql = new StringBuilder("""
+                FROM FormaPagament fp
+                WHERE (
+                    lower(fp.nom) LIKE :text
+                    OR lower(coalesce(fp.descripcio,'')) LIKE :text
+                )
+                """);
+
+            if (actius && !inactius) {
+                hql.append(" AND fp.actiu = true");
+            } else if (!actius && inactius) {
+                hql.append(" AND fp.actiu = false");
+            }
+
+            hql.append(" ORDER BY fp.nom");
+
+            return session.createQuery(hql.toString(), FormaPagament.class)
+                    .setParameter("text", "%" + text.toLowerCase() + "%")
+                    .list();
+        }
+    }
 }
