@@ -27,10 +27,14 @@ public class BuscarProducteService {
     }
 
     public List<Producte> buscarActius() {
-        return repository.buscarTots();
+        return repository.buscarActius();
     }
 
     public List<Producte> buscarInactius() {
         return repository.buscarInactius();
+    }
+
+    public List<Producte> buscar(String text, boolean actius, boolean inactius) {
+        return repository.buscar(text, actius, inactius);
     }
 }

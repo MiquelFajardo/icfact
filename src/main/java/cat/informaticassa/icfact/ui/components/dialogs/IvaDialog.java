@@ -17,7 +17,7 @@ public class IvaDialog extends DialogBase {
     }
 
     public IvaDialog(Iva iva) {
-        super(iva == null ? "Nou IVA" : "Modificar IVA", false);
+        super(iva == null ? "Nou IVA" : "Modificar IVA", 500,250);
         this.iva = iva;
         getRoot().setCenter(formulari);
         formulari.registrarDirty(getDirtyTracker());

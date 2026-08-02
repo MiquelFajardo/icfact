@@ -11,6 +11,7 @@ import cat.informaticassa.icfact.ui.main.pagines.empresa.DadesEmpresa;
 import cat.informaticassa.icfact.ui.main.pagines.formaPagament.PaginaFormesPagament;
 import cat.informaticassa.icfact.ui.main.pagines.geografia.PaginaGeografia;
 import cat.informaticassa.icfact.ui.main.pagines.iva.PaginaIVA;
+import cat.informaticassa.icfact.ui.main.pagines.producte.PaginaProductes;
 import cat.informaticassa.icfact.ui.tema.Tema;
 import cat.informaticassa.icfact.ui.util.MenuPrincipal;
 import javafx.scene.layout.BorderPane;
@@ -56,6 +57,7 @@ public class MainView extends BorderPane {
             case INICI -> workArea.mostrar(new PaginaInici());
             case DADES_EMPRESA -> workArea.mostrar(new DadesEmpresa());
             case CLIENTS -> workArea.mostrar(new PaginaClients());
+            case PRODUCTES -> workArea.mostrar(new PaginaProductes());
             case IVA -> workArea.mostrar(new PaginaIVA());
             case FORMA_DE_PAGAMENT -> workArea.mostrar(new PaginaFormesPagament());
             case GEOGRAFIA -> workArea.mostrar(new PaginaGeografia());

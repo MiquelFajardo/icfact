@@ -17,12 +17,7 @@ public class FormaPagamentDialog extends DialogBase {
     }
 
     public FormaPagamentDialog(FormaPagament formaPagament) {
-        super(
-                formaPagament == null
-                        ? "Nova forma de pagament"
-                        : "Modificar forma de pagament",
-                false
-        );
+        super(formaPagament == null ? "Nova forma de pagament" : "Modificar forma de pagament",500,350);
 
         this.formaPagament = formaPagament;
         getRoot().setCenter(formulari);
