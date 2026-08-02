@@ -26,6 +26,10 @@ public class BuscarIvaService {
         return repository.buscarTots();
     }
 
+    public List<Iva> buscar(String text, boolean actius, boolean inactius) {
+        return repository.buscar(text, actius, inactius);
+    }
+
     public List<Iva> buscarActius() {
         return repository.buscarTots();
     }

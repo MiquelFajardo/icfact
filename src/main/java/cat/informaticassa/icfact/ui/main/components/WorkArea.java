@@ -4,9 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 
 public class WorkArea extends StackPane {
-
     public WorkArea() {
-
         setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
     }
 

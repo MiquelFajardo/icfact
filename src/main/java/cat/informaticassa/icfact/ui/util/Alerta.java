@@ -37,7 +37,12 @@ public final class Alerta {
         alert.setTitle(titol);
         alert.setHeaderText(null);
         alert.setContentText(missatge);
-        return alert.showAndWait().filter(button -> button == ButtonType.OK).isPresent();
+        ButtonType botoSi = new ButtonType("Sí");
+        ButtonType botoNo = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(botoSi, botoNo);
+        return alert.showAndWait()
+                .filter(b -> b == botoSi)
+                .isPresent();
     }
 
 
@@ -67,11 +72,15 @@ public final class Alerta {
     }
 
     public static boolean confirmar(String titol, String missatge) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(titol);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);        alert.setTitle(titol);
         alert.setHeaderText(null);
         alert.setContentText(missatge);
-        return alert.showAndWait().filter(button -> button == ButtonType.OK).isPresent();
+        ButtonType botoSi = new ButtonType("Sí");
+        ButtonType botoNo = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+        alert.getButtonTypes().setAll(botoSi, botoNo);
+        return alert.showAndWait()
+                .filter(b -> b == botoSi)
+                .isPresent();
     }
 
     public static RespostaDirty confirmarCanvis(Window owner) {

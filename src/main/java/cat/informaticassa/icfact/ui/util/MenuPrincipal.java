@@ -6,9 +6,12 @@ public enum MenuPrincipal {
     PRESSUPOSTOS,
     CLIENTS,
     ARTICLES,
+    IVA,
+    FORMA_DE_PAGAMENT,
     INFORMES,
+    GEOGRAFIA,
     TASCA,
     COPIA_SEGURETAT,
-    CONFIGURACIO,
+    DADES_EMPRESA,
     SOBRE
 }

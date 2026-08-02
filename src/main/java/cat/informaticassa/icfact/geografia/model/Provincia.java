@@ -29,7 +29,7 @@ public class Provincia {
     @Column(nullable = false, length = 2)
     private String codi;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name ="pais_id", nullable = false)
     private Pais pais;
 

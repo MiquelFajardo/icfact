@@ -58,4 +58,32 @@ public class Card extends VBox {
     public void add(Node node) {
         getChildren().add(node);
     }
+
+    public Card(String titol) {        inicialitzar();
+
+        if (titol != null && !titol.isBlank()) {
+            Label label = new Label(titol);
+            label.setFont(Tema.TITOL_CARD);
+            label.setMaxWidth(Double.MAX_VALUE);
+            label.setAlignment(Pos.CENTER_LEFT);
+            label.setStyle("""
+            -fx-font-weight: bold;
+            -fx-text-fill: #111827;
+            """);
+            getChildren().add(label);
+        }
+    }
+
+    public void addAll(Node... nodes) {
+        getChildren().addAll(nodes);
+    }
+
+    public void afegir(Node node) {
+        getChildren().add(node);
+    }
+
+    public void afegir(Node... nodes) {
+        getChildren().addAll(nodes);
+    }
+
 }
