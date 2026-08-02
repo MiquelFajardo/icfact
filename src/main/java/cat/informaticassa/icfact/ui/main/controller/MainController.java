@@ -1,6 +1,7 @@
 package cat.informaticassa.icfact.ui.main.controller;
 
 import cat.informaticassa.icfact.ui.main.view.MainView;
+import cat.informaticassa.icfact.ui.util.Alerta;
 import cat.informaticassa.icfact.ui.util.MenuPrincipal;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyManager;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyPage;
@@ -34,6 +35,11 @@ public class MainController {
             if (!continuar) {
                 return;
             }
+        }
+        boolean sortir = Alerta.confirmar(view.getScene().getWindow(),"Sortir","Vols sortir d'ICFact?");
+
+        if (!sortir) {
+            return;
         }
         javafx.application.Platform.exit();
     }

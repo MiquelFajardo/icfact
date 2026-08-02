@@ -2,9 +2,9 @@ package cat.informaticassa.icfact.ui.main.components.empresa;
 
 import cat.informaticassa.icfact.ui.components.BotoPrimari;
 import cat.informaticassa.icfact.ui.main.components.color.ColorPane;
-import cat.informaticassa.icfact.ui.main.components.geografia.adreca.AdrecaBinder;
-import cat.informaticassa.icfact.ui.main.components.geografia.adreca.AdrecaEvents;
-import cat.informaticassa.icfact.ui.main.components.geografia.adreca.AdrecaPane;
+import cat.informaticassa.icfact.ui.components.geografia.adreca.AdrecaBinder;
+import cat.informaticassa.icfact.ui.components.geografia.adreca.AdrecaEvents;
+import cat.informaticassa.icfact.ui.components.geografia.adreca.AdrecaPane;
 import cat.informaticassa.icfact.ui.main.components.pdf.PeuPdfPane;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyTracker;
 import javafx.scene.layout.ColumnConstraints;

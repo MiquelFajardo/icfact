@@ -1,8 +1,6 @@
-package cat.informaticassa.icfact.ui.main.components.geografia.adreca;
+package cat.informaticassa.icfact.ui.components.geografia.adreca;
 
 import cat.informaticassa.icfact.geografia.model.Adreca;
-import cat.informaticassa.icfact.geografia.model.Pais;
-import cat.informaticassa.icfact.geografia.model.Provincia;
 import cat.informaticassa.icfact.geografia.service.pais.BuscarPaisosService;
 import cat.informaticassa.icfact.geografia.service.poblacio.BuscarPoblacionsPerProvinciaService;
 import cat.informaticassa.icfact.geografia.service.provincia.BuscarProvinciesPerPaisService;

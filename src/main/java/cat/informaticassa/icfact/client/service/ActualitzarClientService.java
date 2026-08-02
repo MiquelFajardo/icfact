@@ -14,7 +14,9 @@ public class ActualitzarClientService {
 
     public void executar(Client client) {
         validarClient.executar(client);
-        Client clientActual = repository.buscarPerId(client.getId()).orElseThrow(() -> new ClientNoExisteixException("El client no existeix."));
+
+        Client clientActual = repository.buscarPerIdIncloentInactius(client.getId())
+                .orElseThrow(() ->  new ClientNoExisteixException("El client no existeix."));
         clientActual.actualitzarDades(client);
         clientActual.setDataModificacio(LocalDateTime.now());
         repository.actualitzar(clientActual);

@@ -1,4 +1,4 @@
-package cat.informaticassa.icfact.ui.main.pagines.client.toolbar;
+package cat.informaticassa.icfact.ui.main.pagines.client;
 
 import cat.informaticassa.icfact.ui.components.BotoPrimari;
 import javafx.geometry.Insets;

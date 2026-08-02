@@ -1,4 +1,4 @@
-package cat.informaticassa.icfact.ui.main.components.geografia.adreca;
+package cat.informaticassa.icfact.ui.components.geografia.adreca;
 
 import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.geografia.model.Poblacio;
@@ -17,17 +17,14 @@ import lombok.Getter;
 
 @Getter
 public class AdrecaPane extends GridPane {
-
     private final TextField txtCarrer = new TextField();
     private final TextField txtNumero = new TextField();
     private final TextField txtPis = new TextField();
     private final TextField txtPorta = new TextField();
     private final TextField txtCodiPostal = new TextField();
-
     private final ComboBox<Pais> cmbPais = new ComboBox<>();
     private final ComboBox<Provincia> cmbProvincia = new ComboBox<>();
     private final ComboBox<Poblacio> cmbPoblacio = new ComboBox<>();
-
     private final Button botoNouPais = new Button("+");
     private final Button botoNovaProvincia = new Button("+");
     private final Button botoNovaPoblacio = new Button("+");
@@ -76,6 +73,7 @@ public class AdrecaPane extends GridPane {
 
         add(filaPoblacio, 1, fila);
         configurarAmplades();
+        new AdrecaController(this);
     }
 
     private void configurarAmplades() {

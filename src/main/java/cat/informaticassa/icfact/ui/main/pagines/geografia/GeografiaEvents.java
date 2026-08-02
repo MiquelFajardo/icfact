@@ -1,9 +1,9 @@
 package cat.informaticassa.icfact.ui.main.pagines.geografia;
 
 import cat.informaticassa.icfact.geografia.model.Pais;
-import cat.informaticassa.icfact.ui.dialogs.PaisDialog;
-import cat.informaticassa.icfact.ui.dialogs.PoblacioDialog;
-import cat.informaticassa.icfact.ui.dialogs.ProvinciaDialog;
+import cat.informaticassa.icfact.ui.components.dialogs.PaisDialog;
+import cat.informaticassa.icfact.ui.components.dialogs.PoblacioDialog;
+import cat.informaticassa.icfact.ui.components.dialogs.ProvinciaDialog;
 import javafx.stage.Stage;
 
 public class GeografiaEvents {

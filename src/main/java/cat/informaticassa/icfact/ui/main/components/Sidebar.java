@@ -12,7 +12,6 @@ import java.util.function.Consumer;
 
 @Getter
 public class Sidebar extends VBox {
-
     private final SidebarButton botoInici;
     private final SidebarButton botoFactures;
     private final SidebarButton botoPressupostos;
