@@ -1,13 +1,12 @@
 package cat.informaticassa.icfact.ui.main.components;
 
-import cat.informaticassa.icfact.ui.main.pagines.PaginaInici;
 import cat.informaticassa.icfact.ui.tema.Tema;
 import cat.informaticassa.icfact.ui.util.MenuPrincipal;
-import com.sun.glass.ui.Menu;
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
 import lombok.Getter;
 
+import java.lang.invoke.SerializedLambda;
 import java.util.function.Consumer;
 
 @Getter
@@ -17,11 +16,13 @@ public class Sidebar extends VBox {
     private final SidebarButton botoPressupostos;
     private final SidebarButton botoClients;
     private final SidebarButton botoArticles;
+    private final SidebarButton botoIva;
+    private final SidebarButton botoFormaPagament;
     private final SidebarButton botoGeografia;
     private final SidebarButton botoInformes;
     private final SidebarButton botoTasca;
     private final SidebarButton botoCopiaSeguretat;
-    private final SidebarButton botoConfiguracio;
+    private final SidebarButton botoDadesEmpresa;
     private final SidebarButton botoSobre;
 
     public Sidebar(Consumer<MenuPrincipal> onMenuClick) {
@@ -37,13 +38,15 @@ public class Sidebar extends VBox {
         botoPressupostos = new SidebarButton("Pressupostos", "pressupost.png");
         botoClients = new SidebarButton("Clients", "clients.png");
         botoArticles = new SidebarButton("Articles", "articles.png");
+        botoIva = new SidebarButton("IVA", "iva.png");
+        botoFormaPagament = new SidebarButton("Forma de pagament", "forma_pagament.png");
         botoGeografia = new SidebarButton("Geografia", "geografia.png");
 
         botoInformes = new SidebarButton("Informes", "informes.png");
         botoTasca = new SidebarButton("Tasques", "tasca.png");
 
         botoCopiaSeguretat = new SidebarButton("Còpia de seguretat", "copia_seguretat.png");
-        botoConfiguracio = new SidebarButton("Configuració", "configuracio.png");
+        botoDadesEmpresa = new SidebarButton("Dades empresa", "configuracio.png");
         botoSobre = new SidebarButton("Sobre ICFact", "sobre.png");
 
         botoInici.seleccionar(true);
@@ -56,12 +59,14 @@ public class Sidebar extends VBox {
                 botoPressupostos,
                 botoClients,
                 botoArticles,
+                botoIva,
+                botoFormaPagament,
                 botoInformes,
                 botoTasca,
                 botoGeografia,
                 espai,
                 botoCopiaSeguretat,
-                botoConfiguracio,
+                botoDadesEmpresa,
                 botoSobre
         );
 
@@ -90,6 +95,11 @@ public class Sidebar extends VBox {
             onMenuClick.accept(MenuPrincipal.ARTICLES);
         });
 
+        botoIva.setOnAction(e->{
+            seleccionarBoto(botoIva);
+            onMenuClick.accept(MenuPrincipal.IVA);
+        });
+
         botoGeografia.setOnAction(e -> {
             seleccionarBoto(botoGeografia);
             onMenuClick.accept(MenuPrincipal.GEOGRAFIA);
@@ -110,9 +120,9 @@ public class Sidebar extends VBox {
             onMenuClick.accept(MenuPrincipal.COPIA_SEGURETAT);
         });
 
-        botoConfiguracio.setOnAction(e -> {
-            seleccionarBoto(botoConfiguracio);
-            onMenuClick.accept(MenuPrincipal.CONFIGURACIO);
+        botoDadesEmpresa.setOnAction(e -> {
+            seleccionarBoto(botoDadesEmpresa);
+            onMenuClick.accept(MenuPrincipal.DADES_EMPRESA);
         });
 
         botoSobre.setOnAction(e -> {
@@ -130,7 +140,7 @@ public class Sidebar extends VBox {
         botoGeografia.seleccionar(false);
         botoInformes.seleccionar(false);
         botoTasca.seleccionar(false);
-        botoConfiguracio.seleccionar(false);
+        botoDadesEmpresa.seleccionar(false);
         botoSobre.seleccionar(false);
         seleccionat.seleccionar(true);
     }

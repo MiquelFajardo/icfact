@@ -36,7 +36,7 @@ public class AdrecaController {
         pane.getCmbPais().getItems().setAll(buscarPaisosService.executar());
     }
 
-    private void canviPais() {
+    public void canviPais() {
         Pais pais = pane.getCmbPais().getValue();
         pane.getCmbProvincia().getItems().clear();
         pane.getCmbProvincia().setValue(null);
@@ -52,7 +52,7 @@ public class AdrecaController {
         );
     }
 
-    private void canviProvincia() {
+    public void canviProvincia() {
         Provincia provincia = pane.getCmbProvincia().getValue();
         pane.getCmbPoblacio().getItems().clear();
         pane.getCmbPoblacio().setValue(null);

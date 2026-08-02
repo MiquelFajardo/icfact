@@ -17,6 +17,7 @@ import lombok.Getter;
 
 @Getter
 public class AdrecaPane extends GridPane {
+    private final AdrecaController controller;
     private final TextField txtCarrer = new TextField();
     private final TextField txtNumero = new TextField();
     private final TextField txtPis = new TextField();
@@ -73,7 +74,7 @@ public class AdrecaPane extends GridPane {
 
         add(filaPoblacio, 1, fila);
         configurarAmplades();
-        new AdrecaController(this);
+        controller = new AdrecaController(this);
     }
 
     private void configurarAmplades() {
@@ -100,24 +101,17 @@ public class AdrecaPane extends GridPane {
         txtCodiPostal.setText(adreca.getCodiPostal());
 
         if (adreca.getPais() != null) {
-            cmbPais.getItems().stream()
-                    .filter(p -> p.getId().equals(adreca.getPais().getId()))
-                    .findFirst()
-                    .ifPresent(cmbPais::setValue);
+            cmbPais.setValue(adreca.getPais());
+            controller.canviPais();
         }
 
         if (adreca.getProvincia() != null) {
-            cmbProvincia.getItems().stream()
-                    .filter(p -> p.getId().equals(adreca.getProvincia().getId()))
-                    .findFirst()
-                    .ifPresent(cmbProvincia::setValue);
+            cmbProvincia.setValue(adreca.getProvincia());
+            controller.canviProvincia();
         }
 
         if (adreca.getPoblacio() != null) {
-            cmbPoblacio.getItems().stream()
-                    .filter(p -> p.getId().equals(adreca.getPoblacio().getId()))
-                    .findFirst()
-                    .ifPresent(cmbPoblacio::setValue);
+            cmbPoblacio.setValue(adreca.getPoblacio());
         }
     }
 

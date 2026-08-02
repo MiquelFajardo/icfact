@@ -18,10 +18,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-public class PaginaConfiguracio extends VBox implements DirtyProvider {
+public class DadesEmpresa extends VBox implements DirtyProvider {
     private final EmpresaEvents events;
 
-    public PaginaConfiguracio() {
+    public DadesEmpresa() {
         setSpacing(25);
         setPadding(new Insets(30));
         Label titol = new Label("Configuració");
