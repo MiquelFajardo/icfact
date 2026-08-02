@@ -100,6 +100,11 @@ public class Sidebar extends VBox {
             onMenuClick.accept(MenuPrincipal.IVA);
         });
 
+        botoFormaPagament.setOnAction( e->{
+            seleccionarBoto(botoFormaPagament);
+            onMenuClick.accept(MenuPrincipal.FORMA_DE_PAGAMENT);
+        });
+
         botoGeografia.setOnAction(e -> {
             seleccionarBoto(botoGeografia);
             onMenuClick.accept(MenuPrincipal.GEOGRAFIA);
@@ -137,6 +142,8 @@ public class Sidebar extends VBox {
         botoPressupostos.seleccionar(false);
         botoClients.seleccionar(false);
         botoArticles.seleccionar(false);
+        botoIva.seleccionar(false);
+        botoFormaPagament.seleccionar(false);
         botoGeografia.seleccionar(false);
         botoInformes.seleccionar(false);
         botoTasca.seleccionar(false);
