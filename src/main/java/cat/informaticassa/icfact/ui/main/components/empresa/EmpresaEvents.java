@@ -3,6 +3,7 @@ package cat.informaticassa.icfact.ui.main.components.empresa;
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.empresa.service.BuscarEmpresaService;
 import cat.informaticassa.icfact.empresa.service.ModificarEmpresaService;
+import cat.informaticassa.icfact.geografia.model.Adreca;
 import cat.informaticassa.icfact.infraestructura.validacio.exception.ValidacioException;
 import cat.informaticassa.icfact.ui.components.BotoPrimari;
 import cat.informaticassa.icfact.ui.components.BotoSecundari;
@@ -61,10 +62,10 @@ public class EmpresaEvents implements DirtyPage {
     public boolean guardar() {
         try {
             formulari.getEmpresaBinder().actualitzar(empresa);
-            if (empresa.getAdreca() != null) {
-                formulari.getAdrecaBinder().actualitzar(empresa.getAdreca());
+            if (empresa.getAdreca() == null) {
+                empresa.setAdreca(new Adreca());
             }
-
+            formulari.getAdrecaBinder().actualitzar(empresa.getAdreca());
             modificarEmpresaService.executar(empresa);
 
             if (empresa.getColor() != null && !empresa.getColor().isBlank()) {

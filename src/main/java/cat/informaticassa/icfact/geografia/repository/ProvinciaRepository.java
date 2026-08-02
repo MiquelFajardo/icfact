@@ -43,13 +43,12 @@ public class ProvinciaRepository extends AbstractRepository<Provincia, Long> {
     }
 
     public Optional<Provincia> buscarPerNom(Pais pais, String nom) {
-
         try (var session = obrirSessio()) {
             return session.createQuery("""
-                    FROM Provincia
-                    WHERE pais = :pais
-                    AND lower(nom) = lower(:nom)
-                    """, Provincia.class)
+                FROM Provincia
+                WHERE pais = :pais
+                AND lower(nom) = lower(:nom)
+                """, Provincia.class)
                     .setParameter("pais", pais)
                     .setParameter("nom", nom)
                     .uniqueResultOptional();

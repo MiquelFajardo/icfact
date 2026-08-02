@@ -42,18 +42,28 @@ public class PoblacioRepository extends AbstractRepository<Poblacio, Long> {
         }
     }
 
-    public Optional<Poblacio> buscarPerNomIProvincia(String nom, Provincia provincia) {
-        return buscarPerNom(provincia, nom);
-    }
 
+    public Optional<Poblacio> buscarPerNomIProvincia(String nom, Provincia provincia) {
+
+        try (var session = obrirSessio()) {
+            return session.createQuery("""
+                FROM Poblacio
+                WHERE provincia = :provincia
+                AND lower(nom) = lower(:nom)
+                """, Poblacio.class)
+                    .setParameter("provincia", provincia)
+                    .setParameter("nom", nom)
+                    .uniqueResultOptional();
+        }
+    }
     public Optional<Poblacio> buscarPerNom(Provincia provincia, String nom) {
 
         try (var session = obrirSessio()) {
             return session.createQuery("""
-                    FROM Poblacio
-                    WHERE provincia = :provincia
-                    AND lower(nom) = lower(:nom)
-                    """, Poblacio.class)
+                FROM Poblacio
+                WHERE provincia = :provincia
+                AND lower(nom) = lower(:nom)
+                """, Poblacio.class)
                     .setParameter("provincia", provincia)
                     .setParameter("nom", nom)
                     .uniqueResultOptional();

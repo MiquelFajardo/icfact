@@ -25,9 +25,7 @@ public class EmpresaRepository extends AbstractRepository<Empresa, Long> {
     }
 
     public Optional<Empresa> buscar() {
-
         try (var session = obrirSessio()) {
-
             return session.createQuery("""
                     SELECT e
                     FROM Empresa e
