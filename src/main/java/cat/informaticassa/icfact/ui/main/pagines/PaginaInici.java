@@ -4,6 +4,7 @@ package cat.informaticassa.icfact.ui.main.pagines;
 import cat.informaticassa.icfact.BuildInfo;
 import cat.informaticassa.icfact.ui.components.Card;
 import cat.informaticassa.icfact.ui.components.dialogs.ClientDialog;
+import cat.informaticassa.icfact.ui.components.dialogs.PressupostDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.ProducteDialog;
 import cat.informaticassa.icfact.ui.main.components.ActionCard;
 import cat.informaticassa.icfact.ui.main.components.TasquesPendentsCardView;
@@ -37,6 +38,12 @@ public class PaginaInici extends VBox {
         graellaAccions.setVgap(20);
 
         ActionCard nouPressupost = new ActionCard("Nou pressupost", "pressupost_card.png");
+        nouPressupost.setOnMouseClicked( e-> {
+            PressupostDialog dialog = new PressupostDialog();
+            dialog.initOwner((Stage) getScene().getWindow());
+            dialog.showAndWait();
+        });
+
         ActionCard novaFactura = new ActionCard("Nova factura", "factura_card.png");
         ActionCard pressupostosPendents = new ActionCard("Pressupostos pendents", "pressupost_pendent_card.png");
         ActionCard facturesPendents = new ActionCard("Factures pendents", "factura_pendent_card.png");

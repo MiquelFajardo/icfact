@@ -2,6 +2,7 @@ package cat.informaticassa.icfact.ui.main.pagines.client.controller;
 
 import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.client.service.BuscarClientsService;
+import cat.informaticassa.icfact.ui.main.controller.MainController;
 import cat.informaticassa.icfact.ui.main.pagines.client.PaginaClients;
 import lombok.Getter;
 
@@ -13,10 +14,11 @@ public class ClientController {
     private final PaginaClients pagina;
     private final BuscarClientsService buscarClientsService = new BuscarClientsService();
 
+
     public ClientController(PaginaClients pagina) {
         this.pagina = pagina;
-        carregarActius();
         new ClientEvents(this);
+        carregarActius();
     }
 
     public void carregarActius() {

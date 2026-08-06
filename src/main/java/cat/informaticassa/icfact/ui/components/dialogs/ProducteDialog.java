@@ -13,11 +13,24 @@ public class ProducteDialog extends DialogBase {
     private Producte producte;
 
     public ProducteDialog() {
-        this(null);
+        this((String) null);
+    }
+
+    public ProducteDialog(String nomInicial) {
+        this(new Producte());
+        this.producte.setNom(nomInicial);
+        formulari.mostrar(this.producte);
     }
 
     public ProducteDialog(Producte producte) {
-        super(producte == null ? "Nou producte" : "Modificar producte", 750,400);
+        super(
+                producte == null
+                        ? "Nou producte"
+                        : "Modificar producte",
+                750,
+                400
+        );
+
         this.producte = producte;
         getRoot().setCenter(formulari);
         formulari.registrarDirty(getDirtyTracker());
@@ -31,6 +44,6 @@ public class ProducteDialog extends DialogBase {
     }
 
     public boolean esEdicio() {
-        return producte != null;
+        return producte != null && producte.getId() != null;
     }
 }

@@ -20,23 +20,20 @@ public class CrearPressupostService {
     public Pressupost executar(Pressupost pressupost) {
         validarService.executar(pressupost);
         recalcularService.executar(pressupost);
-
-        long numero = numeroService.obtenir(
-                Year.now().getValue(),
-                TipusDocument.PRESSUPOST);
-
+        long numero = numeroService.obtenir(Year.now().getValue(), TipusDocument.PRESSUPOST);
         pressupost.setNumero(GenerarNumeroDocumentService.generar("P", numero));
         pressupost.setActiu(true);
         pressupost.setDataCreacio(LocalDateTime.now());
         pressupost.setDataModificacio(LocalDateTime.now());
-
         for (LiniaPressupost linia : pressupost.getLinies()) {
             linia.setPressupost(pressupost);
         }
-
-
         repository.guardar(pressupost);
-
         return pressupost;
+    }
+
+    public String generarNumero() {
+        long numero = numeroService.obtenir(Year.now().getValue(), TipusDocument.PRESSUPOST);
+        return GenerarNumeroDocumentService.generar("P", numero);
     }
 }

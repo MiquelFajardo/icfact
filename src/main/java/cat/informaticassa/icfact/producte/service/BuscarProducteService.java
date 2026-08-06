@@ -37,4 +37,8 @@ public class BuscarProducteService {
     public List<Producte> buscar(String text, boolean actius, boolean inactius) {
         return repository.buscar(text, actius, inactius);
     }
+
+    public Producte buscarPerCodiONom(String text) {
+        return repository.buscarPerCodiONom(text).orElse(null);
+    }
 }

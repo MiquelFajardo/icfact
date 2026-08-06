@@ -21,6 +21,8 @@ public abstract class DialogBase extends Stage {
     protected final BotoSecundari botoCancelar = new BotoSecundari("❌ Cancel·la");
     private final BorderPane root = new BorderPane();
     private final DirtyTracker dirtyTracker = new DirtyTracker();
+    @Getter
+    protected final HBox botons = new HBox(10);
 
     protected DialogBase(String titol) {
         this(titol, 600, 350);
@@ -30,7 +32,6 @@ public abstract class DialogBase extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setTitle(titol);
         root.setPadding(new Insets(20));
-        HBox botons = new HBox(10);
         botons.setAlignment(Pos.CENTER_RIGHT);
         botons.getChildren().addAll(botoCancelar, botoGuardar);
         root.setBottom(botons);

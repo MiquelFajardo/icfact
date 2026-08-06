@@ -11,11 +11,12 @@ public class PaginaClients extends BorderPane {
 
     private final ClientToolbar toolbar = new ClientToolbar();
     private final ClientTable taula = new ClientTable();
+    private final ClientController controller;
 
     public PaginaClients() {
         setPadding(new Insets(20));
         setTop(toolbar);
         setCenter(taula);
-        new ClientController(this);
+        controller = new ClientController(this);
     }
 }

@@ -1,6 +1,7 @@
 package cat.informaticassa.icfact.ui.main.pagines.client.controller;
 
 import cat.informaticassa.icfact.ui.components.dialogs.ClientDialog;
+import cat.informaticassa.icfact.ui.navigation.Navegacio;
 import javafx.animation.PauseTransition;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -8,6 +9,7 @@ import javafx.util.Duration;
 public class ClientEvents {
     private final ClientController controller;
     private final PauseTransition pausaBuscar = new PauseTransition(Duration.millis(300));
+
 
     public ClientEvents(ClientController controller) {
         this.controller = controller;
@@ -41,7 +43,7 @@ public class ClientEvents {
         });
 
         controller.getPagina().getTaula().setOnPressupostos(client -> {
-            // TODO Obrir pressupostos del client
+            Navegacio.get().getMainView().mostrarPressupostos(client);
         });
 
         controller.getPagina().getTaula().setOnFactures(client -> {

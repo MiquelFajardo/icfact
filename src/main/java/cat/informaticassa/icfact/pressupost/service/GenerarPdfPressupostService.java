@@ -28,11 +28,10 @@ public class GenerarPdfPressupostService {
     private final PdfAcceptacioPressupost pdfAcceptacio = new PdfAcceptacioPressupost();
     private final PdfObservacions pdfObservacions = new PdfObservacions();
 
-    public Path executar(Long pressupostId) {
+    public Path executar(Pressupost pressupost) {
+        pressupost = obtenirPressupost(pressupost.getId());
         Empresa empresa = obtenirEmpresa();
-        Pressupost pressupost = obtenirPressupost(pressupostId);
         Path fitxer = crearFitxer(pressupost);
-
         try {
             Document document = crearDocument(fitxer, empresa, pressupost);
             generarContingut(document, pressupost, empresa);

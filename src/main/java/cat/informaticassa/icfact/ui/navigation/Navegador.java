@@ -16,12 +16,12 @@ import lombok.Setter;
 import java.util.Objects;
 
 public class Navegador {
-
     private final Stage stage;
-
     @Getter
     @Setter
     private Empresa empresa;
+    @Getter
+    private MainView mainView;
 
     public Navegador(Stage stage) {
         this.stage = stage;
@@ -30,13 +30,7 @@ public class Navegador {
 
     private void configurarStage() {
         stage.setTitle(BuildInfo.getNomAplicacio());
-        stage.getIcons().add(
-                new Image(
-                        Objects.requireNonNull(
-                                getClass().getResourceAsStream("/icons/logo.png")
-                        )
-                )
-        );
+        stage.getIcons().add( new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/logo.png"))));
     }
 
     private void midaAltaEmpresa() {
@@ -73,7 +67,8 @@ public class Navegador {
     }
 
     public void mostrarPrincipal() {
-        mostrar(new MainView(empresa));
+        mainView = new MainView(empresa);
+        mostrar(mainView);
         stage.show();
         stage.setMaximized(true);
     }
