@@ -17,12 +17,14 @@ public class ModificarPressupostService {
     private final RecalcularPressupostService recalcularService = new RecalcularPressupostService();
 
     public Pressupost executar(Pressupost pressupost) {
-        Pressupost existent = repository.buscarPerIdAmbLinies(pressupost.getId())
+        Pressupost existent = repository.buscarPerIdIncloentInactius(pressupost.getId())
                 .orElseThrow(() -> new PressupostNoTrobatException("No s'ha trobat el pressupost."));
 
         existent.setClient(pressupost.getClient());
         existent.setData(pressupost.getData());
         existent.setEstat(pressupost.getEstat());
+        existent.setActiu(pressupost.isActiu());
+        existent.setFormaPagament(pressupost.getFormaPagament());
         existent.setObservacions(pressupost.getObservacions());
 
         existent.getLinies().clear();

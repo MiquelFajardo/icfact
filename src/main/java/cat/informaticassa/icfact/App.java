@@ -1,6 +1,7 @@
 package cat.informaticassa.icfact;
 
 import cat.informaticassa.icfact.empresa.service.EmpresaExisteixService;
+import cat.informaticassa.icfact.ui.navigation.Navegacio;
 import cat.informaticassa.icfact.ui.navigation.Navegador;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -11,6 +12,7 @@ public class App extends Application {
     public void start(Stage stage) {
         Inicialitzador.inicialitzar();
         Navegador navegador = new Navegador(stage);
+        Navegacio.inicialitzar(navegador);
 
         if (new EmpresaExisteixService().executar()) {
             navegador.mostrarLogin();

@@ -1,7 +1,9 @@
 package cat.informaticassa.icfact.producte.repository;
 
+import cat.informaticassa.icfact.infraestructura.database.HibernateUtil;
 import cat.informaticassa.icfact.infraestructura.repository.AbstractActivableRepository;
 import cat.informaticassa.icfact.producte.model.Producte;
+import org.hibernate.Session;
 
 import java.util.List;
 import java.util.Optional;
@@ -117,6 +119,19 @@ public class ProducteRepository extends AbstractActivableRepository<Producte, Lo
             return session.createQuery(hql.toString(), Producte.class)
                     .setParameter("text", "%" + text.toLowerCase() + "%")
                     .list();
+        }
+    }
+
+    public Optional<Producte> buscarPerCodiONom(String text) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            return session.createQuery("""
+                from Producte
+                where upper(codi)=:text
+                   or upper(nom)=:text
+                """, Producte.class)
+                    .setParameter("text", text.toUpperCase().trim())
+                    .setMaxResults(1)
+                    .uniqueResultOptional();
         }
     }
 }

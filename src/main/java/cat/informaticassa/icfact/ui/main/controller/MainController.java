@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.ui.main.controller;
 
+import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.ui.main.view.MainView;
 import cat.informaticassa.icfact.ui.util.Alerta;
 import cat.informaticassa.icfact.ui.util.MenuPrincipal;
@@ -19,7 +20,10 @@ public class MainController {
         Node actual = view.getWorkArea().getPaginaActual();
         if (actual instanceof DirtyProvider provider) {
             DirtyPage dirtyPage = provider.getDirtyPage();
-            boolean continuar = DirtyManager.sortir(dirtyPage, view.getScene().getWindow());
+            boolean continuar = DirtyManager.sortir(
+                    dirtyPage,
+                    view.getScene().getWindow()
+            );
             if (!continuar) {
                 return;
             }
@@ -27,17 +31,26 @@ public class MainController {
         view.mostrarPagina(pagina);
     }
 
+    public void obrirPressupostos(Client client) {
+        canviarPagina(MenuPrincipal.PRESSUPOSTOS);
+        view.getPaginaPressupostos()
+                .getController()
+                .mostrarPressupostosClient(client);
+    }
+
     public void sortirAplicacio() {
         Node actual = view.getWorkArea().getPaginaActual();
         if (actual instanceof DirtyProvider provider) {
             DirtyPage dirtyPage = provider.getDirtyPage();
-            boolean continuar = DirtyManager.sortir(dirtyPage, view.getScene().getWindow());
+            boolean continuar = DirtyManager.sortir(
+                    dirtyPage,
+                    view.getScene().getWindow()
+            );
             if (!continuar) {
                 return;
             }
         }
         boolean sortir = Alerta.confirmar(view.getScene().getWindow(),"Sortir","Vols sortir d'ICFact?");
-
         if (!sortir) {
             return;
         }

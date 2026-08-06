@@ -30,6 +30,7 @@ public class DuplicarPressupostService {
         nou.setClient(origen.getClient());
         nou.setData(LocalDate.now());
         nou.setObservacions(origen.getObservacions());
+        nou.setFormaPagament(origen.getFormaPagament());
         nou.setEstat(EstatPressupost.ESBORRANY);
         nou.setActiu(true);
         nou.setDataCreacio(LocalDateTime.now());
@@ -39,14 +40,11 @@ public class DuplicarPressupostService {
                 Year.now().getValue(),
                 TipusDocument.PRESSUPOST
         );
-
         nou.setNumero(GenerarNumeroDocumentService.generar("P", numero));
 
         for (LiniaPressupost liniaOrigen : origen.getLinies()) {
-
             LiniaPressupost linia = new LiniaPressupost();
             linia.setPressupost(nou);
-
             linia.setProducte(liniaOrigen.getProducte());
             linia.setDescripcio(liniaOrigen.getDescripcio());
             linia.setQuantitat(liniaOrigen.getQuantitat());
@@ -58,6 +56,6 @@ public class DuplicarPressupostService {
             nou.getLinies().add(linia);
         }
 
-        return crearService.executar(nou);
+        return nou;
     }
 }

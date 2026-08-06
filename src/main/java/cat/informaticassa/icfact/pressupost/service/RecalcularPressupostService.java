@@ -8,9 +8,11 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class RecalcularPressupostService {
+    private final RecalcularLiniaPressupostService recalcularLiniaService = new RecalcularLiniaPressupostService();
     private static final BigDecimal CENT = BigDecimal.valueOf(100);
 
     public void executar(Pressupost pressupost) {
+        BigDecimal total = BigDecimal.ZERO;
         if (pressupost == null) {
             throw new PressupostNullException("El pressupost no pot ser nul.");
         }
@@ -19,28 +21,18 @@ public class RecalcularPressupostService {
         BigDecimal iva = BigDecimal.ZERO;
 
         for (LiniaPressupost linia : pressupost.getLinies()) {
-            final BigDecimal importLinia = linia.getPreu()
-                    .multiply(linia.getQuantitat());
-
-            final BigDecimal descompte = importLinia
-                    .multiply(linia.getDte())
-                    .divide(CENT, 2, RoundingMode.HALF_UP);
-
-            final BigDecimal subtotalLinia = importLinia.subtract(descompte);
-
-            final BigDecimal ivaLinia = subtotalLinia
-                    .multiply(linia.getIva().getPercentatge())
-                    .divide(CENT, 2, RoundingMode.HALF_UP);
-
-            linia.setSubtotal(subtotalLinia);
-            linia.setTotal(subtotalLinia.add(ivaLinia));
-
-            subtotal = subtotal.add(subtotalLinia);
-            iva = iva.add(ivaLinia);
+            recalcularLiniaService.executar(linia);
+            if (linia.getSubtotal() != null) {
+                subtotal = subtotal.add(linia.getSubtotal());
+            }
+            if (linia.getTotal() != null) {
+                total = total.add(linia.getTotal());
+            }
         }
 
-        pressupost.setSubtotal(subtotal);
-        pressupost.setIva(iva);
-        pressupost.setTotal(subtotal.add(iva));
+        iva = total.subtract(subtotal);
+        pressupost.setSubtotal(subtotal.setScale(2, RoundingMode.HALF_UP));
+        pressupost.setIva(iva.setScale(2, RoundingMode.HALF_UP));
+        pressupost.setTotal(total.setScale(2, RoundingMode.HALF_UP));
     }
 }

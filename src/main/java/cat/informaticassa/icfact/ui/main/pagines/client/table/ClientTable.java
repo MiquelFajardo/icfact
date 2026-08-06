@@ -8,17 +8,23 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.function.Consumer;
 
 @Getter
 public class ClientTable extends TableView<Client> {
+
     private final ObservableList<Client> clients = FXCollections.observableArrayList();
+
     @Setter
     private Consumer<Client> onModificar;
+
     @Setter
     private Consumer<Client> onPressupostos;
+
     @Setter
     private Consumer<Client> onFactures;
 
@@ -40,7 +46,6 @@ public class ClientTable extends TableView<Client> {
             MenuItem pressupostos = new MenuItem("📄 Pressupostos");
             MenuItem factures = new MenuItem("💶 Factures");
             MenuItem modificar = new MenuItem("✏ Modificar");
-
             menu.getItems().addAll(
                     pressupostos,
                     factures,
@@ -71,6 +76,19 @@ public class ClientTable extends TableView<Client> {
                 }
             });
 
+            row.setOnMouseClicked(e -> {
+
+                if (e.getButton() != MouseButton.PRIMARY) {
+                    return;
+                }
+
+                if (e.getClickCount() == 2 && !row.isEmpty()) {
+
+                    if (onModificar != null) {
+                        onModificar.accept(row.getItem());
+                    }
+                }
+            });
             return row;
         });
     }

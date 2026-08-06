@@ -103,7 +103,7 @@ public class FacturaRepository extends AbstractActivableRepository<Factura, Long
             String prefix = "F" + any;
 
             Long ultimNumero = session.createQuery("""
-                    SELECT MAX(CAST(SUBSTRING(f.numero, 5) AS long))
+                    SELECT MAX(CAST(SUBSTRING(f.numero, 6) AS long))
                     FROM Factura f
                     WHERE f.numero LIKE :prefix
                     """, Long.class)
