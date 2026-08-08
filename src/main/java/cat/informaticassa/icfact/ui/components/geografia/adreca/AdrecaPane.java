@@ -22,7 +22,6 @@ public class AdrecaPane extends GridPane {
     private final TextField txtNumero = new TextField();
     private final TextField txtPis = new TextField();
     private final TextField txtPorta = new TextField();
-    private final TextField txtCodiPostal = new TextField();
     private final ComboBox<Pais> cmbPais = new ComboBox<>();
     private final ComboBox<Provincia> cmbProvincia = new ComboBox<>();
     private final ComboBox<Poblacio> cmbPoblacio = new ComboBox<>();
@@ -47,8 +46,6 @@ public class AdrecaPane extends GridPane {
         add(new FormLabel("Porta"), 0, fila);
         add(txtPorta, 1, fila++);
 
-        add(new FormLabel("Codi postal"), 0, fila);
-        add(txtCodiPostal, 1, fila++);
 
         add(new FormLabel("País"), 0, fila);
 
@@ -82,12 +79,10 @@ public class AdrecaPane extends GridPane {
         txtNumero.setMaxWidth(Double.MAX_VALUE);
         txtPis.setMaxWidth(Double.MAX_VALUE);
         txtPorta.setMaxWidth(Double.MAX_VALUE);
-        txtCodiPostal.setMaxWidth(Double.MAX_VALUE);
         GridPane.setHgrow(txtCarrer, Priority.ALWAYS);
         GridPane.setHgrow(txtNumero, Priority.ALWAYS);
         GridPane.setHgrow(txtPis, Priority.ALWAYS);
         GridPane.setHgrow(txtPorta, Priority.ALWAYS);
-        GridPane.setHgrow(txtCodiPostal, Priority.ALWAYS);
         cmbPais.setMaxWidth(Double.MAX_VALUE);
         cmbProvincia.setMaxWidth(Double.MAX_VALUE);
         cmbPoblacio.setMaxWidth(Double.MAX_VALUE);
@@ -98,7 +93,6 @@ public class AdrecaPane extends GridPane {
         txtNumero.setText(adreca.getNumero());
         txtPis.setText(adreca.getPis());
         txtPorta.setText(adreca.getPorta());
-        txtCodiPostal.setText(adreca.getCodiPostal());
 
         if (adreca.getPais() != null) {
             cmbPais.setValue(adreca.getPais());
@@ -120,7 +114,6 @@ public class AdrecaPane extends GridPane {
         adreca.setNumero(txtNumero.getText());
         adreca.setPis(txtPis.getText());
         adreca.setPorta(txtPorta.getText());
-        adreca.setCodiPostal(txtCodiPostal.getText());
         adreca.setPais(cmbPais.getValue());
         adreca.setProvincia(cmbProvincia.getValue());
         adreca.setPoblacio(cmbPoblacio.getValue());
@@ -133,7 +126,6 @@ public class AdrecaPane extends GridPane {
                 txtNumero,
                 txtPis,
                 txtPorta,
-                txtCodiPostal,
                 cmbPais,
                 cmbProvincia,
                 cmbPoblacio

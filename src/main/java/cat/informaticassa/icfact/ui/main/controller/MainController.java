@@ -38,6 +38,13 @@ public class MainController {
                 .mostrarPressupostosClient(client);
     }
 
+    public void obrirFactures(Client client) {
+        canviarPagina(MenuPrincipal.FACTURES);
+        view.getPaginaFactures()
+                .getController()
+                .treureFiltreClient();
+    }
+
     public void sortirAplicacio() {
         Node actual = view.getWorkArea().getPaginaActual();
         if (actual instanceof DirtyProvider provider) {

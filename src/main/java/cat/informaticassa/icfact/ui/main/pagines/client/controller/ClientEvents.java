@@ -47,8 +47,8 @@ public class ClientEvents {
         });
 
         controller.getPagina().getTaula().setOnFactures(client -> {
-            // TODO Obrir factures del client
-        });
+            Navegacio.get().getMainView().mostrarFactures(client);
+        });;
     }
 
     private void filtrar() {
