@@ -9,6 +9,7 @@ import cat.informaticassa.icfact.ui.main.controller.MainController;
 import cat.informaticassa.icfact.ui.main.pagines.PaginaInici;
 import cat.informaticassa.icfact.ui.main.pagines.client.PaginaClients;
 import cat.informaticassa.icfact.ui.main.pagines.empresa.DadesEmpresa;
+import cat.informaticassa.icfact.ui.main.pagines.factura.PaginaFactures;
 import cat.informaticassa.icfact.ui.main.pagines.formaPagament.PaginaFormesPagament;
 import cat.informaticassa.icfact.ui.main.pagines.geografia.PaginaGeografia;
 import cat.informaticassa.icfact.ui.main.pagines.iva.PaginaIVA;
@@ -31,6 +32,7 @@ public class MainView extends BorderPane {
     private final PaginaIVA paginaIVA = new PaginaIVA();
     private final PaginaFormesPagament paginaFormesPagament = new PaginaFormesPagament();
     private final PaginaPressupostos paginaPressupostos = new PaginaPressupostos();
+    private final PaginaFactures paginaFactures = new PaginaFactures();
     private final PaginaGeografia paginaGeografia = new PaginaGeografia();
     private final MainController controller;
 
@@ -75,6 +77,10 @@ public class MainView extends BorderPane {
                 paginaPressupostos.getController().treureFiltreClient();
                 workArea.mostrar(paginaPressupostos);
             }
+            case FACTURES -> {
+                paginaFactures.getController().treureFiltreClient();
+                workArea.mostrar(paginaFactures);
+            }
             case GEOGRAFIA -> workArea.mostrar(paginaGeografia);
             default -> workArea.mostrar(paginaInici);
         }
@@ -83,5 +89,10 @@ public class MainView extends BorderPane {
     public void mostrarPressupostos(Client client) {
         mostrarPagina(MenuPrincipal.PRESSUPOSTOS);
         paginaPressupostos.getController().mostrarPressupostosClient(client);
+    }
+
+    public void mostrarFactures(Client client) {
+        mostrarPagina(MenuPrincipal.FACTURES);
+        paginaFactures.getController().mostrarFacturesClient(client);
     }
 }

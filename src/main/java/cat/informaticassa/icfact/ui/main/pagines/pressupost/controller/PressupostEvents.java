@@ -1,13 +1,12 @@
 package cat.informaticassa.icfact.ui.main.pagines.pressupost.controller;
 
 import cat.informaticassa.icfact.client.model.Client;
+import cat.informaticassa.icfact.factura.model.Factura;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
-import cat.informaticassa.icfact.pressupost.service.DuplicarPressupostService;
-import cat.informaticassa.icfact.pressupost.service.ObrirPdfPressupostService;
-import cat.informaticassa.icfact.pressupost.service.ObtenirPressupostService;
+import cat.informaticassa.icfact.pressupost.service.*;
+import cat.informaticassa.icfact.ui.components.dialogs.FacturaDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.PressupostDialog;
 import cat.informaticassa.icfact.pressupost.model.EstatPressupost;
-import cat.informaticassa.icfact.pressupost.service.CanviarEstatPressupostService;
 import cat.informaticassa.icfact.ui.util.Alerta;
 import javafx.animation.PauseTransition;
 import javafx.stage.Stage;
@@ -20,6 +19,7 @@ public class PressupostEvents {
     private final ObtenirPressupostService obtenirPressupostService = new ObtenirPressupostService();
     private final DuplicarPressupostService duplicarPressupostService = new DuplicarPressupostService();
     private final CanviarEstatPressupostService canviarEstatPressupostService = new CanviarEstatPressupostService();
+    private final ConvertirPressupostAFacturaService convertirPressupostAFacturaService = new ConvertirPressupostAFacturaService();
 
     public PressupostEvents(PressupostController controller) {
         this.controller = controller;
@@ -91,9 +91,39 @@ public class PressupostEvents {
         });
 
         controller.getPagina().getTaula().setOnCrearFactura(pressupost -> {
-            // TODO Crear factura
-        });
+            Stage stage = (Stage) controller.getPagina().getScene().getWindow();
+            boolean confirmar = Alerta.confirmar(stage,"Convertir pressupost","Vols convertir el pressupost "
+                            + pressupost.getNumero() + " en una factura?");
+            if (!confirmar) {
+                return;
+            }
+            try {
+                Factura factura = convertirPressupostAFacturaService.preparar(pressupost.getId());
+                FacturaDialog dialog = new FacturaDialog(factura, true);
+                dialog.initOwner(stage);
+                dialog.showAndWait();
+                if (dialog.isDesadaCorrectament()) {
+                    convertirPressupostAFacturaService.marcarPressupostFacturat(pressupost.getId());
+                    controller.buscar(
+                            controller.getPagina()
+                                    .getToolbar()
+                                    .getTxtBuscar()
+                                    .getText(),
+                            controller.getPagina()
+                                    .getToolbar()
+                                    .getChkActius()
+                                    .isSelected(),
+                            controller.getPagina()
+                                    .getToolbar()
+                                    .getChkInactius()
+                                    .isSelected()
+                    );
+                }
 
+            } catch (Exception ex) {
+                Alerta.error(stage,ex.getMessage());
+            }
+        });
     }
 
     private void filtrar() {

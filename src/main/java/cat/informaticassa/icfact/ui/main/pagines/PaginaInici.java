@@ -4,6 +4,7 @@ package cat.informaticassa.icfact.ui.main.pagines;
 import cat.informaticassa.icfact.BuildInfo;
 import cat.informaticassa.icfact.ui.components.Card;
 import cat.informaticassa.icfact.ui.components.dialogs.ClientDialog;
+import cat.informaticassa.icfact.ui.components.dialogs.FacturaDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.PressupostDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.ProducteDialog;
 import cat.informaticassa.icfact.ui.main.components.ActionCard;
@@ -45,6 +46,12 @@ public class PaginaInici extends VBox {
         });
 
         ActionCard novaFactura = new ActionCard("Nova factura", "factura_card.png");
+        novaFactura.setOnMouseClicked(e -> {
+            FacturaDialog dialog = new FacturaDialog();
+            dialog.initOwner((Stage) getScene().getWindow());
+            dialog.showAndWait();
+        });
+
         ActionCard pressupostosPendents = new ActionCard("Pressupostos pendents", "pressupost_pendent_card.png");
         ActionCard facturesPendents = new ActionCard("Factures pendents", "factura_pendent_card.png");
 

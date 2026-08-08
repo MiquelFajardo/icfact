@@ -44,9 +44,6 @@ public class Adreca {
     @JoinColumn(name = "poblacio_id")
     private Poblacio poblacio;
 
-    @Column(length = 10)
-    private String codiPostal;
-
     public String getAdrecaCompleta() {
         StringBuilder sb = new StringBuilder();
         if (carrer != null && !carrer.isBlank()) {

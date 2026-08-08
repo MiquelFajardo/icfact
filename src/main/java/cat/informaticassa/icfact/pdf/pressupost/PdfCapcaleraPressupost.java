@@ -12,7 +12,6 @@ import com.lowagie.text.pdf.PdfPTable;
 
 import java.awt.*;
 
-
 public class PdfCapcaleraPressupost {
 
     public void afegir(Document document, Pressupost pressupost, Empresa empresa) {
@@ -44,7 +43,11 @@ public class PdfCapcaleraPressupost {
             barra.setFixedHeight(35f);
 
             PdfPCell textTitol = new PdfPCell(
-                    new Phrase("PRESSUPOST", PdfFonts.titolGran(colorEmpresa)));
+                    new Phrase(
+                            "PRESSUPOST",
+                            PdfFonts.titolGran(colorEmpresa)
+                    )
+            );
 
             textTitol.setBorder(Rectangle.NO_BORDER);
             textTitol.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -59,18 +62,35 @@ public class PdfCapcaleraPressupost {
             dades.setWidths(new float[]{30, 70});
             dades.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
-            dades.addCell(new Phrase("Número", PdfFonts.etiqueta(colorEmpresa)));
-            dades.addCell(new Phrase(pressupost.getNumero(), subtitol));
+            dades.addCell(new Phrase(
+                    "Número",
+                    PdfFonts.etiqueta(colorEmpresa)
+            ));
 
-            dades.addCell(new Phrase("Data", PdfFonts.etiqueta(colorEmpresa)));
+            dades.addCell(new Phrase(
+                    pressupost.getNumero(),
+                    subtitol
+            ));
+
+            dades.addCell(new Phrase(
+                    "Data",
+                    PdfFonts.etiqueta(colorEmpresa)
+            ));
+
             dades.addCell(new Phrase(
                     PdfUtils.formatData(pressupost.getData()),
-                    subtitol));
+                    subtitol
+            ));
 
-            dades.addCell(new Phrase("Client", PdfFonts.etiqueta(colorEmpresa)));
+            dades.addCell(new Phrase(
+                    "Client",
+                    PdfFonts.etiqueta(colorEmpresa)
+            ));
+
             dades.addCell(new Phrase(
                     pressupost.getClient().getNom(),
-                    subtitol));
+                    subtitol
+            ));
 
             esquerra.addElement(new Paragraph(" "));
             esquerra.addElement(dades);
@@ -85,11 +105,13 @@ public class PdfCapcaleraPressupost {
 
             dreta.addElement(new Paragraph(
                     empresa.getNom(),
-                    PdfFonts.nomEmpresa(colorEmpresa)));
+                    PdfFonts.nomEmpresa(colorEmpresa)
+            ));
 
             dreta.addElement(new Paragraph(
                     empresa.getDescripcio(),
-                    normal));
+                    normal
+            ));
 
             PdfPTable dadesEmpresa = new PdfPTable(1);
             dadesEmpresa.setWidthPercentage(100);
@@ -97,25 +119,56 @@ public class PdfCapcaleraPressupost {
 
             dadesEmpresa.addCell(new Phrase(
                     empresa.getAdreca().getAdrecaCompleta(),
-                    normal));
+                    normal
+            ));
+
+            String codiPostal = "";
+            String poblacio = "";
+
+            if (empresa.getAdreca().getPoblacio() != null) {
+
+                codiPostal = empresa.getAdreca()
+                        .getPoblacio()
+                        .getCodiPostal()
+                        .stream()
+                        .findFirst()
+                        .orElse("");
+
+                poblacio = empresa.getAdreca()
+                        .getPoblacio()
+                        .getNom();
+            }
+
+            String cpPoblacio = codiPostal;
+
+            if (!poblacio.isBlank()) {
+
+                if (!cpPoblacio.isBlank()) {
+                    cpPoblacio += " - ";
+                }
+
+                cpPoblacio += poblacio;
+            }
 
             dadesEmpresa.addCell(new Phrase(
-                    empresa.getAdreca().getPoblacio().getCodiPostal()
-                            + " - "
-                            + empresa.getAdreca().getPoblacio().getNom(),
-                    normal));
+                    cpPoblacio,
+                    normal
+            ));
 
             dadesEmpresa.addCell(new Phrase(
                     empresa.getTelefon(),
-                    normal));
+                    normal
+            ));
 
             dadesEmpresa.addCell(new Phrase(
                     empresa.getWeb(),
-                    normal));
+                    normal
+            ));
 
             dadesEmpresa.addCell(new Phrase(
                     empresa.getEmail(),
-                    normal));
+                    normal
+            ));
 
             dreta.addElement(dadesEmpresa);
 
