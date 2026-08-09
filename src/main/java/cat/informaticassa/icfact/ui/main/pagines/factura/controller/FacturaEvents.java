@@ -4,6 +4,8 @@ import cat.informaticassa.icfact.factura.model.EstatFactura;
 import cat.informaticassa.icfact.factura.model.Factura;
 import cat.informaticassa.icfact.factura.service.*;
 import cat.informaticassa.icfact.ui.components.dialogs.FacturaDialog;
+import cat.informaticassa.icfact.ui.components.dialogs.PagamentDialog;
+import cat.informaticassa.icfact.ui.components.dialogs.PagamentsDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
 import javafx.animation.PauseTransition;
 import javafx.stage.Stage;
@@ -76,33 +78,46 @@ public class FacturaEvents {
             }
         });
 
-        controller.getPagina().getTaula().setOnCobrar(factura -> {
-            boolean resposta = Alerta.confirmar((Stage) controller.getPagina().getScene().getWindow(),
-                    "Cobrar factura","Vols marcar aquesta factura com a COBRADA?");
-            if (!resposta) {
+        controller.getPagina().getTaula().setOnAnullar(factura -> {
+            Stage stage =(Stage) controller.getPagina().getScene().getWindow();
+            if (factura.getPagaments() != null && !factura.getPagaments().isEmpty()) {
+                Alerta.error(stage,"No es pot anul·lar una factura que té pagaments.");
                 return;
             }
-            try {
-                canviarEstatFacturaService.executar(factura.getId(), EstatFactura.COBRADA );
-                regenerarPdf(factura.getId());
-                buscar(controller.getPagina() .getToolbar().getTxtBuscar().getText());
-            } catch (Exception ex) {
-                Alerta.error((Stage) controller.getPagina().getScene().getWindow(), ex.getMessage());
-            }
-        });
-
-        controller.getPagina().getTaula().setOnAnullar(factura -> {
-            boolean resposta = Alerta.confirmar((Stage) controller.getPagina().getScene().getWindow(),
-                    "Anul·lar factura","Vols anul·lar aquesta factura?");
+            boolean resposta = Alerta.confirmar(stage,"Anul·lar factura","Vols anul·lar aquesta factura?");
             if (!resposta) {
                 return;
             }
             try {
                 canviarEstatFacturaService.executar(factura.getId(), EstatFactura.ANULADA);
                 regenerarPdf(factura.getId());
+                buscar(controller.getPagina().getToolbar().getTxtBuscar().getText()
+                );
+            } catch (Exception ex) {
+                Alerta.error(stage, ex.getMessage());
+            }
+        });
+
+        controller.getPagina().getTaula().setOnAfegirPagament(factura -> {
+            Stage stage = (Stage) controller.getPagina().getScene().getWindow();
+            try {
+                PagamentDialog dialog = new PagamentDialog(factura);
+                dialog.initOwner(stage);
+                dialog.showAndWait();
                 buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
             } catch (Exception ex) {
-                Alerta.error((Stage) controller.getPagina().getScene().getWindow(), ex.getMessage());
+                Alerta.error(stage, ex.getMessage());
+            }
+        });
+
+        controller.getPagina().getTaula().setOnVeurePagaments(factura -> {
+            Stage stage = (Stage) controller.getPagina().getScene().getWindow();
+            try {
+                PagamentsDialog dialog = new PagamentsDialog(factura);
+                dialog.initOwner(stage);
+                dialog.showAndWait();
+            } catch (Exception ex) {
+                Alerta.error(stage, ex.getMessage());
             }
         });
     }
@@ -110,7 +125,6 @@ public class FacturaEvents {
     private void filtrar() {
         boolean actives = controller.getPagina().getToolbar().getChkActius().isSelected();
         boolean inactives = controller.getPagina().getToolbar().getChkInactius().isSelected();
-
         if (!actives && !inactives) {
             controller.getPagina().getToolbar().getChkActius().setSelected(true);
             actives = true;

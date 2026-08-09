@@ -7,6 +7,7 @@ import cat.informaticassa.icfact.factura.service.CrearFacturaService;
 import cat.informaticassa.icfact.infraestructura.model.TipusDocument;
 import cat.informaticassa.icfact.infraestructura.service.GenerarNumeroDocumentService;
 import cat.informaticassa.icfact.infraestructura.service.ObtenirSeguentNumeroDocumentService;
+import cat.informaticassa.icfact.pagament.repository.PagamentRepository;
 import cat.informaticassa.icfact.pressupost.exception.PressupostNoExisteixException;
 import cat.informaticassa.icfact.pressupost.model.EstatPressupost;
 import cat.informaticassa.icfact.pressupost.model.LiniaPressupost;
@@ -17,19 +18,21 @@ import java.time.LocalDate;
 import java.time.Year;
 
 public class ConvertirPressupostAFacturaService {
-
     private final PressupostRepository repository = new PressupostRepository();
     private final CrearFacturaService crearFacturaService = new CrearFacturaService();
     private final ObtenirSeguentNumeroDocumentService numeroService = new ObtenirSeguentNumeroDocumentService();
+    private final PagamentRepository pagamentRepository = new PagamentRepository();
 
     public Factura executar(Long pressupostId) {
-        Pressupost pressupost = repository.buscarPerIdAmbLinies(pressupostId)
-                .orElseThrow(() -> new PressupostNoExisteixException("El pressupost no existeix."));
+        Pressupost pressupost = repository.buscarPerIdAmbLinies(pressupostId).orElseThrow(() ->
+                        new PressupostNoExisteixException("El pressupost no existeix."));
         Factura factura = new Factura();
         factura.setData(pressupost.getData());
-        factura.setEstat(cat.informaticassa.icfact.factura.model.EstatFactura.ESBORRANY);
+        factura.setEstat(EstatFactura.ESBORRANY);
         factura.setClient(pressupost.getClient());
         factura.setObservacions(pressupost.getObservacions());
+        factura.setFormaPagament(pressupost.getFormaPagament());
+
         for (LiniaPressupost origen : pressupost.getLinies()) {
             LiniaFactura linia = new LiniaFactura();
             linia.setFactura(factura);
@@ -42,18 +45,20 @@ public class ConvertirPressupostAFacturaService {
             linia.setActiu(true);
             factura.getLinies().add(linia);
         }
+
         Factura resultat = crearFacturaService.executar(factura);
+        pagamentRepository.associarPagamentsAFactura(pressupost, resultat);
         pressupost.setEstat(EstatPressupost.FACTURAT);
         repository.actualitzar(pressupost);
-
         return resultat;
     }
+
     public Factura preparar(Long pressupostId) {
         Pressupost pressupost = repository.buscarPerIdAmbLinies(pressupostId).orElseThrow(() -> new PressupostNoExisteixException("El pressupost no existeix."));
         Factura factura = new Factura();
-
         long numero = numeroService.obtenir(Year.now().getValue(), TipusDocument.FACTURA);
         factura.setNumero(GenerarNumeroDocumentService.generar("F", numero));
+        factura.setPressupost(pressupost);
         factura.setData(LocalDate.now());
         factura.setEstat(EstatFactura.ESBORRANY);
         factura.setClient(pressupost.getClient());
@@ -78,8 +83,7 @@ public class ConvertirPressupostAFacturaService {
     }
 
     public void marcarPressupostFacturat(Long pressupostId) {
-        Pressupost pressupost = repository.buscarPerIdAmbLinies(pressupostId).orElseThrow(() ->
-                        new PressupostNoExisteixException("El pressupost no existeix."));
+        Pressupost pressupost = repository.buscarPerIdAmbLinies(pressupostId).orElseThrow(() -> new PressupostNoExisteixException("El pressupost no existeix."));
         pressupost.setEstat(EstatPressupost.FACTURAT);
         repository.actualitzar(pressupost);
     }

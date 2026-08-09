@@ -25,7 +25,7 @@ import lombok.Getter;
 public class MainView extends BorderPane {
     private final WorkArea workArea = new WorkArea();
     private final TopBar topBar;
-    private final PaginaInici paginaInici = new PaginaInici();
+    private final PaginaInici paginaInici;
     private final DadesEmpresa paginaEmpresa = new DadesEmpresa();
     private final PaginaClients paginaClients = new PaginaClients();
     private final PaginaProductes paginaProductes = new PaginaProductes();
@@ -43,6 +43,8 @@ public class MainView extends BorderPane {
 
         topBar = new TopBar(empresa.getNom());
         controller = new MainController(this);
+        paginaInici = new PaginaInici();
+        paginaInici.setOnFacturesPendents(controller::obrirFacturesPendents);
         topBar.setOnSortir(controller::sortirAplicacio);
         sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene == null) {
@@ -94,5 +96,10 @@ public class MainView extends BorderPane {
     public void mostrarFactures(Client client) {
         mostrarPagina(MenuPrincipal.FACTURES);
         paginaFactures.getController().mostrarFacturesClient(client);
+    }
+
+    public void mostrarFacturesPendents() {
+        paginaFactures.getController().mostrarFacturesPendents();
+        workArea.mostrar(paginaFactures);
     }
 }

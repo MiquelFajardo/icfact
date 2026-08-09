@@ -4,13 +4,14 @@ import cat.informaticassa.icfact.pagament.model.Pagament;
 import cat.informaticassa.icfact.pagament.repository.PagamentRepository;
 
 public class ModificarPagamentService {
-
-    private final PagamentRepository repository = new PagamentRepository();
-    private final ModificarEstatFacturaPagamentService actualitzarService =
-            new ModificarEstatFacturaPagamentService();
+    private final PagamentRepository repository =  new PagamentRepository();
+    private final ActualitzarEstatPagamentService actualitzarEstatService = new ActualitzarEstatPagamentService();
 
     public void executar(Pagament pagament) {
+        if (pagament.getPressupost() == null && pagament.getFactura() == null) {
+            throw new IllegalArgumentException("El pagament ha d'estar relacionat amb un pressupost o una factura.");
+        }
         repository.actualitzar(pagament);
-        actualitzarService.executar(pagament.getFactura());
+        actualitzarEstatService.executar(pagament);
     }
 }
