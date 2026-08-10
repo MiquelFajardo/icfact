@@ -1,5 +1,7 @@
 package cat.informaticassa.icfact.ui.main.components;
 
+import cat.informaticassa.icfact.ui.components.dialogs.TascaDialog;
+import cat.informaticassa.icfact.ui.main.view.MainView;
 import cat.informaticassa.icfact.ui.tema.Tema;
 import cat.informaticassa.icfact.ui.util.MenuPrincipal;
 import javafx.geometry.Insets;
@@ -42,7 +44,7 @@ public class Sidebar extends VBox {
         botoGeografia = new SidebarButton("Geografia", "geografia.png");
 
         botoInformes = new SidebarButton("Informes", "informes.png");
-        botoTasca = new SidebarButton("Tasques", "tasca.png");
+        botoTasca = new SidebarButton("Tasca nova", "tasca.png");
 
         botoCopiaSeguretat = new SidebarButton("Còpia de seguretat", "copia_seguretat.png");
         botoDadesEmpresa = new SidebarButton("Dades empresa", "configuracio.png");
@@ -119,9 +121,13 @@ public class Sidebar extends VBox {
             onMenuClick.accept(MenuPrincipal.TASCA);
         });
 
-        botoCopiaSeguretat.setOnAction(e -> {
-            seleccionarBoto(botoCopiaSeguretat);
-            onMenuClick.accept(MenuPrincipal.COPIA_SEGURETAT);
+        botoTasca.setOnAction(e -> {
+            seleccionarBoto(botoTasca);
+            TascaDialog dialog = new TascaDialog();
+            dialog.initOwner(botoTasca.getScene().getWindow());
+            dialog.showAndWait();
+            MainView mainView = (MainView) botoTasca.getScene().getWindow().getScene().getRoot();
+            mainView.getController().refrescarTasquesSiEstemAInici();
         });
 
         botoDadesEmpresa.setOnAction(e -> {

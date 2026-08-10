@@ -18,7 +18,9 @@ import javafx.stage.Stage;
 import lombok.Setter;
 
 public class PaginaInici extends VBox {
+    @Setter
     private Runnable onFacturesPendents;
+    private final TasquesPendentsCardView tasquesPendents = new TasquesPendentsCardView();
 
     public PaginaInici() {
         setSpacing(25);
@@ -95,7 +97,7 @@ public class PaginaInici extends VBox {
         // Tasques
         //--------------------------------------------------
 
-        Card cardTasques = new Card("Tasques pendents",new TasquesPendentsCardView());
+        Card cardTasques = new Card("Tasques pendents", tasquesPendents);
 
         // Visualització
         Region espai = new Region();
@@ -112,7 +114,8 @@ public class PaginaInici extends VBox {
         );
     }
 
-    public void setOnFacturesPendents(Runnable onFacturesPendents) {
-        this.onFacturesPendents = onFacturesPendents;
+    public void refrescarTasques() {
+        tasquesPendents.carregar();
     }
+
 }

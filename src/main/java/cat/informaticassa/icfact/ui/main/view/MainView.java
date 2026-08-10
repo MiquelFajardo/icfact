@@ -60,7 +60,7 @@ public class MainView extends BorderPane {
                 });
             });
         });
-        Sidebar sidebar = new Sidebar(controller::canviarPagina);
+       Sidebar sidebar = new Sidebar(controller::canviarPagina);
         setTop(topBar);
         setLeft(sidebar);
         setCenter(workArea);
@@ -69,7 +69,10 @@ public class MainView extends BorderPane {
 
     public void mostrarPagina(MenuPrincipal pagina) {
         switch (pagina) {
-            case INICI -> workArea.mostrar(paginaInici);
+            case INICI -> {
+                paginaInici.refrescarTasques();
+                workArea.mostrar(paginaInici);
+            }
             case DADES_EMPRESA -> workArea.mostrar(paginaEmpresa);
             case CLIENTS -> workArea.mostrar(paginaClients);
             case PRODUCTES -> workArea.mostrar(paginaProductes);

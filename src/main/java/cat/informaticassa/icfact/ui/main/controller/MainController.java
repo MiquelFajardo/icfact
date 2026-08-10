@@ -31,6 +31,13 @@ public class MainController {
         view.mostrarPagina(pagina);
     }
 
+    public void refrescarTasquesSiEstemAInici() {
+        Node actual = view.getWorkArea().getPaginaActual();
+        if (actual == view.getPaginaInici()) {
+            view.getPaginaInici().refrescarTasques();
+        }
+    }
+
 
     public void sortirAplicacio() {
         Node actual = view.getWorkArea().getPaginaActual();
