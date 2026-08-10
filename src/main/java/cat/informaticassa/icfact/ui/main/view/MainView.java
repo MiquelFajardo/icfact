@@ -12,6 +12,7 @@ import cat.informaticassa.icfact.ui.main.pagines.empresa.DadesEmpresa;
 import cat.informaticassa.icfact.ui.main.pagines.factura.PaginaFactures;
 import cat.informaticassa.icfact.ui.main.pagines.formaPagament.PaginaFormesPagament;
 import cat.informaticassa.icfact.ui.main.pagines.geografia.PaginaGeografia;
+import cat.informaticassa.icfact.ui.main.pagines.informe.PaginaInformes;
 import cat.informaticassa.icfact.ui.main.pagines.iva.PaginaIVA;
 import cat.informaticassa.icfact.ui.main.pagines.pressupost.PaginaPressupostos;
 import cat.informaticassa.icfact.ui.main.pagines.producte.PaginaProductes;
@@ -34,6 +35,7 @@ public class MainView extends BorderPane {
     private final PaginaPressupostos paginaPressupostos = new PaginaPressupostos();
     private final PaginaFactures paginaFactures = new PaginaFactures();
     private final PaginaGeografia paginaGeografia = new PaginaGeografia();
+    private final PaginaInformes paginaInformes = new PaginaInformes();
     private final MainController controller;
 
     public MainView(Empresa empresa) {
@@ -87,6 +89,10 @@ public class MainView extends BorderPane {
                 workArea.mostrar(paginaFactures);
             }
             case GEOGRAFIA -> workArea.mostrar(paginaGeografia);
+            case INFORMES -> {
+                paginaInformes.carregar();
+                workArea.mostrar(paginaInformes);
+            }
             default -> workArea.mostrar(paginaInici);
         }
     }

@@ -57,10 +57,6 @@ public class PaginaInici extends VBox {
             dialog.showAndWait();
         });
 
-        ActionCard pressupostosPendents = new ActionCard("Pressupostos pendents", "pressupost_pendent_card.png");
-
-
-
         ActionCard facturesPendents = new ActionCard("Factures pendents", "factura_pendent_card.png");
         facturesPendents.setOnMouseClicked(e -> {
             if (onFacturesPendents != null) {
@@ -83,13 +79,13 @@ public class PaginaInici extends VBox {
         });
 
         graellaAccions.add(nouPressupost, 0, 0);
-        graellaAccions.add(novaFactura, 1, 0);
+        graellaAccions.add(nouArticle, 0, 1);
 
-        graellaAccions.add(pressupostosPendents, 0, 1);
+        graellaAccions.add(novaFactura, 1, 0);
         graellaAccions.add(facturesPendents, 1, 1);
 
         graellaAccions.add(nouClient, 2, 0);
-        graellaAccions.add(nouArticle, 2, 1);
+
 
        Card cardAccions = new Card(null, graellaAccions);
 

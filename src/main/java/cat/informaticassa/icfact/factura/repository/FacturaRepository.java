@@ -226,4 +226,26 @@ public class FacturaRepository extends AbstractActivableRepository<Factura, Long
                     .list();
         }
     }
+
+    public List<Factura> buscarPeriodePerInforme(LocalDate desDe, LocalDate finsA) {
+        try (var session = obrirSessio()) {
+            return session.createQuery("""
+                SELECT DISTINCT f
+                FROM Factura f
+                LEFT JOIN FETCH f.client
+                LEFT JOIN FETCH f.linies l
+                LEFT JOIN FETCH l.iva
+                WHERE f.actiu = true
+                AND f.estat IN (
+                    cat.informaticassa.icfact.factura.model.EstatFactura.EMESA,
+                    cat.informaticassa.icfact.factura.model.EstatFactura.COBRADA
+                )
+                AND f.data BETWEEN :desDe AND :finsA
+                ORDER BY f.data DESC, f.numero DESC
+                """, Factura.class)
+                    .setParameter("desDe", desDe)
+                    .setParameter("finsA", finsA)
+                    .list();
+        }
+    }
 }
