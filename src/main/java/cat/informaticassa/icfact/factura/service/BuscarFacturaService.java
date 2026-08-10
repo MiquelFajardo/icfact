@@ -29,4 +29,8 @@ public class BuscarFacturaService {
     public List<Factura> buscar(String text, boolean actives, boolean inactives, Client client) {
         return repository.buscar(text, actives, inactives, client );
     }
+
+    public List<Factura> buscarPendents() {
+        return repository.buscarPendents();
+    }
 }

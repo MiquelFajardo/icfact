@@ -4,6 +4,7 @@ import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
 import cat.informaticassa.icfact.infraestructura.model.Activable;
 import cat.informaticassa.icfact.pagament.model.Pagament;
+import cat.informaticassa.icfact.pressupost.model.Pressupost;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,7 +19,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "FACTURA")
 public class Factura implements Activable {
@@ -65,8 +65,12 @@ public class Factura implements Activable {
     @JoinColumn(name = "forma_pagament_id")
     private FormaPagament formaPagament;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pressupost_id")
+    private Pressupost pressupost;
+
     @Builder.Default
-    @OneToMany(mappedBy = "factura",cascade = CascadeType.ALL, orphanRemoval = false)
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
     private List<Pagament> pagaments = new ArrayList<>();
 
     @Column
@@ -81,5 +85,4 @@ public class Factura implements Activable {
 
     @Column(nullable = false)
     private LocalDateTime dataModificacio;
-
 }

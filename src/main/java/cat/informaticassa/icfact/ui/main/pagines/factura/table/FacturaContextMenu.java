@@ -13,18 +13,19 @@ import java.util.function.Consumer;
 @Getter
 @Setter
 public class FacturaContextMenu extends ContextMenu {
-
     private Consumer<Factura> onModificar;
     private Consumer<Factura> onObrirPdf;
     private Consumer<Factura> onDuplicar;
-    private Consumer<Factura> onCobrar;
+    private Consumer<Factura> onAfegirPagament;
+    private Consumer<Factura> onVeurePagaments;
     private Consumer<Factura> onAnullar;
 
     public FacturaContextMenu(Factura factura) {
         MenuItem obrirPdf = new MenuItem("📄 Obrir PDF");
         MenuItem modificar = new MenuItem("✏ Editar");
         MenuItem duplicar = new MenuItem("📑 Duplicar");
-        MenuItem cobrar = new MenuItem("💰 Cobrar");
+        MenuItem afegirPagament = new MenuItem("💶 Afegir pagament");
+        MenuItem veurePagaments = new MenuItem("💳 Veure pagaments");
         MenuItem anullar = new MenuItem("❌ Anul·lar");
 
         obrirPdf.setOnAction(e -> {
@@ -45,9 +46,15 @@ public class FacturaContextMenu extends ContextMenu {
             }
         });
 
-        cobrar.setOnAction(e -> {
-            if (onCobrar != null) {
-                onCobrar.accept(factura);
+        afegirPagament.setOnAction(e -> {
+            if (onAfegirPagament != null) {
+                onAfegirPagament.accept(factura);
+            }
+        });
+
+        veurePagaments.setOnAction(e -> {
+            if (onVeurePagaments != null) {
+                onVeurePagaments.accept(factura);
             }
         });
 
@@ -57,40 +64,35 @@ public class FacturaContextMenu extends ContextMenu {
             }
         });
 
-        getItems().addAll(
-                obrirPdf,
-                modificar,
-                duplicar,
-                new SeparatorMenuItem(),
-                cobrar,
-                anullar
-        );
+        getItems().addAll(obrirPdf, modificar, duplicar, afegirPagament, veurePagaments, new SeparatorMenuItem(), anullar);
 
         switch (factura.getEstat()) {
             case ESBORRANY -> {
                 obrirPdf.setDisable(true);
-                cobrar.setDisable(true);
+                afegirPagament.setDisable(true);
+                veurePagaments.setDisable(true);
                 anullar.setDisable(true);
             }
-
-            case EMESA -> { }
-
+            case EMESA -> {
+                anullar.setDisable(factura.getPagaments() != null && !factura.getPagaments().isEmpty());
+            }
             case COBRADA -> {
                 modificar.setDisable(true);
-                cobrar.setDisable(true);
+                afegirPagament.setDisable(true);
                 anullar.setDisable(true);
+                veurePagaments.setDisable(factura.getPagaments() == null || factura.getPagaments().isEmpty());
             }
-
             case ANULADA -> {
-                cobrar.setDisable(true);
+                afegirPagament.setDisable(true);
                 anullar.setDisable(true);
+                veurePagaments.setDisable(factura.getPagaments() == null || factura.getPagaments().isEmpty());
             }
         }
 
         if (!factura.isActiu()) {
             modificar.setDisable(true);
             duplicar.setDisable(true);
-            cobrar.setDisable(true);
+            afegirPagament.setDisable(true);
             anullar.setDisable(true);
         }
     }

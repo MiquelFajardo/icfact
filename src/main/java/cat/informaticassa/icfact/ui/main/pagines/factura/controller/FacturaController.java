@@ -50,5 +50,11 @@ public class FacturaController {
         pagina.getTaula().mostrar(buscarFacturaService.buscar(text.trim(), actives, inactives, client));
     }
 
-
+    public void mostrarFacturesPendents() {
+        clientFiltrat = null;
+        pagina.getToolbar().treureClient();
+        pagina.getToolbar().getChkActius().setSelected(true);
+        pagina.getToolbar().getChkInactius().setSelected(false);
+        pagina.getTaula().mostrar(buscarFacturaService.buscarPendents());
+    }
 }

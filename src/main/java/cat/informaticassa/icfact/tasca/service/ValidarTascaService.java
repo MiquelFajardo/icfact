@@ -1,22 +1,23 @@
 package cat.informaticassa.icfact.tasca.service;
 
-import cat.informaticassa.icfact.tasca.exception.TascaException;
 import cat.informaticassa.icfact.tasca.model.Tasca;
+
+import java.time.LocalDate;
 
 public class ValidarTascaService {
 
     public void executar(Tasca tasca) {
 
         if (tasca == null) {
-            throw new TascaException("La tasca no pot ser nul·la.");
+            throw new IllegalArgumentException("La tasca no pot ser nul·la." );
         }
 
         if (tasca.getTitol() == null || tasca.getTitol().isBlank()) {
-            throw new TascaException("El títol de la tasca és obligatori.");
+            throw new IllegalArgumentException("El títol de la tasca és obligatori.");
         }
 
-        if (tasca.getTitol().length() > 150) {
-            throw new TascaException("El títol no pot superar els 150 caràcters.");
+        if (tasca.getDataLimit() != null && tasca.getDataLimit().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("La data límit no pot ser anterior a avui.");
         }
     }
 }

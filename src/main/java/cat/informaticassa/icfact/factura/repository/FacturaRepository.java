@@ -202,4 +202,28 @@ public class FacturaRepository extends AbstractActivableRepository<Factura, Long
             return ultimNumero == null ? 1 : ultimNumero + 1;
         }
     }
+
+    public List<Factura> buscarPendents() {
+        try (var session = obrirSessio()) {
+            return session.createQuery("""
+                SELECT DISTINCT f
+                FROM Factura f
+                LEFT JOIN FETCH f.client
+                LEFT JOIN FETCH f.formaPagament
+                WHERE f.actiu = true
+                AND f.estat = cat.informaticassa.icfact.factura.model.EstatFactura.EMESA
+                AND f.total > COALESCE(
+                    (
+                        SELECT SUM(p.importPagat)
+                        FROM Pagament p
+                        WHERE p.factura = f
+                        AND p.actiu = true
+                    ),
+                    0
+                )
+                ORDER BY f.data DESC, f.numero DESC
+                """, Factura.class)
+                    .list();
+        }
+    }
 }

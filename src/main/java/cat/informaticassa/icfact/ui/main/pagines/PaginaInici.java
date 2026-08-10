@@ -15,8 +15,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import lombok.Setter;
 
 public class PaginaInici extends VBox {
+    @Setter
+    private Runnable onFacturesPendents;
+    private final TasquesPendentsCardView tasquesPendents = new TasquesPendentsCardView();
+
     public PaginaInici() {
         setSpacing(25);
         setPadding(new Insets(30));
@@ -53,7 +58,15 @@ public class PaginaInici extends VBox {
         });
 
         ActionCard pressupostosPendents = new ActionCard("Pressupostos pendents", "pressupost_pendent_card.png");
+
+
+
         ActionCard facturesPendents = new ActionCard("Factures pendents", "factura_pendent_card.png");
+        facturesPendents.setOnMouseClicked(e -> {
+            if (onFacturesPendents != null) {
+                onFacturesPendents.run();
+            }
+        });
 
         ActionCard nouClient = new ActionCard("Nou client", "clients_card.png");
         nouClient.setOnMouseClicked(e -> {
@@ -84,7 +97,7 @@ public class PaginaInici extends VBox {
         // Tasques
         //--------------------------------------------------
 
-        Card cardTasques = new Card("Tasques pendents",new TasquesPendentsCardView());
+        Card cardTasques = new Card("Tasques pendents", tasquesPendents);
 
         // Visualització
         Region espai = new Region();
@@ -100,4 +113,9 @@ public class PaginaInici extends VBox {
                 versio
         );
     }
+
+    public void refrescarTasques() {
+        tasquesPendents.carregar();
+    }
+
 }

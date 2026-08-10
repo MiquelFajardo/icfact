@@ -13,20 +13,22 @@ import java.util.function.Consumer;
 @Getter
 @Setter
 public class PressupostContextMenu extends ContextMenu {
-
     private Consumer<Pressupost> onModificar;
     private Consumer<Pressupost> onObrirPdf;
     private Consumer<Pressupost> onDuplicar;
     private Consumer<Pressupost> onAcceptar;
     private Consumer<Pressupost> onRebutjar;
     private Consumer<Pressupost> onCrearFactura;
+    private Consumer<Pressupost> onAfegirPagament;
+    private Consumer<Pressupost> onVeurePagaments;
 
     public PressupostContextMenu(Pressupost pressupost) {
-
         MenuItem obrirPdf = new MenuItem("📄 Obrir PDF");
         MenuItem modificar = new MenuItem("✏ Editar");
         MenuItem duplicar = new MenuItem("📑 Duplicar");
-        MenuItem acceptar = new MenuItem("✔ Acceptar");
+        MenuItem afegirPagament = new MenuItem("💶 Afegir pagament");
+        MenuItem veurePagaments =  new MenuItem("💳 Veure pagaments");
+        MenuItem acceptar =  new MenuItem("✔ Acceptar");
         MenuItem rebutjar = new MenuItem("❌ Rebutjar");
         MenuItem crearFactura = new MenuItem("🧾 Crear factura");
 
@@ -48,6 +50,18 @@ public class PressupostContextMenu extends ContextMenu {
             }
         });
 
+        afegirPagament.setOnAction(e -> {
+            if (onAfegirPagament != null) {
+                onAfegirPagament.accept(pressupost);
+            }
+        });
+
+        veurePagaments.setOnAction(e -> {
+            if (onVeurePagaments != null) {
+                onVeurePagaments.accept(pressupost);
+            }
+        });
+
         acceptar.setOnAction(e -> {
             if (onAcceptar != null) {
                 onAcceptar.accept(pressupost);
@@ -66,19 +80,11 @@ public class PressupostContextMenu extends ContextMenu {
             }
         });
 
-        getItems().addAll(
-                obrirPdf,
-                modificar,
-                duplicar
-        );
+        getItems().addAll(obrirPdf, modificar, duplicar, afegirPagament, veurePagaments);
+        getItems().add(new SeparatorMenuItem());
 
         if (pressupost.isActiu()) {
-            getItems().add(new SeparatorMenuItem());
-            getItems().addAll(
-                    acceptar,
-                    rebutjar
-            );
-
+            getItems().addAll(acceptar, rebutjar);
             if (pressupost.getEstat() == EstatPressupost.ACCEPTAT) {
                 getItems().add(new SeparatorMenuItem());
                 getItems().add(crearFactura);
@@ -90,23 +96,30 @@ public class PressupostContextMenu extends ContextMenu {
                 obrirPdf.setDisable(true);
                 acceptar.setDisable(true);
                 rebutjar.setDisable(true);
+                afegirPagament.setDisable(true);
+                veurePagaments.setDisable(true);
             }
-
             case ENVIAT -> {
+                afegirPagament.setDisable(true);
+                veurePagaments.setDisable(pressupost.getPagaments() == null || pressupost.getPagaments().isEmpty());
             }
-
             case ACCEPTAT -> {
                 acceptar.setDisable(true);
+                afegirPagament.setDisable(false);
+                veurePagaments.setDisable(pressupost.getPagaments() == null || pressupost.getPagaments().isEmpty());
             }
-
             case REBUTJAT -> {
                 rebutjar.setDisable(true);
+                afegirPagament.setDisable(true);
+                veurePagaments.setDisable(pressupost.getPagaments() == null || pressupost.getPagaments().isEmpty());
             }
-
             case FACTURAT -> {
                 modificar.setDisable(true);
                 acceptar.setDisable(true);
                 rebutjar.setDisable(true);
+                afegirPagament.setDisable(true);
+                veurePagaments.setDisable( pressupost.getPagaments() == null || pressupost.getPagaments().isEmpty());
+                crearFactura.setDisable(true);
             }
         }
     }

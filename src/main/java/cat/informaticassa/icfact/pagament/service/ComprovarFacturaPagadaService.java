@@ -4,29 +4,25 @@ import cat.informaticassa.icfact.factura.model.EstatFactura;
 import cat.informaticassa.icfact.factura.model.Factura;
 import cat.informaticassa.icfact.factura.repository.FacturaRepository;
 import cat.informaticassa.icfact.pagament.repository.PagamentRepository;
-
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
-public class ModificarEstatFacturaPagamentService {
-
+public class ComprovarFacturaPagadaService {
     private final PagamentRepository pagamentRepository = new PagamentRepository();
     private final FacturaRepository facturaRepository = new FacturaRepository();
 
-    public void executar(Factura factura) {
+    public void executar(Long facturaId) {
+        Factura factura = facturaRepository.buscarPerIdIncloentInactius(facturaId).orElseThrow(() ->
+                        new IllegalArgumentException("La factura no existeix."));
 
-        factura = facturaRepository.buscarPerId(factura.getId()).orElseThrow();
-
+        if (factura.getEstat() == EstatFactura.ANULADA) {
+            return;
+        }
         BigDecimal importPagat = pagamentRepository.calcularImportPagat(factura);
-
         if (importPagat.compareTo(factura.getTotal()) >= 0) {
             factura.setEstat(EstatFactura.COBRADA);
-            if (factura.getDataCobrament() == null) {
-                factura.setDataCobrament(java.time.LocalDate.now());
-            }
-        } else {
-            factura.setEstat(EstatFactura.EMESA);
-            factura.setDataCobrament(null);
+            factura.setDataCobrament(LocalDate.now());
+            facturaRepository.actualitzar(factura);
         }
-        facturaRepository.actualitzar(factura);
     }
 }

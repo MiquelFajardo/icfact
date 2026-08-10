@@ -31,19 +31,13 @@ public class MainController {
         view.mostrarPagina(pagina);
     }
 
-    public void obrirPressupostos(Client client) {
-        canviarPagina(MenuPrincipal.PRESSUPOSTOS);
-        view.getPaginaPressupostos()
-                .getController()
-                .mostrarPressupostosClient(client);
+    public void refrescarTasquesSiEstemAInici() {
+        Node actual = view.getWorkArea().getPaginaActual();
+        if (actual == view.getPaginaInici()) {
+            view.getPaginaInici().refrescarTasques();
+        }
     }
 
-    public void obrirFactures(Client client) {
-        canviarPagina(MenuPrincipal.FACTURES);
-        view.getPaginaFactures()
-                .getController()
-                .treureFiltreClient();
-    }
 
     public void sortirAplicacio() {
         Node actual = view.getWorkArea().getPaginaActual();
@@ -62,5 +56,10 @@ public class MainController {
             return;
         }
         javafx.application.Platform.exit();
+    }
+
+    public void obrirFacturesPendents() {
+        canviarPagina(MenuPrincipal.FACTURES);
+        view.mostrarFacturesPendents();
     }
 }

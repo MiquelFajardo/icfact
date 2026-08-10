@@ -1,9 +1,9 @@
-
 package cat.informaticassa.icfact.pagament.model;
 
 import cat.informaticassa.icfact.factura.model.Factura;
 import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
 import cat.informaticassa.icfact.infraestructura.model.Activable;
+import cat.informaticassa.icfact.pressupost.model.Pressupost;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,17 +16,19 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Entity
 @Table(name = "PAGAMENT")
 public class Pagament implements Activable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "factura_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pressupost_id")
+    private Pressupost pressupost;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "factura_id")
     private Factura factura;
 
     @Column(nullable = false)
@@ -34,10 +36,6 @@ public class Pagament implements Activable {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal importPagat;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "forma_pagament_id", nullable = false)
-    private FormaPagament formaPagament;
 
     @Column(length = 100)
     private String referencia;
