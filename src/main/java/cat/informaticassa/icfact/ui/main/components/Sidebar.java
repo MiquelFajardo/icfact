@@ -1,13 +1,23 @@
 package cat.informaticassa.icfact.ui.main.components;
 
+import cat.informaticassa.icfact.infraestructura.service.CopiaSeguretatService;
+import cat.informaticassa.icfact.infraestructura.service.RestaurarCopiaSeguretatService;
 import cat.informaticassa.icfact.ui.components.dialogs.TascaDialog;
 import cat.informaticassa.icfact.ui.main.view.MainView;
 import cat.informaticassa.icfact.ui.tema.Tema;
+import cat.informaticassa.icfact.ui.util.Alerta;
 import cat.informaticassa.icfact.ui.util.MenuPrincipal;
 import javafx.geometry.Insets;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import lombok.Getter;
 
+import java.io.File;
+import java.time.LocalDate;
 import java.util.function.Consumer;
 
 @Getter
@@ -25,6 +35,8 @@ public class Sidebar extends VBox {
     private final SidebarButton botoCopiaSeguretat;
     private final SidebarButton botoDadesEmpresa;
     private final SidebarButton botoSobre;
+    private final CopiaSeguretatService copiaSeguretatService = new CopiaSeguretatService();
+    private final RestaurarCopiaSeguretatService restaurarCopiaSeguretatService = new RestaurarCopiaSeguretatService();
 
     public Sidebar(Consumer<MenuPrincipal> onMenuClick) {
         setPrefWidth(240);
@@ -130,6 +142,8 @@ public class Sidebar extends VBox {
             mainView.getController().refrescarTasquesSiEstemAInici();
         });
 
+        botoCopiaSeguretat.setOnAction(e -> mostrarDialogCopiaSeguretat());
+
         botoDadesEmpresa.setOnAction(e -> {
             seleccionarBoto(botoDadesEmpresa);
             onMenuClick.accept(MenuPrincipal.DADES_EMPRESA);
@@ -152,8 +166,77 @@ public class Sidebar extends VBox {
         botoGeografia.seleccionar(false);
         botoInformes.seleccionar(false);
         botoTasca.seleccionar(false);
+        botoCopiaSeguretat.seleccionar(false);
         botoDadesEmpresa.seleccionar(false);
         botoSobre.seleccionar(false);
         seleccionat.seleccionar(true);
+    }
+
+    private void mostrarDialogCopiaSeguretat() {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.initOwner(botoCopiaSeguretat.getScene().getWindow());
+        dialog.setTitle("Còpia de seguretat");
+        ButtonType botoCopia = new ButtonType("💾 Fer còpia", ButtonBar.ButtonData.OTHER);
+        ButtonType botoRestaurar = new ButtonType("♻ Restaurar", ButtonBar.ButtonData.OTHER);
+        ButtonType botoCancelar = new ButtonType("Cancel·lar", ButtonBar.ButtonData.CANCEL_CLOSE);
+        dialog.getDialogPane().getButtonTypes().addAll(botoCopia, botoRestaurar, botoCancelar);
+        dialog.setContentText("Què vols fer?");
+        var resultat = dialog.showAndWait();
+        if (resultat.isEmpty()) {
+            return;
+        }
+        if (resultat.get() == botoCopia) {
+            ferCopiaSeguretat();
+            return;
+        }
+        if (resultat.get() == botoRestaurar) {
+            restaurarCopiaSeguretat();
+        }
+    }
+
+    private void ferCopiaSeguretat() {
+        Window finestra =  botoCopiaSeguretat.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar còpia de seguretat");
+        fileChooser.setInitialFileName("empresa_backup_" + LocalDate.now() + ".db");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Base de dades SQLite (*.db)","*.db"));
+        File fitxer = fileChooser.showSaveDialog(finestra);
+        if (fitxer == null) {
+            return;
+        }
+        try {
+            copiaSeguretatService.executar(fitxer.toPath());
+            Alerta.informacio( finestra,"Còpia de seguretat","La còpia de seguretat s'ha creat correctament." );
+        } catch (Exception ex) {
+            Alerta.error(finestra, ex.getMessage());
+        }
+    }
+
+    private void restaurarCopiaSeguretat() {
+        Window finestra = botoCopiaSeguretat.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar còpia de seguretat");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Base de dades SQLite (*.db)","*.db"));
+        File fitxer = fileChooser.showOpenDialog(finestra);
+        if (fitxer == null) {
+            return;
+        }
+        boolean confirmar = Alerta.confirmar(finestra,"Restaurar còpia de seguretat",
+                "La base de dades actual serà substituïda per la còpia seleccionada.\n\n"
+                        + "ICFact es tancarà després de restaurar-la.\n\n"
+                        + "Vols continuar?"
+        );
+        if (!confirmar) {
+            return;
+        }
+        try {
+            restaurarCopiaSeguretatService.executar(fitxer.toPath());
+            Alerta.informacio(finestra,"Còpia restaurada",
+                    "La còpia de seguretat s'ha restaurat correctament.\n\n"
+                            + "ICFact es tancarà ara. Torna a iniciar-lo per continuar.");
+            javafx.application.Platform.exit();
+        } catch (Exception ex) {
+            Alerta.error( finestra, ex.getMessage());
+        }
     }
 }
