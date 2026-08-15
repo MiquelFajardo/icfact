@@ -10,7 +10,7 @@ public abstract class AbstractActivableRepository<T, ID>
         return "id";
     }
 
-    @Override
+
     public Optional<T> buscarPerId(ID id) {
         try (var session = obrirSessio()) {
             return session.createQuery("""

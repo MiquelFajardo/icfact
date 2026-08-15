@@ -8,20 +8,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class PoblacioRepository extends AbstractRepository<Poblacio, Long> {
-
-    @Override
-    public Optional<Poblacio> buscarPerId(Long id) {
-        try (var session = obrirSessio()) {
-            return session.createQuery("""
-                    SELECT p
-                    FROM Poblacio p
-                    JOIN FETCH p.provincia
-                    WHERE p.id = :id
-                    """, Poblacio.class).setParameter("id", id).uniqueResultOptional();
-        }
-    }
-
-
     public List<Poblacio> buscarPerProvincia(Provincia provincia) {
         try (var session = obrirSessio()) {
             return session.createQuery("""

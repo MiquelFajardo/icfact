@@ -5,12 +5,11 @@ import org.hibernate.Session;
 
 import java.lang.reflect.ParameterizedType;
 
-public abstract class AbstractRepository<T, ID> implements CrudRepository<T, ID> {
-
+public abstract class AbstractRepository<T, ID> {
     protected final Class<T> classe;
 
-    @SuppressWarnings("unchecked")
     protected AbstractRepository() {
+        //noinspection unchecked
         this.classe = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
@@ -18,7 +17,6 @@ public abstract class AbstractRepository<T, ID> implements CrudRepository<T, ID>
         return HibernateUtil.getSessionFactory().openSession();
     }
 
-    @Override
     public void guardar(T entitat) {
         try (Session session = obrirSessio()) {
             var tx = session.beginTransaction();
@@ -27,7 +25,6 @@ public abstract class AbstractRepository<T, ID> implements CrudRepository<T, ID>
         }
     }
 
-    @Override
     public void actualitzar(T entitat) {
         try (Session session = obrirSessio()) {
             var tx = session.beginTransaction();

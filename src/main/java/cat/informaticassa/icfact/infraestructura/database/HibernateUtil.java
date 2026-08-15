@@ -34,8 +34,4 @@ public final class HibernateUtil {
     public static void configurarProduccio() {
         configurarBaseDades(AppConfig.getBaseDadesProduccio());
     }
-
-    public static void configurarTest() {
-        configurarBaseDades(AppConfig.getBaseDadesTest());
-    }
 }

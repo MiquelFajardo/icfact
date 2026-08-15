@@ -5,14 +5,6 @@ import cat.informaticassa.icfact.infraestructura.repository.AbstractRepository;
 import java.util.Optional;
 
 public class EmpresaRepository extends AbstractRepository<Empresa, Long> {
-
-    @Override
-    public Optional<Empresa> buscarPerId(Long id) {
-        try (var session = obrirSessio()) {
-            return Optional.ofNullable(session.find(Empresa.class, id));
-        }
-    }
-
     public Optional<Empresa> buscar() {
         try (var session = obrirSessio()) {
             return session.createQuery("""

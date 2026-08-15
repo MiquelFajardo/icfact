@@ -7,14 +7,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class PaisRepository extends AbstractRepository<Pais, Long> {
-
-    @Override
-    public Optional<Pais> buscarPerId(Long id) {
-        try (var session = obrirSessio()) {
-            return Optional.ofNullable(session.find(Pais.class, id));
-        }
-    }
-
     public List<Pais> buscarTots() {
         try (var session = obrirSessio()) {
             return session.createQuery("""

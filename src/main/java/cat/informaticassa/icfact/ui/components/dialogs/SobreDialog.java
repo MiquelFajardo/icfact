@@ -61,8 +61,9 @@ public class SobreDialog extends DialogBase {
         contingut.setAlignment(Pos.CENTER);
         contingut.setPadding(new Insets(25, 30, 25, 30));
         getRoot().setCenter(contingut);
-        getBotoGuardar().setVisible(false);
-        getBotoGuardar().setManaged(false);
+        getBotons().getChildren().remove(getBotoCancelar());
+        getBotoGuardar().setText("✕ Tancar");
+        getBotoGuardar().setOnAction(e -> close());
         botoActualitzar.setOnAction(e -> comprovarActualitzacions());
         botoWhatsApp.setOnAction(e -> obrirWhatsApp());
         botoEmail.setOnAction(e -> obrirEmail());
