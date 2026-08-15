@@ -19,14 +19,6 @@ public class FormaPagamentController {
         pagina.getTaula().mostrar(buscarFormesPagamentService.buscarActius());
     }
 
-    public void carregarInactius() {
-        pagina.getTaula().mostrar(buscarFormesPagamentService.buscarInactius());
-    }
-
-    public void carregarTots() {
-        pagina.getTaula().mostrar(buscarFormesPagamentService.buscarTots());
-    }
-
     public void buscar(String text, boolean actius, boolean inactius) {
         if (text == null) {
             text = "";

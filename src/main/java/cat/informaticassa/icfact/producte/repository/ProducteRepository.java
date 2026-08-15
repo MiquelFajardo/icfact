@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact.producte.repository;
 
-import cat.informaticassa.icfact.infraestructura.database.HibernateUtil;
 import cat.informaticassa.icfact.infraestructura.repository.AbstractActivableRepository;
 import cat.informaticassa.icfact.producte.model.Producte;
 import org.hibernate.Session;
@@ -59,29 +58,13 @@ public class ProducteRepository extends AbstractActivableRepository<Producte, Lo
     public Optional<Producte> buscarPerCodi(String codi) {
         try (var session = obrirSessio()) {
             return session.createQuery("""
-                    SELECT p
-                    FROM Producte p
-                    LEFT JOIN FETCH p.iva
-                    WHERE p.codi = :codi
-                    AND p.actiu = true
-                    """, Producte.class)
+                SELECT p
+                FROM Producte p
+                LEFT JOIN FETCH p.iva
+                WHERE lower(p.codi) = lower(:codi)
+                """, Producte.class)
                     .setParameter("codi", codi)
                     .uniqueResultOptional();
-        }
-    }
-
-    public List<Producte> buscarPerNom(String nom) {
-        try (var session = obrirSessio()) {
-            return session.createQuery("""
-                    SELECT DISTINCT p
-                    FROM Producte p
-                    LEFT JOIN FETCH p.iva
-                    WHERE lower(p.nom) LIKE lower(:nom)
-                    AND p.actiu = true
-                    ORDER BY p.nom
-                    """, Producte.class)
-                    .setParameter("nom", "%" + nom + "%")
-                    .list();
         }
     }
 
@@ -123,7 +106,7 @@ public class ProducteRepository extends AbstractActivableRepository<Producte, Lo
     }
 
     public Optional<Producte> buscarPerCodiONom(String text) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = obrirSessio()) {
             return session.createQuery("""
                 from Producte
                 where upper(codi)=:text

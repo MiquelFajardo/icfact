@@ -13,6 +13,7 @@ import lombok.Setter;
 import java.util.List;
 import java.util.function.Consumer;
 
+@SuppressWarnings("unchecked")
 public class FormaPagamentTable extends TableView<FormaPagament> {
     private final ObservableList<FormaPagament> dades = FXCollections.observableArrayList();
     @Setter

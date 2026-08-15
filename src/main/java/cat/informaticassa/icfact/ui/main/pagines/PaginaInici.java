@@ -14,7 +14,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 import lombok.Setter;
 
 public class PaginaInici extends VBox {
@@ -38,56 +37,10 @@ public class PaginaInici extends VBox {
         // Accions ràpides
         //--------------------------------------------------
 
-        GridPane graellaAccions = new GridPane();
-        graellaAccions.setAlignment(Pos.CENTER);
-        graellaAccions.setHgap(20);
-        graellaAccions.setVgap(20);
-
-        ActionCard nouPressupost = new ActionCard("Nou pressupost", "pressupost_card.png");
-        nouPressupost.setOnMouseClicked( e-> {
-            PressupostDialog dialog = new PressupostDialog();
-            dialog.initOwner((Stage) getScene().getWindow());
-            dialog.showAndWait();
-        });
-
-        ActionCard novaFactura = new ActionCard("Nova factura", "factura_card.png");
-        novaFactura.setOnMouseClicked(e -> {
-            FacturaDialog dialog = new FacturaDialog();
-            dialog.initOwner((Stage) getScene().getWindow());
-            dialog.showAndWait();
-        });
-
-        ActionCard facturesPendents = new ActionCard("Factures pendents", "factura_pendent_card.png");
-        facturesPendents.setOnMouseClicked(e -> {
-            if (onFacturesPendents != null) {
-                onFacturesPendents.run();
-            }
-        });
-
-        ActionCard nouClient = new ActionCard("Nou client", "clients_card.png");
-        nouClient.setOnMouseClicked(e -> {
-            ClientDialog dialog = new ClientDialog();
-            dialog.initOwner((Stage) getScene().getWindow());
-            dialog.showAndWait();
-        });
-
-        ActionCard nouArticle = new ActionCard("Nou producte", "articles_card.png");
-        nouArticle.setOnMouseClicked(e -> {
-            ProducteDialog dialog = new ProducteDialog();
-            dialog.initOwner((Stage) getScene().getWindow());
-            dialog.showAndWait();
-        });
-
-        graellaAccions.add(nouPressupost, 0, 0);
-        graellaAccions.add(nouArticle, 0, 1);
-
-        graellaAccions.add(novaFactura, 1, 0);
-        graellaAccions.add(facturesPendents, 1, 1);
-
-        graellaAccions.add(nouClient, 2, 0);
+        GridPane graellaAccions = createGraellaAccions();
 
 
-       Card cardAccions = new Card(null, graellaAccions);
+        Card cardAccions = new Card(null, graellaAccions);
 
         //--------------------------------------------------
         // Tasques
@@ -108,6 +61,57 @@ public class PaginaInici extends VBox {
                 espai,
                 versio
         );
+    }
+
+    private GridPane createGraellaAccions() {
+        GridPane graellaAccions = new GridPane();
+        graellaAccions.setAlignment(Pos.CENTER);
+        graellaAccions.setHgap(20);
+        graellaAccions.setVgap(20);
+
+        ActionCard nouPressupost = new ActionCard("Nou pressupost", "pressupost_card.png");
+        nouPressupost.setOnMouseClicked( e-> {
+            PressupostDialog dialog = new PressupostDialog();
+            dialog.initOwner(getScene().getWindow());
+            dialog.showAndWait();
+        });
+
+        ActionCard novaFactura = new ActionCard("Nova factura", "factura_card.png");
+        novaFactura.setOnMouseClicked(e -> {
+            FacturaDialog dialog = new FacturaDialog();
+            dialog.initOwner(getScene().getWindow());
+            dialog.showAndWait();
+        });
+
+        ActionCard facturesPendents = new ActionCard("Factures pendents", "factura_pendent_card.png");
+        facturesPendents.setOnMouseClicked(e -> {
+            if (onFacturesPendents != null) {
+                onFacturesPendents.run();
+            }
+        });
+
+        ActionCard nouClient = new ActionCard("Nou client", "clients_card.png");
+        nouClient.setOnMouseClicked(e -> {
+            ClientDialog dialog = new ClientDialog();
+            dialog.initOwner(getScene().getWindow());
+            dialog.showAndWait();
+        });
+
+        ActionCard nouArticle = new ActionCard("Nou producte", "articles_card.png");
+        nouArticle.setOnMouseClicked(e -> {
+            ProducteDialog dialog = new ProducteDialog();
+            dialog.initOwner(getScene().getWindow());
+            dialog.showAndWait();
+        });
+
+        graellaAccions.add(nouPressupost, 0, 0);
+        graellaAccions.add(nouArticle, 0, 1);
+
+        graellaAccions.add(novaFactura, 1, 0);
+        graellaAccions.add(facturesPendents, 1, 1);
+
+        graellaAccions.add(nouClient, 2, 0);
+        return graellaAccions;
     }
 
     public void refrescarTasques() {

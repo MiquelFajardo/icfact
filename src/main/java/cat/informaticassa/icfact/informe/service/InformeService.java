@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact.informe.service;
 
-import cat.informaticassa.icfact.factura.model.EstatFactura;
 import cat.informaticassa.icfact.factura.model.Factura;
 import cat.informaticassa.icfact.factura.model.LiniaFactura;
 import cat.informaticassa.icfact.factura.repository.FacturaRepository;

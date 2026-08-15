@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact.ui.components.client;
 
-import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.ui.components.forms.FormGrid;
 import cat.informaticassa.icfact.ui.components.geografia.adreca.AdrecaPane;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyBindings;
@@ -41,26 +40,10 @@ public class ClientPane extends FormGrid {
         chkActiu.setManaged(false);
     }
 
-    public void mostrar(Client client) {
-        txtNom.setText(client.getNom());
-        txtNomComercial.setText(client.getNomComercial());
-        txtNif.setText(client.getNif());
-        txtTelefon.setText(client.getTelefon());
-        txtMobil.setText(client.getMobil());
-        txtEmail.setText(client.getEmail());
-        txtWeb.setText(client.getWeb());
-        txtObservacions.setText(client.getObservacions());
-        if (client.getAdreca() != null) {
-            adrecaPane.mostrar(client.getAdreca());
-        }
-        chkActiu.setSelected(client.isActiu());
-    }
-
     public void mostrarCampActiu(boolean mostrar) {
         chkActiu.setVisible(mostrar);
         chkActiu.setManaged(mostrar);
     }
-
 
     public void registrarDirty(DirtyTracker tracker) {
         DirtyBindings.registrar(

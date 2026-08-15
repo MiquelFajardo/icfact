@@ -16,13 +16,10 @@ import java.time.Year;
 public class DuplicarPressupostService {
 
     private final PressupostRepository repository = new PressupostRepository();
-    private final CrearPressupostService crearService = new CrearPressupostService();
     private final ObtenirSeguentNumeroDocumentService numeroService = new ObtenirSeguentNumeroDocumentService();
 
     public Pressupost executar(Long id) {
-
-        Pressupost origen = repository.buscarPerIdAmbLinies(id)
-                .orElseThrow(() ->
+        Pressupost origen = repository.buscarPerIdAmbLinies(id).orElseThrow(() ->
                         new PressupostNoExisteixException("El pressupost no existeix."));
 
         Pressupost nou = new Pressupost();

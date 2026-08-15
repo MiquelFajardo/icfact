@@ -19,22 +19,10 @@ public class ProducteController {
         pagina.getTaula().mostrar(buscarProductesService.buscarActius());
     }
 
-    public void carregarInactius() {
-        pagina.getTaula().mostrar(buscarProductesService.buscarInactius());
-    }
-
-    public void carregarTots() {
-        pagina.getTaula().mostrar(buscarProductesService.buscarTots());
-    }
-
     public void buscar(String text, boolean actius, boolean inactius) {
-
         if (text == null) {
             text = "";
         }
-
-        pagina.getTaula().mostrar(
-                buscarProductesService.buscar(text, actius, inactius)
-        );
+        pagina.getTaula().mostrar(buscarProductesService.buscar(text, actius, inactius));
     }
 }

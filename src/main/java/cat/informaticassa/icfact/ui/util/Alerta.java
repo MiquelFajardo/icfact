@@ -46,15 +46,6 @@ public final class Alerta {
     }
 
 
-
-    public static void error(String titol, String missatge) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(missatge);
-        alert.showAndWait();
-    }
-
     public static void error(String missatge) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

@@ -126,7 +126,7 @@ public class GenerarPdfInformeService {
         }
     }
 
-    private void afegirCapcalera(Document document, Empresa empresa,  String titol,  LocalDate desDe, LocalDate finsA) throws Exception {
+    private void afegirCapcalera(Document document, Empresa empresa,  String titol,  LocalDate desDe, LocalDate finsA) {
         Color color = Color.decode(empresa.getColor());
         Paragraph nomEmpresa = new Paragraph(empresa.getNom(), PdfFonts.nomEmpresa(color));
         nomEmpresa.setSpacingAfter(8);

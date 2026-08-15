@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 public class PagamentsTable extends TableView<Pagament> {
         private final ObservableList<Pagament> dades = FXCollections.observableArrayList();
 

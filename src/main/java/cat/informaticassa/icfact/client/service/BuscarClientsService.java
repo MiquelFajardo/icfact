@@ -12,10 +12,6 @@ public class BuscarClientsService {
         return repository.buscarTots();
     }
 
-    public List<Client> buscarInactius() {
-        return repository.buscarInactius();
-    }
-
     public List<Client> buscar(String text, boolean actius, boolean inactius) {
         return repository.buscar(text, actius, inactius);
     }

@@ -9,13 +9,14 @@ import javafx.scene.input.MouseButton;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
 @Getter
 @Setter
-public class PressupostTable extends TableView {
-    private final ObservableList dades = FXCollections.observableArrayList();
+public class PressupostTable extends TableView<Pressupost> {
+    private final ObservableList<Pressupost> dades = FXCollections.observableArrayList();
     private Consumer<Pressupost> onModificar;
     private Consumer<Pressupost> onObrirPdf;
     private Consumer<Pressupost> onDuplicar;
@@ -27,30 +28,34 @@ public class PressupostTable extends TableView {
 
     public PressupostTable() {
         setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-        getColumns().addAll(PressupostColumns.columnaNumero(), PressupostColumns.columnaData(), PressupostColumns.columnaClient(),
-                PressupostColumns.columnaEstat(), PressupostColumns.columnaFormaPagament(), PressupostColumns.columnaTotal());
+        Collections.addAll(
+                getColumns(),
+                PressupostColumns.columnaNumero(),
+                PressupostColumns.columnaData(),
+                PressupostColumns.columnaClient(),
+                PressupostColumns.columnaEstat(),
+                PressupostColumns.columnaFormaPagament(),
+                PressupostColumns.columnaTotal()
+        );
         setItems(dades);
         setRowFactory(tv -> {
             TableRow<Pressupost> fila = new TableRow<>();
             fila.itemProperty().addListener((obs, anterior, pressupost) -> {
-                        if (pressupost == null) {
-                            fila.setContextMenu(null);
-                            return;
-                        }
-                        PressupostContextMenu menu = new PressupostContextMenu(pressupost);
-                        menu.setOnModificar(onModificar);
-                        menu.setOnObrirPdf(onObrirPdf);
-                        menu.setOnDuplicar(onDuplicar);
-                        menu.setOnAcceptar(onAcceptar);
-                        menu.setOnRebutjar(onRebutjar);
-                        menu.setOnCrearFactura(onCrearFactura);
-                        menu.setOnAfegirPagament(onAfegirPagament);
-                        menu.setOnVeurePagaments(onVeurePagaments);
-                        //menu.setOnVeureFactura(onVeureFactura);
-                        fila.setContextMenu(menu);
-                    }
-            );
-
+                if (pressupost == null) {
+                    fila.setContextMenu(null);
+                    return;
+                }
+                PressupostContextMenu menu = new PressupostContextMenu(pressupost);
+                menu.setOnModificar(onModificar);
+                menu.setOnObrirPdf(onObrirPdf);
+                menu.setOnDuplicar(onDuplicar);
+                menu.setOnAcceptar(onAcceptar);
+                menu.setOnRebutjar(onRebutjar);
+                menu.setOnCrearFactura(onCrearFactura);
+                menu.setOnAfegirPagament(onAfegirPagament);
+                menu.setOnVeurePagaments(onVeurePagaments);
+                fila.setContextMenu(menu);
+            });
             fila.setOnMouseClicked(e -> {
                 if (e.getButton() != MouseButton.PRIMARY) {
                     return;

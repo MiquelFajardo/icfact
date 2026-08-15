@@ -2,8 +2,6 @@ package cat.informaticassa.icfact.empresa.repository;
 
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.infraestructura.repository.AbstractRepository;
-
-import java.util.List;
 import java.util.Optional;
 
 public class EmpresaRepository extends AbstractRepository<Empresa, Long> {
@@ -12,15 +10,6 @@ public class EmpresaRepository extends AbstractRepository<Empresa, Long> {
     public Optional<Empresa> buscarPerId(Long id) {
         try (var session = obrirSessio()) {
             return Optional.ofNullable(session.find(Empresa.class, id));
-        }
-    }
-
-    @Override
-    public List<Empresa> buscarTots() {
-        try (var session = obrirSessio()) {
-            return session.createQuery("""
-                    FROM Empresa
-                    """, Empresa.class).list();
         }
     }
 

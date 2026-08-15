@@ -7,7 +7,6 @@ import cat.informaticassa.icfact.formaPagament.service.BuscarFormesPagamentServi
 import cat.informaticassa.icfact.ui.components.dialogs.ClientDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.FormaPagamentDialog;
 import cat.informaticassa.icfact.ui.main.pagines.factura.FacturaPane;
-import javafx.stage.Stage;
 
 public class FacturaPaneController {
     private final FacturaPane pane;
@@ -60,7 +59,7 @@ public class FacturaPaneController {
 
     private void nouClient() {
         ClientDialog dialog = new ClientDialog();
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
         if (dialog.getClient() != null) {
             carregarClients();
@@ -70,7 +69,7 @@ public class FacturaPaneController {
 
     private void novaFormaPagament() {
         FormaPagamentDialog dialog = new FormaPagamentDialog();
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
         if (dialog.getFormaPagament() != null) {
             carregarFormesPagament();

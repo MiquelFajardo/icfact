@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact.ui.main.pagines.factura;
 
-import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.ui.components.BotoPrimari;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -42,11 +41,6 @@ public class FacturaToolbar extends VBox {
         segonaFila.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(txtBuscar, Priority.ALWAYS);
         getChildren().addAll(primeraFila, segonaFila);
-    }
-
-    public void mostrarClient(Client client) {
-        txtBuscar.setText(client.getNom());
-        txtBuscar.setDisable(true);
     }
 
     public void treureClient() {

@@ -65,8 +65,4 @@ public class SearchField<T> extends TextField {
             onItemSelected.handle(new ActionEvent(this, this));
         }
     }
-
-    ObjectProperty<T> selectedItemProperty() {
-        return selectedItem;
-    }
 }

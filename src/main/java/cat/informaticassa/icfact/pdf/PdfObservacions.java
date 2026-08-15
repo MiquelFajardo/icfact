@@ -1,15 +1,12 @@
 package cat.informaticassa.icfact.pdf;
 
-import cat.informaticassa.icfact.empresa.model.Empresa;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;
 import com.lowagie.text.Paragraph;
 
-import java.awt.*;
-
 public class PdfObservacions {
 
-    public void afegir(Document document, String observacions, Empresa empresa) {
+    public void afegir(Document document, String observacions) {
         try {
             if (observacions == null || observacions.isBlank()) {
                 return;

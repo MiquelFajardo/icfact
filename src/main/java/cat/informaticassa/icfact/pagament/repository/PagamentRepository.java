@@ -1,7 +1,6 @@
 package cat.informaticassa.icfact.pagament.repository;
 
 import cat.informaticassa.icfact.factura.model.Factura;
-import cat.informaticassa.icfact.infraestructura.database.HibernateUtil;
 import cat.informaticassa.icfact.infraestructura.repository.AbstractActivableRepository;
 import cat.informaticassa.icfact.pagament.model.Pagament;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
@@ -18,7 +17,7 @@ public class PagamentRepository
     }
 
     public List<Pagament> buscarPerPressupost(Pressupost pressupost) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+        try (var session = obrirSessio()) {
 
             return session.createQuery("""
                     FROM Pagament
@@ -39,7 +38,7 @@ public class PagamentRepository
     }
 
     public BigDecimal calcularImportPagat(Pressupost pressupost) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+        try (var session = obrirSessio()) {
 
             BigDecimal total = session.createQuery("""
                     SELECT COALESCE(SUM(p.importPagat), 0)
@@ -64,7 +63,7 @@ public class PagamentRepository
     }
 
     public List<Pagament> buscarPerFactura(Factura factura) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+        try (var session = obrirSessio()) {
 
             return session.createQuery("""
                     FROM Pagament
@@ -78,7 +77,7 @@ public class PagamentRepository
     }
 
     public BigDecimal calcularImportPagat(Factura factura) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+        try (var session = obrirSessio()) {
 
             BigDecimal total = session.createQuery("""
                 SELECT COALESCE(SUM(p.importPagat), 0)
@@ -105,25 +104,13 @@ public class PagamentRepository
         }
     }
 
-    public List<Pagament> buscarPerFacturaIncloentInactius(Factura factura) {
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
-
-            return session.createQuery("""
-                    FROM Pagament
-                    WHERE factura = :factura
-                    ORDER BY dataPagament ASC
-                    """, Pagament.class)
-                    .setParameter("factura", factura)
-                    .list();
-        }
-    }
-
     public void associarPagamentsAFactura(Pressupost pressupost, Factura factura) {
         if (pressupost == null || factura == null || factura.getId() == null) {
-            throw new IllegalArgumentException("El pressupost i la factura han de ser vàlids i la factura ha d'estar guardada.");        }
-        try (var session = HibernateUtil.getSessionFactory().openSession()) {
+            throw new IllegalArgumentException("El pressupost i la factura han de ser vàlids i la factura ha d'estar guardada.");
+        }
+        try (var session = obrirSessio()) {
             var transaction = session.beginTransaction();
-            int actualitzats = session.createMutationQuery("""
+            session.createMutationQuery("""
                     UPDATE Pagament p
                     SET p.factura = :factura
                     WHERE p.pressupost = :pressupost

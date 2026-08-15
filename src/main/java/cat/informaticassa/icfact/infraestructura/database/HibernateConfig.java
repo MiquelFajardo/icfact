@@ -22,17 +22,7 @@ public final class HibernateConfig {
     }
 
     public static Configuration getConfiguration(String nomBaseDades) {
-        Configuration configuration = new Configuration();
-
-        configuration.setProperty("hibernate.connection.driver_class", "org.sqlite.JDBC");
-        configuration.setProperty("hibernate.connection.url","JDBC:sqlite:" + nomBaseDades);
-
-        configuration.setProperty("hibernate.dialect", "org.hibernate.community.dialect.SQLiteDialect");
-
-        configuration.setProperty("hibernate.hbm2ddl.auto", "update");  // Create esborra dades || update es poden afegir taules || validate no modifica taules
-
-        configuration.setProperty("hibernate.show_sql", "true");
-        configuration.setProperty("hibernate.format_sql", "true");
+        Configuration configuration = createConfiguration(nomBaseDades);
 
         configuration.addAnnotatedClass(Pais.class);
         configuration.addAnnotatedClass(Provincia.class);
@@ -54,6 +44,17 @@ public final class HibernateConfig {
         configuration.addAnnotatedClass(Pagament.class);
 
         configuration.addAnnotatedClass(Tasca.class);
+        return configuration;
+    }
+
+    private static Configuration createConfiguration(String nomBaseDades) {
+        Configuration configuration = new Configuration();
+        configuration.setProperty("hibernate.connection.driver_class", "org.sqlite.JDBC");
+        configuration.setProperty("hibernate.connection.url","JDBC:sqlite:" + nomBaseDades);
+        configuration.setProperty("hibernate.dialect", "org.hibernate.community.dialect.SQLiteDialect");
+        configuration.setProperty("hibernate.hbm2ddl.auto", "update");  // Create esborra dades || update es poden afegir taules || validate no modifica taules
+        configuration.setProperty("hibernate.show_sql", "true");
+        configuration.setProperty("hibernate.format_sql", "true");
         return configuration;
     }
 }

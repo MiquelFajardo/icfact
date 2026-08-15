@@ -6,7 +6,6 @@ import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
 import cat.informaticassa.icfact.formaPagament.service.BuscarFormesPagamentService;
 import cat.informaticassa.icfact.ui.components.dialogs.ClientDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.FormaPagamentDialog;
-import javafx.stage.Stage;
 
 public class PressupostPaneController {
     private final PressupostPane pane;
@@ -61,7 +60,7 @@ public class PressupostPaneController {
 
     private void nouClient() {
         ClientDialog dialog = new ClientDialog();
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
         if (dialog.getClient() != null) {
             carregarClients();
@@ -71,7 +70,7 @@ public class PressupostPaneController {
 
     private void novaFormaPagament() {
         FormaPagamentDialog dialog = new FormaPagamentDialog();
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
         if (dialog.getFormaPagament() != null) {
             carregarFormesPagament();

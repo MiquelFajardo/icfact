@@ -6,10 +6,11 @@ public class GuardarPressupostService {
     private final CrearPressupostService crearService = new CrearPressupostService();
     private final ModificarPressupostService modificarService = new ModificarPressupostService();
 
-    public Pressupost executar(Pressupost pressupost) {
+    public void executar(Pressupost pressupost) {
         if (pressupost.getId() == null) {
-            return crearService.executar(pressupost);
+            crearService.executar(pressupost);
+            return;
         }
-        return modificarService.executar(pressupost);
+        modificarService.executar(pressupost);
     }
 }

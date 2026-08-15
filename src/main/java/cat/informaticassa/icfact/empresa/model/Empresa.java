@@ -43,7 +43,7 @@ public class Empresa {
     @Column(length = 34)
     private String iban;
 
-    @Column(length = 255)
+    @Column()
     private String logo;
 
     @Column(length = 7)
@@ -52,7 +52,7 @@ public class Empresa {
     @Column(columnDefinition = "TEXT")
     private String peuPdf;
 
-    @Column(name = "contrasenya_hash", length = 255)
+    @Column(name = "contrasenya_hash")
     private String contrasenyaHash;
 
     @Column(nullable = false)

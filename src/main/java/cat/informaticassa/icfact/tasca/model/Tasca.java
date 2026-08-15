@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact.tasca.model;
 
-import cat.informaticassa.icfact.infraestructura.model.Activable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Tasca implements Activable {
+public class Tasca {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

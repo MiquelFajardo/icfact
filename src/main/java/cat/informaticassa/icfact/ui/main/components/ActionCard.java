@@ -57,8 +57,4 @@ public class ActionCard extends VBox {
                         -fx-cursor:hand;
                         """));
     }
-
-    public void setOnAction(Runnable action) {
-        setOnMouseClicked(e -> action.run());
-    }
 }

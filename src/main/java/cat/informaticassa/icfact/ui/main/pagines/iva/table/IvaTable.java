@@ -13,6 +13,7 @@ import lombok.Setter;
 import java.util.List;
 import java.util.function.Consumer;
 
+@SuppressWarnings("unchecked")
 public class IvaTable extends TableView<Iva> {
     private final ObservableList<Iva> dades = FXCollections.observableArrayList();
     @Setter

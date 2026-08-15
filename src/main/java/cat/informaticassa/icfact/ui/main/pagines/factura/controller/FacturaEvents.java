@@ -41,7 +41,7 @@ public class FacturaEvents {
 
         controller.getPagina().getToolbar().getBotoNou().setOnAction(e -> {
                     FacturaDialog dialog =  new FacturaDialog();
-                    dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+                    dialog.initOwner(controller.getPagina().getScene().getWindow());
                     dialog.showAndWait();
                     buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
                 });
@@ -50,11 +50,11 @@ public class FacturaEvents {
             try {
                 Factura facturaCompleta = obtenirFacturaService.executar(factura.getId());
                 FacturaDialog dialog =new FacturaDialog(facturaCompleta);
-                dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+                dialog.initOwner(controller.getPagina().getScene().getWindow());
                 dialog.showAndWait();
                 buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
             } catch (Exception ex) {
-                Alerta.error((Stage) controller.getPagina().getScene().getWindow(), ex.getMessage());
+                Alerta.error(controller.getPagina().getScene().getWindow(), ex.getMessage());
             }
         });
 
@@ -62,7 +62,7 @@ public class FacturaEvents {
             try {
                 obrirPdfFacturaService.executar(factura);
             } catch (Exception ex) {
-                Alerta.error((Stage) controller.getPagina().getScene().getWindow(), ex.getMessage());
+                Alerta.error(controller.getPagina().getScene().getWindow(), ex.getMessage());
             }
         });
 
@@ -70,11 +70,11 @@ public class FacturaEvents {
             try {
                 Factura nova = duplicarFacturaService.executar(factura.getId());
                 FacturaDialog dialog = new FacturaDialog(nova);
-                dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+                dialog.initOwner(controller.getPagina().getScene().getWindow());
                 dialog.showAndWait();
                 buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
             } catch (Exception ex) {
-                Alerta.error((Stage) controller.getPagina().getScene().getWindow(), ex.getMessage());
+                Alerta.error(controller.getPagina().getScene().getWindow(), ex.getMessage());
             }
         });
 
@@ -127,7 +127,6 @@ public class FacturaEvents {
         boolean inactives = controller.getPagina().getToolbar().getChkInactius().isSelected();
         if (!actives && !inactives) {
             controller.getPagina().getToolbar().getChkActius().setSelected(true);
-            actives = true;
         }
         buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
     }
@@ -142,7 +141,7 @@ public class FacturaEvents {
         try {
             generarPdfFacturaService.executar(facturaId);
         } catch (Exception ex) {
-            Alerta.error((Stage) controller.getPagina().getScene().getWindow(),
+            Alerta.error(controller.getPagina().getScene().getWindow(),
                     "No s'ha pogut actualitzar el PDF de la factura:\n" + ex.getMessage());
         }
     }

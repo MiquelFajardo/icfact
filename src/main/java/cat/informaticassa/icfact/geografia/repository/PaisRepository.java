@@ -15,7 +15,6 @@ public class PaisRepository extends AbstractRepository<Pais, Long> {
         }
     }
 
-    @Override
     public List<Pais> buscarTots() {
         try (var session = obrirSessio()) {
             return session.createQuery("""
@@ -27,7 +26,6 @@ public class PaisRepository extends AbstractRepository<Pais, Long> {
     }
 
     public Optional<Pais> buscarPerCodiIso(String codiIso) {
-
         try (var session = obrirSessio()) {
             return session.createQuery("""
                     FROM Pais
@@ -39,7 +37,6 @@ public class PaisRepository extends AbstractRepository<Pais, Long> {
     }
 
     public Optional<Pais> buscarPerNom(String nom) {
-
         try (var session = obrirSessio()) {
             return session.createQuery("""
                     FROM Pais

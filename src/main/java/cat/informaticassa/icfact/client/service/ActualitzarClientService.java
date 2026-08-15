@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.client.service;
 
+import cat.informaticassa.icfact.client.exception.ClientJaExisteixException;
 import cat.informaticassa.icfact.client.exception.ClientNoExisteixException;
 import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.client.repository.ClientRepository;
@@ -14,9 +15,12 @@ public class ActualitzarClientService {
 
     public void executar(Client client) {
         validarClient.executar(client);
-
-        Client clientActual = repository.buscarPerIdIncloentInactius(client.getId())
-                .orElseThrow(() ->  new ClientNoExisteixException("El client no existeix."));
+        Client clientActual = repository.buscarPerIdIncloentInactius(client.getId()).orElseThrow(() -> new ClientNoExisteixException("El client no existeix."));
+        repository.buscarPerNif(client.getNif()).ifPresent(existent -> {
+            if (!existent.getId().equals(client.getId())) {
+                throw new ClientJaExisteixException("Ja existeix un client amb aquest NIF.");
+            }
+        });
         clientActual.actualitzarDades(client);
         clientActual.setDataModificacio(LocalDateTime.now());
         repository.actualitzar(clientActual);

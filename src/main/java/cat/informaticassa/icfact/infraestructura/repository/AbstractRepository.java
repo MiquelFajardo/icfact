@@ -11,9 +11,7 @@ public abstract class AbstractRepository<T, ID> implements CrudRepository<T, ID>
 
     @SuppressWarnings("unchecked")
     protected AbstractRepository() {
-        this.classe = (Class<T>) ((ParameterizedType) getClass()
-                .getGenericSuperclass())
-                .getActualTypeArguments()[0];
+        this.classe = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     protected Session obrirSessio() {
@@ -22,26 +20,18 @@ public abstract class AbstractRepository<T, ID> implements CrudRepository<T, ID>
 
     @Override
     public void guardar(T entitat) {
-
         try (Session session = obrirSessio()) {
-
             var tx = session.beginTransaction();
-
             session.persist(entitat);
-
             tx.commit();
         }
     }
 
     @Override
     public void actualitzar(T entitat) {
-
         try (Session session = obrirSessio()) {
-
             var tx = session.beginTransaction();
-
             session.merge(entitat);
-
             tx.commit();
         }
     }

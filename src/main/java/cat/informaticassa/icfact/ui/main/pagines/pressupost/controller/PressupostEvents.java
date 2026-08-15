@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact.ui.main.pagines.pressupost.controller;
 
-import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.factura.model.Factura;
 import cat.informaticassa.icfact.pagament.repository.PagamentRepository;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
@@ -43,7 +42,7 @@ public class PressupostEvents {
 
         controller.getPagina().getToolbar().getBotoNou().setOnAction(e -> {
             PressupostDialog dialog = new PressupostDialog();
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
         });
@@ -51,7 +50,7 @@ public class PressupostEvents {
         controller.getPagina().getTaula().setOnModificar(pressupost -> {
             Pressupost pressupostComplet = obtenirPressupostService.executar(pressupost.getId());
             PressupostDialog dialog = new PressupostDialog(pressupostComplet);
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
         });
@@ -60,20 +59,20 @@ public class PressupostEvents {
             try {
                 obrirPdfService.executar(pressupost);
             } catch (Exception ex) {
-                Alerta.error((Stage) controller.getPagina().getScene().getWindow(), ex.getMessage());
+                Alerta.error(controller.getPagina().getScene().getWindow(), ex.getMessage());
             }
         });
 
         controller.getPagina().getTaula().setOnDuplicar(pressupost -> {
             Pressupost nou = duplicarPressupostService.executar(pressupost.getId());
             PressupostDialog dialog = new PressupostDialog(nou);
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
         });
 
         controller.getPagina().getTaula().setOnAcceptar(pressupost -> {
-            boolean resposta = Alerta.confirmar((Stage) controller.getPagina().getScene().getWindow(),
+            boolean resposta = Alerta.confirmar(controller.getPagina().getScene().getWindow(),
                     "Acceptar pressupost",
                     "Vols marcar aquest pressupost com a ACCEPTAT?");
             if (!resposta) {
@@ -84,7 +83,7 @@ public class PressupostEvents {
         });
 
         controller.getPagina().getTaula().setOnRebutjar(pressupost -> {
-            boolean resposta = Alerta.confirmar((Stage) controller.getPagina().getScene().getWindow(),
+            boolean resposta = Alerta.confirmar(controller.getPagina().getScene().getWindow(),
                     "Rebutjar pressupost",
                     "Vols marcar aquest pressupost com a REBUTJAT?");
             if (!resposta) {
@@ -162,7 +161,6 @@ public class PressupostEvents {
         boolean inactius = controller.getPagina().getToolbar().getChkInactius().isSelected();
         if (!actius && !inactius) {
             controller.getPagina().getToolbar().getChkActius().setSelected(true);
-            actius = true;
         }
         buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
     }

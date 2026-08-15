@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact.formaPagament.model;
 
-import cat.informaticassa.icfact.infraestructura.model.Activable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "FORMA_PAGAMENT")
-public class FormaPagament implements Activable {
+public class FormaPagament {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

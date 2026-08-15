@@ -11,7 +11,7 @@ public class CanviarEstatFacturaService {
 
     private final FacturaRepository repository = new FacturaRepository();
 
-    public Factura executar(Long id, EstatFactura estat) {
+    public void executar(Long id, EstatFactura estat) {
 
         Factura factura = repository.buscarPerId(id)
                 .orElseThrow(() ->
@@ -22,6 +22,5 @@ public class CanviarEstatFacturaService {
 
         repository.actualitzar(factura);
 
-        return factura;
     }
 }

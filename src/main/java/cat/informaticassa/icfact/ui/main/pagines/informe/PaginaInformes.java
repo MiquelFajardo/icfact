@@ -19,12 +19,12 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Locale;
 
+@SuppressWarnings("unchecked")
 public class PaginaInformes extends BorderPane {
     private final InformeService informeService = new InformeService();
     private final DatePicker dateDesDe = new DatePicker();
     private final DatePicker dateFinsA =   new DatePicker();
     private final BotoPrimari botoAplicar = new BotoPrimari("Aplicar");
-    private final TabPane pestanyes = new TabPane();
     private final VBox panellFacturacio = new VBox(20);
     private final VBox panellIva = new VBox(20);
     private final VBox panellClients = new VBox(20);
@@ -52,6 +52,7 @@ public class PaginaInformes extends BorderPane {
         tabIva.setClosable(false);
         tabClients.setClosable(false);
 
+        TabPane pestanyes = new TabPane();
         pestanyes.getTabs().addAll(tabFacturacio, tabIva, tabClients);
         pestanyes.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         botoAplicar.setOnAction(e -> carregar());

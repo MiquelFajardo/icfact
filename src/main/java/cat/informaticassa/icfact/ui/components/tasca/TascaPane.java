@@ -7,7 +7,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import lombok.Getter;
 
+@Getter
 public class TascaPane extends GridPane {
     private final TextField txtTitol = new TextField();
     private final DatePicker dpDataLimit = new DatePicker();
@@ -40,11 +42,4 @@ public class TascaPane extends GridPane {
         tasca.setDataLimit(dpDataLimit.getValue());
     }
 
-    public TextField getTxtTitol() {
-        return txtTitol;
-    }
-
-    public DatePicker getDpDataLimit() {
-        return dpDataLimit;
-    }
 }

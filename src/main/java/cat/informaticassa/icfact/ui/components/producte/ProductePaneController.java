@@ -3,7 +3,6 @@ package cat.informaticassa.icfact.ui.components.producte;
 import cat.informaticassa.icfact.iva.model.Iva;
 import cat.informaticassa.icfact.iva.service.BuscarIvaService;
 import cat.informaticassa.icfact.ui.components.dialogs.IvaDialog;
-import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 public class ProductePaneController {
@@ -44,7 +43,7 @@ public class ProductePaneController {
 
     private void nouIva() {
         IvaDialog dialog = new IvaDialog();
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
         carregarIves();
         if (dialog.getIva() != null) {

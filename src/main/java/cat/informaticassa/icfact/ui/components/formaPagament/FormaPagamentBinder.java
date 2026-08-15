@@ -9,17 +9,6 @@ public class FormaPagamentBinder {
         this.formulari = formulari;
     }
 
-    public void carregar(FormaPagament formaPagament) {
-        formulari.getTxtNom().setText(formaPagament.getNom());
-        formulari.getTxtDescripcio().setText(
-                formaPagament.getDescripcio() == null
-                        ? ""
-                        : formaPagament.getDescripcio()
-        );
-        formulari.getChkMostrarIban().setSelected(Boolean.TRUE.equals(formaPagament.getMostrarIban()) );
-        formulari.getChkActiu().setSelected(formaPagament.isActiu());
-    }
-
     public void actualitzar(FormaPagament formaPagament) {
         formaPagament.setNom(formulari.getTxtNom().getText().trim());
         formaPagament.setDescripcio(formulari.getTxtDescripcio().getText().trim());

@@ -6,18 +6,19 @@ import cat.informaticassa.icfact.formaPagament.service.ModificarFormaPagamentSer
 import cat.informaticassa.icfact.infraestructura.validacio.exception.ValidacioException;
 import cat.informaticassa.icfact.ui.components.dialogs.FormaPagamentDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FormaPagamentEvents {
+    private static final Logger logger = LoggerFactory.getLogger(FormaPagamentEvents.class);
     private final FormaPagamentDialog dialog;
-    private final FormaPagamentPane formulari;
     private final FormaPagamentBinder binder;
-
     private final CrearFormaPagamentService crearFormaPagamentService = new CrearFormaPagamentService();
     private final ModificarFormaPagamentService modificarFormaPagamentService = new ModificarFormaPagamentService();
 
     public FormaPagamentEvents(FormaPagamentDialog dialog) {
         this.dialog = dialog;
-        this.formulari = dialog.getFormulari();
+        FormaPagamentPane formulari = dialog.getFormulari();
         this.binder = new FormaPagamentBinder(formulari);
         dialog.getBotoGuardar().setOnAction(e -> guardar());
     }
@@ -39,7 +40,7 @@ public class FormaPagamentEvents {
         } catch (ValidacioException e) {
             Alerta.error(e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error inesperat desant la forma de pagament.", e);
             Alerta.error("No s'ha pogut desar la forma de pagament.");
         }
     }

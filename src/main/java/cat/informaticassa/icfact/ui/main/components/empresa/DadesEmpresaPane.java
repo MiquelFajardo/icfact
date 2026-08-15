@@ -4,7 +4,6 @@ import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.ui.main.components.FormLabel;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyBindings;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyTracker;
-import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;

@@ -2,7 +2,6 @@ package cat.informaticassa.icfact.factura.model;
 
 import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
-import cat.informaticassa.icfact.infraestructura.model.Activable;
 import cat.informaticassa.icfact.pagament.model.Pagament;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
 import jakarta.persistence.*;
@@ -21,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "FACTURA")
-public class Factura implements Activable {
+public class Factura {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,7 +69,7 @@ public class Factura implements Activable {
     private Pressupost pressupost;
 
     @Builder.Default
-    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Pagament> pagaments = new ArrayList<>();
 
     @Column

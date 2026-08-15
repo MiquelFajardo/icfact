@@ -21,12 +21,7 @@ public abstract class DialogBase extends Stage {
     protected final BotoSecundari botoCancelar = new BotoSecundari("❌ Cancel·la");
     private final BorderPane root = new BorderPane();
     private final DirtyTracker dirtyTracker = new DirtyTracker();
-    @Getter
     protected final HBox botons = new HBox(10);
-
-    protected DialogBase(String titol) {
-        this(titol, 600, 350);
-    }
 
     protected DialogBase(String titol, double amplada, double alcada) {
         initModality(Modality.APPLICATION_MODAL);
@@ -45,7 +40,7 @@ public abstract class DialogBase extends Stage {
         centerOnScreen();
         botoCancelar.setOnAction(e -> tancar());
         setOnCloseRequest(e -> {
-            if (!dirtyTracker.estaModificat()) {
+            if (dirtyTracker.estaModificat()) {
                 return;
             }
             e.consume();
@@ -54,7 +49,7 @@ public abstract class DialogBase extends Stage {
     }
 
     private void tancar() {
-        if (!dirtyTracker.estaModificat()) {
+        if (dirtyTracker.estaModificat()) {
             close();
             return;
         }

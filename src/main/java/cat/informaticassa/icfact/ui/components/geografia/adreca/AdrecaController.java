@@ -8,7 +8,6 @@ import cat.informaticassa.icfact.geografia.service.provincia.BuscarProvinciesPer
 import cat.informaticassa.icfact.ui.components.dialogs.PaisDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.PoblacioDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.ProvinciaDialog;
-import javafx.stage.Stage;
 
 public class AdrecaController {
     private final AdrecaPane pane;
@@ -65,7 +64,7 @@ public class AdrecaController {
 
     private void nouPais() {
         PaisDialog dialog = new PaisDialog();
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
         carregarPaisos();
         if (dialog.getPais() != null) {
@@ -80,7 +79,7 @@ public class AdrecaController {
             return;
         }
         ProvinciaDialog dialog = new ProvinciaDialog(pais);
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
         canviPais();
         if (dialog.getProvincia() != null) {
@@ -95,7 +94,7 @@ public class AdrecaController {
             return;
         }
         PoblacioDialog dialog = new PoblacioDialog(provincia);
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
         canviProvincia();
         if (dialog.getPoblacio() != null) {

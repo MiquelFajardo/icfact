@@ -10,8 +10,5 @@ public enum MenuPrincipal {
     FORMA_DE_PAGAMENT,
     INFORMES,
     GEOGRAFIA,
-    TASCA,
-    COPIA_SEGURETAT,
-    DADES_EMPRESA,
-    SOBRE
+    DADES_EMPRESA
 }

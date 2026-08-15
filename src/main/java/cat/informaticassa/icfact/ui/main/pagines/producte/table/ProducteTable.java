@@ -13,6 +13,7 @@ import lombok.Setter;
 import java.util.List;
 import java.util.function.Consumer;
 
+@SuppressWarnings("unchecked")
 public class ProducteTable extends TableView<Producte> {
     private final ObservableList<Producte> dades = FXCollections.observableArrayList();
     @Setter

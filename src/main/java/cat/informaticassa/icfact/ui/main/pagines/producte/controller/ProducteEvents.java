@@ -2,7 +2,6 @@ package cat.informaticassa.icfact.ui.main.pagines.producte.controller;
 
 import cat.informaticassa.icfact.ui.components.dialogs.ProducteDialog;
 import javafx.animation.PauseTransition;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ProducteEvents {
@@ -27,14 +26,14 @@ public class ProducteEvents {
 
         controller.getPagina().getToolbar().getBotoNou().setOnAction(e -> {
             ProducteDialog dialog = new ProducteDialog();
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
         });
 
         controller.getPagina().getTaula().setOnModificar(producte -> {
             ProducteDialog dialog = new ProducteDialog(producte);
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
         });
