@@ -19,4 +19,20 @@ public class EmpresaRepository extends AbstractRepository<Empresa, Long> {
                     .uniqueResultOptional();
         }
     }
+
+    public void actualitzarContrasenya(Long empresaId, String hash) {
+        try (var session = obrirSessio()) {
+            var transaction = session.beginTransaction();
+            session.createMutationQuery("""
+                UPDATE Empresa e
+                SET e.contrasenyaHash = :hash,
+                    e.dataModificacio = CURRENT_TIMESTAMP
+                WHERE e.id = :id
+                """)
+                    .setParameter("hash", hash)
+                    .setParameter("id", empresaId)
+                    .executeUpdate();
+            transaction.commit();
+        }
+    }
 }

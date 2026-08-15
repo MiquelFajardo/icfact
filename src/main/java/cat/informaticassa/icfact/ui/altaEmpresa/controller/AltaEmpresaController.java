@@ -8,6 +8,7 @@ import cat.informaticassa.icfact.empresa.service.validar.ValidarEmpresa;
 import cat.informaticassa.icfact.infraestructura.validacio.exception.ValidacioException;
 import cat.informaticassa.icfact.ui.altaEmpresa.mapper.EmpresaMapper;
 import cat.informaticassa.icfact.ui.altaEmpresa.view.AltaEmpresaView;
+import cat.informaticassa.icfact.ui.components.dialogs.ClauRecuperacioDialog;
 import cat.informaticassa.icfact.ui.navigation.Navegador;
 import cat.informaticassa.icfact.ui.util.Alerta;
 import org.slf4j.Logger;
@@ -36,11 +37,12 @@ public class AltaEmpresaController {
 
     private void crearEmpresa() {
         Empresa empresa = empresaMapper.convertir(view);
-
         try {
             validar(empresa);
-            crearEmpresaService.executar(empresa);
-            Alerta.informacio(view.getScene().getWindow(),"Empresa creada","L'empresa s'ha creat correctament.");
+            String clauRecuperacio = crearEmpresaService.executar(empresa);
+            ClauRecuperacioDialog dialog = new ClauRecuperacioDialog(empresa.getNom(), clauRecuperacio);
+            dialog.initOwner(view.getScene().getWindow());
+            dialog.showAndWait();
             navegador.setEmpresa(empresa);
             navegador.mostrarPrincipal();
         } catch (ValidacioException | EmpresaJaExisteixException e) {
@@ -49,7 +51,6 @@ public class AltaEmpresaController {
             logger.error("Error en crear l'empresa.", e);
             Alerta.error(view.getScene().getWindow(),"S'ha produït un error en crear l'empresa.");
         }
-
     }
 
     private void validar(Empresa empresa) {

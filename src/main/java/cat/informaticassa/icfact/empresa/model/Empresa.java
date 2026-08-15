@@ -55,6 +55,12 @@ public class Empresa {
     @Column(name = "contrasenya_hash")
     private String contrasenyaHash;
 
+    @Column(name = "clau_recuperacio_hash", length = 60)
+    private String clauRecuperacioHash;
+
+    @Transient
+    private String clauRecuperacio;
+
     @Column(nullable = false)
     private LocalDateTime dataCreacio;
 

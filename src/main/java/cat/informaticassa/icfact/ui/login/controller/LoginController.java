@@ -3,6 +3,7 @@ package cat.informaticassa.icfact.ui.login.controller;
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.ui.login.view.LoginView;
 import cat.informaticassa.icfact.ui.navigation.Navegador;
+import cat.informaticassa.icfact.ui.login.dialog.RecuperarContrasenyaDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
@@ -25,7 +26,7 @@ public class LoginController {
     private void inicialitzar() {
         view.getContrasenya().setOnAction(event -> entrar());
         view.getBotoEntrar().setOnAction(event -> entrar());
-
+        view.getRecuperar().setOnAction(event -> recuperarContrasenya());
     }
 
     private void entrar() {
@@ -50,5 +51,11 @@ public class LoginController {
             logger.error("Error durant el procés de login.", e);
             Alerta.error(view.getScene().getWindow(), "S'ha produït un error en iniciar sessió.");
         }
+    }
+
+    private void recuperarContrasenya() {
+        RecuperarContrasenyaDialog dialog = new RecuperarContrasenyaDialog(empresa);
+        dialog.initOwner(view.getScene().getWindow());
+        dialog.showAndWait();
     }
 }
