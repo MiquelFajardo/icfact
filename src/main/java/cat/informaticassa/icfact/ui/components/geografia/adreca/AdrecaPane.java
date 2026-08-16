@@ -93,19 +93,34 @@ public class AdrecaPane extends GridPane {
         txtNumero.setText(adreca.getNumero());
         txtPis.setText(adreca.getPis());
         txtPorta.setText(adreca.getPorta());
-
         if (adreca.getPais() != null) {
-            cmbPais.setValue(adreca.getPais());
-            controller.canviPais();
+            Long paisId = adreca.getPais().getId();
+            cmbPais.getItems().stream()
+                    .filter(pais -> pais.getId().equals(paisId))
+                    .findFirst()
+                    .ifPresent(pais -> {
+                        cmbPais.setValue(pais);
+                        controller.canviPais();
+                    });
         }
-
         if (adreca.getProvincia() != null) {
-            cmbProvincia.setValue(adreca.getProvincia());
-            controller.canviProvincia();
-        }
+            Long provinciaId = adreca.getProvincia().getId();
 
+            cmbProvincia.getItems().stream()
+                    .filter(provincia -> provincia.getId().equals(provinciaId))
+                    .findFirst()
+                    .ifPresent(provincia -> {
+                        cmbProvincia.setValue(provincia);
+                        controller.canviProvincia();
+                    });
+        }
         if (adreca.getPoblacio() != null) {
-            cmbPoblacio.setValue(adreca.getPoblacio());
+            Long poblacioId = adreca.getPoblacio().getId();
+
+            cmbPoblacio.getItems().stream()
+                    .filter(poblacio -> poblacio.getId().equals(poblacioId))
+                    .findFirst()
+                    .ifPresent(cmbPoblacio::setValue);
         }
     }
 

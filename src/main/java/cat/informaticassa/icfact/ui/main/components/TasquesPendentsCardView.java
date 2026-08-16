@@ -49,9 +49,15 @@ public class TasquesPendentsCardView extends VBox {
                 -fx-font-weight: bold;
                 -fx-alignment: center;
                 """);
-
         icona.setMinSize(50, 50);
         icona.setPrefSize(50, 50);
+        VBox text = getText();
+        HBox fila = new HBox(16, icona, text);
+        fila.setAlignment(Pos.CENTER_LEFT);
+        getChildren().add(fila);
+    }
+
+    private static VBox getText() {
         Label titol = new Label("No hi ha tasques pendents.");
         titol.setStyle("""
                 -fx-font-size: 15px;
@@ -67,11 +73,7 @@ public class TasquesPendentsCardView extends VBox {
 
         VBox text = new VBox(4, titol, subtitol);
         text.setAlignment(Pos.CENTER_LEFT);
-
-        HBox fila = new HBox(16, icona, text);
-        fila.setAlignment(Pos.CENTER_LEFT);
-
-        getChildren().add(fila);
+        return text;
     }
 
     private HBox crearTasca(Tasca tasca) {
@@ -146,13 +148,11 @@ public class TasquesPendentsCardView extends VBox {
 
         marcarFeta.setOnAction(e -> marcarComAFeta(tasca));
 
-        fila.setOnContextMenuRequested(e -> {
-            contextMenu.show(
-                    fila,
-                    e.getScreenX(),
-                    e.getScreenY()
-            );
-        });
+        fila.setOnContextMenuRequested(e -> contextMenu.show(
+                fila,
+                e.getScreenX(),
+                e.getScreenY()
+        ));
 
         return fila;
     }

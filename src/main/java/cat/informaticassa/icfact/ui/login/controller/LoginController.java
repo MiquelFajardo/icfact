@@ -1,9 +1,9 @@
 package cat.informaticassa.icfact.ui.login.controller;
 
 import cat.informaticassa.icfact.empresa.model.Empresa;
+import cat.informaticassa.icfact.ui.components.dialogs.RecuperarContrasenyaDialog;
 import cat.informaticassa.icfact.ui.login.view.LoginView;
 import cat.informaticassa.icfact.ui.navigation.Navegador;
-import cat.informaticassa.icfact.ui.login.dialog.RecuperarContrasenyaDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;

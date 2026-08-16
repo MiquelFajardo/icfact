@@ -1,11 +1,10 @@
-package cat.informaticassa.icfact.ui.login.dialog;
+package cat.informaticassa.icfact.ui.components.dialogs;
 
 import cat.informaticassa.icfact.ConstantsAplicacio;
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.empresa.service.RecuperarContrasenyaService;
 import cat.informaticassa.icfact.ui.components.BotoPrimari;
 import cat.informaticassa.icfact.ui.components.PrimaryButton;
-import cat.informaticassa.icfact.ui.tema.Tema;
 import cat.informaticassa.icfact.ui.util.Alerta;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

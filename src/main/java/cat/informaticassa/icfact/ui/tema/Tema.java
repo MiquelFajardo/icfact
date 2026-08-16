@@ -2,7 +2,6 @@ package cat.informaticassa.icfact.ui.tema;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -41,9 +40,6 @@ public final class Tema {
     * Cards
      */
     public static final Font TITOL_CARD = Font.font("Inter", FontWeight.BOLD, 20);
-    public static final double CARD_RADIUS = 18;
-    public static final double CARD_SPACING = 28;
-    public static final Insets CARD_PADDING = new Insets(36);
     public static final Color CARD_BACKGROUND = Color.WHITE;
     public static Color getColorPrincipal() {
         return colorPrincipal.get();

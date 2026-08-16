@@ -85,15 +85,8 @@ public class Card extends VBox {
         getChildren().add(node);
     }
 
-    public void addAll(Node... nodes) {
-        getChildren().addAll(nodes);
-    }
-
     public void afegir(Node node) {
         getChildren().add(node);
     }
 
-    public void afegir(Node... nodes) {
-        getChildren().addAll(nodes);
-    }
 }

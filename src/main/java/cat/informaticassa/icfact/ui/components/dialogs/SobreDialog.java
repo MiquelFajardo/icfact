@@ -2,7 +2,10 @@ package cat.informaticassa.icfact.ui.components.dialogs;
 
 import cat.informaticassa.icfact.BuildInfo;
 import cat.informaticassa.icfact.ConstantsAplicacio;
+import cat.informaticassa.icfact.actualitzacio.model.InformacioActualitzacio;
+import cat.informaticassa.icfact.actualitzacio.service.ActualitzacioService;
 import cat.informaticassa.icfact.ui.components.BotoPrimari;
+import cat.informaticassa.icfact.ui.util.Alerta;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -10,8 +13,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 
 public class SobreDialog extends DialogBase {
@@ -19,6 +25,7 @@ public class SobreDialog extends DialogBase {
     private final BotoPrimari botoWhatsApp = new BotoPrimari("💬  WhatsApp");
     private final BotoPrimari botoEmail = new BotoPrimari("✉  Email");
     private static final Logger logger = LoggerFactory.getLogger(SobreDialog.class);
+    private final ActualitzacioService actualitzacioService = new ActualitzacioService();
 
     public SobreDialog() {
         super("Sobre ICFact", 620, 560);
@@ -71,8 +78,53 @@ public class SobreDialog extends DialogBase {
 
 
     private void comprovarActualitzacions() {
-
-        // Ho implementarem després.
+        InformacioActualitzacio informacio = actualitzacioService.comprovar();
+        if (informacio == null) {
+            Alerta.informacio(getScene().getWindow(),"Actualitzacions","Ja tens l'última versió d'ICFact.");
+            return;
+        }
+        ActualitzacioDialog dialog = new ActualitzacioDialog(getScene().getWindow(), informacio);
+        ActualitzacioDialog.Resultat resultat = dialog.mostrar();
+        switch (resultat) {
+            case ACTUALITZAR -> {
+                String url;
+                String nomFitxer;
+                if (esWindows()) {
+                    if (!informacio.getWindows().isDisponible()) {
+                        Alerta.error(getScene().getWindow(),"No hi ha cap actualització disponible per a Windows.");
+                        return;
+                    }
+                    url = informacio.getWindows().getUrl();
+                    nomFitxer = "ICFact-Setup.exe";
+                } else {
+                    if (!informacio.getLinux().isDisponible()) {
+                        Alerta.error(getScene().getWindow(),"No hi ha cap actualització disponible per a Linux.");
+                        return;
+                    }
+                    url = informacio.getLinux().getUrl();
+                    nomFitxer = "ICFact-Linux.tar.gz";
+                }
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Guardar actualització d'ICFact");
+                fileChooser.setInitialFileName(nomFitxer);
+                if (esWindows()) {
+                    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Instal·lador d'ICFact (*.exe)","*.exe"));
+                } else {
+                    fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Paquet Linux (*.tar.gz)", "*.tar.gz"));
+                }
+                File fitxer = fileChooser.showSaveDialog(getScene().getWindow());
+                if (fitxer == null) {
+                    return;
+                }
+                ActualitzacioDescarregaDialog descarrega = new ActualitzacioDescarregaDialog(getScene().getWindow());
+                descarrega.show();
+                descarrega.iniciarDescarga(url, fitxer.toPath());
+            }
+            case VEURE_NOTES -> {
+                NotesActualitzacioDialog notesDialog = new NotesActualitzacioDialog(getScene().getWindow(), informacio.getUltimaVersio(), informacio.getNotes());
+                notesDialog.mostrar();
+            }
+        }
     }
 
     private void obrirWhatsApp() {
@@ -120,7 +172,6 @@ public class SobreDialog extends DialogBase {
         return separador;
     }
 
-
     private Label createAutor() {
         Label lblAutor = new Label("© 2026 Informaticassa");
         lblAutor.setStyle("-fx-font-size: 13px; -fx-text-fill: #71819a; -fx-cursor: hand;");
@@ -129,4 +180,9 @@ public class SobreDialog extends DialogBase {
         lblAutor.setOnMouseClicked(e -> obrirProtocol(ConstantsAplicacio.WEB));
         return lblAutor;
     }
+
+    private boolean esWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("win");
+    }
+
 }

@@ -8,13 +8,13 @@ public class EmpresaRepository extends AbstractRepository<Empresa, Long> {
     public Optional<Empresa> buscar() {
         try (var session = obrirSessio()) {
             return session.createQuery("""
-                    SELECT e
-                    FROM Empresa e
-                    LEFT JOIN FETCH e.adreca a
-                    LEFT JOIN FETCH a.poblacio p
-                    LEFT JOIN FETCH p.provincia pr
-                    LEFT JOIN FETCH pr.pais
-                    """, Empresa.class)
+                SELECT DISTINCT e
+                FROM Empresa e
+                LEFT JOIN FETCH e.adreca a
+                LEFT JOIN FETCH a.poblacio p
+                LEFT JOIN FETCH p.provincia pr
+                LEFT JOIN FETCH pr.pais pa
+                """, Empresa.class)
                     .setMaxResults(1)
                     .uniqueResultOptional();
         }
