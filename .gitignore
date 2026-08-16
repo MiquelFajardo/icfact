@@ -1,1 +1,26 @@
+# Maven
+target/
 
+# Dades locals
+*.db
+*.db-shm
+*.db-wal
+
+# Backups
+*_backup_*.db
+
+# Fitxers de l'aplicació
+logs/
+factures/
+pressupostos/
+informes/
+
+# Claus i dades sensibles
+clau-recuperacio-*.txt
+
+# IDE
+.idea/
+*.iml
+
+# Sistema
+.DS_Store
