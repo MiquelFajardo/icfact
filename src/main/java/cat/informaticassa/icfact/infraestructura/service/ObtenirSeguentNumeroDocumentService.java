@@ -1,22 +1,12 @@
 package cat.informaticassa.icfact.infraestructura.service;
 
-import cat.informaticassa.icfact.factura.repository.FacturaRepository;
 import cat.informaticassa.icfact.infraestructura.model.TipusDocument;
-import cat.informaticassa.icfact.pressupost.repository.PressupostRepository;
+import cat.informaticassa.icfact.infraestructura.repository.NumeracioDocumentRepository;
 
 public class ObtenirSeguentNumeroDocumentService {
-
-    private final PressupostRepository pressupostRepository = new PressupostRepository();
-    private final FacturaRepository facturaRepository = new FacturaRepository();
+    private final NumeracioDocumentRepository repository = new NumeracioDocumentRepository();
 
     public long obtenir(int any, TipusDocument tipusDocument) {
-
-        return switch (tipusDocument) {
-            case PRESSUPOST ->
-                    pressupostRepository.obtenirSeguentNumero(any);
-
-            case FACTURA ->
-                    facturaRepository.obtenirSeguentNumero(any);
-        };
+        return repository.obtenirSeguentNumero(any, tipusDocument);
     }
 }

@@ -33,7 +33,7 @@ public class GenerarPdfPressupostService {
         Empresa empresa = obtenirEmpresa();
         Path fitxer = crearFitxer(pressupost);
         try {
-            Document document = crearDocument(fitxer, empresa, pressupost);
+            Document document = crearDocument(fitxer, empresa);
             generarContingut(document, pressupost, empresa);
             document.close();
             return fitxer;
@@ -60,7 +60,7 @@ public class GenerarPdfPressupostService {
         return carpeta.resolve(pressupost.getNumero() + ".pdf");
     }
 
-    private Document crearDocument(Path fitxer, Empresa empresa, Pressupost pressupost) {
+    private Document crearDocument(Path fitxer, Empresa empresa) {
         try {
             Document document = new Document(PageSize.A4);
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(fitxer.toFile()));
@@ -77,7 +77,7 @@ public class GenerarPdfPressupostService {
         pdfLinies.afegir(document, pressupost, empresa);
         pdfTotals.afegir(document, pressupost, empresa);
         pdfFormaPagament.afegir(document, pressupost, empresa);
-        pdfObservacions.afegir(document, pressupost.getObservacions(), empresa);
+        pdfObservacions.afegir(document, pressupost.getObservacions());
         pdfAcceptacio.afegir(document, empresa);
     }
 

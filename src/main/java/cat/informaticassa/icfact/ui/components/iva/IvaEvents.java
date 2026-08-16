@@ -6,17 +6,19 @@ import cat.informaticassa.icfact.iva.service.ModificarIvaService;
 import cat.informaticassa.icfact.iva.service.CrearIvaService;
 import cat.informaticassa.icfact.ui.components.dialogs.IvaDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class IvaEvents {
     private final IvaDialog dialog;
-    private final IvaPane formulari;
     private final IvaBinder binder;
     private final CrearIvaService crearIvaService = new CrearIvaService();
     private final ModificarIvaService modificarIvaService = new ModificarIvaService();
+    private static final Logger logger = LoggerFactory.getLogger(IvaEvents.class);
 
     public IvaEvents(IvaDialog dialog) {
         this.dialog = dialog;
-        this.formulari = dialog.getFormulari();
+        IvaPane formulari = dialog.getFormulari();
         this.binder = new IvaBinder(formulari);
         dialog.getBotoGuardar().setOnAction(e -> guardar());
     }
@@ -38,7 +40,7 @@ public class IvaEvents {
         } catch (ValidacioException e) {
             Alerta.error(e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error inesperat desant l'IVA.", e);
             Alerta.error("No s'ha pogut desar l'IVA.");
         }
     }

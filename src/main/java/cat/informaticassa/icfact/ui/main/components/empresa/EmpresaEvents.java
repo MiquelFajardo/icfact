@@ -22,17 +22,12 @@ public class EmpresaEvents implements DirtyPage {
     private final FormulariEmpresa formulari;
     private final Empresa empresa;
 
-    private final BotoPrimari botoGuardar;
-    private final BotoSecundari botoCancelar;
-
     private final ModificarEmpresaService modificarEmpresaService = new ModificarEmpresaService();
     private final BuscarEmpresaService buscarEmpresaService = new BuscarEmpresaService();
 
     public EmpresaEvents(FormulariEmpresa formulari, Empresa empresa, BotoPrimari botoGuardar, BotoSecundari botoCancelar) {
         this.formulari = formulari;
         this.empresa = empresa;
-        this.botoGuardar = botoGuardar;
-        this.botoCancelar = botoCancelar;
         carregar();
         formulari.getDirtyTracker().marcarDesat();
         botoGuardar.setDisable(true);

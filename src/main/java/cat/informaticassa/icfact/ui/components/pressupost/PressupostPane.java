@@ -20,7 +20,7 @@ import java.math.RoundingMode;
 public class PressupostPane extends BorderPane {
     private DirtyTracker dirtyTracker;
     private final TextField txtNumero = new TextField();
-    private final SearchField<Client> txtClient = new SearchField();
+    private final SearchField<Client> txtClient = new SearchField<>();
     private final Button botoNouClient = new Button("+");
     private final ComboBox<FormaPagament> cmbFormaPagament = new ComboBox<>();
     private final Button botoNovaFormaPagament = new Button("+");
@@ -106,31 +106,19 @@ public class PressupostPane extends BorderPane {
         Pressupost pressupost = new Pressupost();
         pressupost.setLinies(taulaLinies.obtenirLinies());
         recalcularService.executar(pressupost);
-        txtSubtotal.setText(pressupost.getSubtotal().setScale(2).toPlainString());
-        txtIva.setText(pressupost.getIva().setScale(2).toPlainString());
-        txtTotal.setText( pressupost.getTotal().setScale(2).toPlainString());
+        txtSubtotal.setText(pressupost.getSubtotal().setScale(2, RoundingMode.HALF_UP).toPlainString());
+        txtIva.setText(pressupost.getIva().setScale(2, RoundingMode.HALF_UP).toPlainString());
+        txtTotal.setText(pressupost.getTotal().setScale(2, RoundingMode.HALF_UP).toPlainString());
     }
 
-    public void registrarDirty(DirtyTracker dirtyTracker) {        this.dirtyTracker = dirtyTracker;
-
-        dpData.valueProperty().addListener((o, a, n) ->
-                dirtyTracker.marcarModificat());
-
-        txtClient.textProperty().addListener((o, a, n) ->
-                dirtyTracker.marcarModificat());
-
-        cmbFormaPagament.valueProperty().addListener((o, a, n) ->
-                dirtyTracker.marcarModificat());
-
-        chkActiu.selectedProperty().addListener((o, a, n) ->
-                dirtyTracker.marcarModificat());
-
-        txtObservacions.textProperty().addListener((o, a, n) ->
-                dirtyTracker.marcarModificat());
-
-        taulaLinies.getItems().addListener(
-                (javafx.collections.ListChangeListener<LiniaPressupost>) c ->
-                        dirtyTracker.marcarModificat());
+    public void registrarDirty(DirtyTracker dirtyTracker) {
+        this.dirtyTracker = dirtyTracker;
+        dpData.valueProperty().addListener((o, a, n) -> dirtyTracker.marcarModificat());
+        txtClient.textProperty().addListener((o, a, n) -> dirtyTracker.marcarModificat());
+        cmbFormaPagament.valueProperty().addListener((o, a, n) -> dirtyTracker.marcarModificat());
+        chkActiu.selectedProperty().addListener((o, a, n) -> dirtyTracker.marcarModificat());
+        txtObservacions.textProperty().addListener((o, a, n) -> dirtyTracker.marcarModificat());
+        taulaLinies.getItems().addListener((javafx.collections.ListChangeListener<LiniaPressupost>) c ->dirtyTracker.marcarModificat());
     }
 
     public void marcarModificat() {

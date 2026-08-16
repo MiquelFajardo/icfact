@@ -21,14 +21,6 @@ public class PressupostController {
         pagina.getTaula().mostrar(buscarPressupostService.buscarActius());
     }
 
-    public void carregarInactius() {
-        pagina.getTaula().mostrar(buscarPressupostService.buscarInactius());
-    }
-
-    public void carregarTots() {
-        pagina.getTaula().mostrar(buscarPressupostService.buscarTots());
-    }
-
     public void mostrarPressupostosClient(Client client) {
         this.clientFiltrat = client;
         pagina.getToolbar().mostrarClient(client);

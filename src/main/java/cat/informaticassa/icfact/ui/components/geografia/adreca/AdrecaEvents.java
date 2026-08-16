@@ -10,15 +10,16 @@ import cat.informaticassa.icfact.ui.components.dialogs.PaisDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.PoblacioDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.ProvinciaDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AdrecaEvents {
-
+    private static final Logger logger = LoggerFactory.getLogger(AdrecaEvents.class);
     private final AdrecaPane vista;
-
     private final BuscarPaisosService buscarPaisosService = new BuscarPaisosService();
     private final BuscarProvinciesPerPaisService buscarProvinciesPerPaisService = new BuscarProvinciesPerPaisService();
     private final BuscarPoblacionsPerProvinciaService buscarPoblacionsPerProvinciaService = new BuscarPoblacionsPerProvinciaService();
-    private boolean carregant = false;
+    private final boolean carregant = false;
 
     public AdrecaEvents(AdrecaPane vista) {
         this.vista = vista;
@@ -45,9 +46,12 @@ public class AdrecaEvents {
         if (pais == null) {
             return;
         }
-        vista.getCmbProvincia().getItems().setAll(
-                buscarProvinciesPerPaisService.executar(pais)
-        );
+        try {
+            vista.getCmbProvincia().getItems().setAll( buscarProvinciesPerPaisService.executar(pais));
+        } catch (Exception e) {
+            logger.error("Error carregant les províncies del país '{}'.", pais.getNom(), e);
+            Alerta.error("No s'han pogut carregar les províncies.");
+        }
     }
 
     private void canviProvincia() {
@@ -60,22 +64,28 @@ public class AdrecaEvents {
         if (provincia == null) {
             return;
         }
-        vista.getCmbPoblacio().getItems().setAll(
-                buscarPoblacionsPerProvinciaService.executar(provincia)
-        );
+        try {
+            vista.getCmbPoblacio().getItems().setAll(buscarPoblacionsPerProvinciaService.executar(provincia));
+        } catch (Exception e) {
+            logger.error("Error carregant les poblacions de la província '{}'.", provincia.getNom(), e);
+            Alerta.error("No s'han pogut carregar les poblacions.");
+        }
     }
 
     private void nouPais() {
-        PaisDialog dialog = new PaisDialog();
-        dialog.showAndWait();
-        Pais pais = dialog.getPais();
-        if (pais == null) {
-            return;
+        try {
+            PaisDialog dialog = new PaisDialog();
+            dialog.showAndWait();
+            Pais pais = dialog.getPais();
+            if (pais == null) {
+                return;
+            }
+            vista.getCmbPais().getItems().setAll(buscarPaisosService.executar());
+            vista.getCmbPais().setValue(pais);
+        } catch (Exception e) {
+            logger.error("Error creant o carregant un nou país.", e);
+            Alerta.error("No s'ha pogut crear el país.");
         }
-        vista.getCmbPais().getItems().setAll(
-                buscarPaisosService.executar()
-        );
-        vista.getCmbPais().setValue(pais);
     }
 
     private void novaProvincia() {
@@ -84,16 +94,19 @@ public class AdrecaEvents {
             Alerta.error("Primer has de seleccionar un país.");
             return;
         }
-        ProvinciaDialog dialog = new ProvinciaDialog(pais);
-        dialog.showAndWait();
-        Provincia provincia = dialog.getProvincia();
-        if (provincia == null) {
-            return;
+        try {
+            ProvinciaDialog dialog = new ProvinciaDialog(pais);
+            dialog.showAndWait();
+            Provincia provincia = dialog.getProvincia();
+            if (provincia == null) {
+                return;
+            }
+            vista.getCmbProvincia().getItems().setAll(buscarProvinciesPerPaisService.executar(pais));
+            vista.getCmbProvincia().setValue(provincia);
+        } catch (Exception e) {
+            logger.error("Error creant o carregant una nova província del país '{}'.", pais.getNom(), e);
+            Alerta.error("No s'ha pogut crear la província.");
         }
-        vista.getCmbProvincia().getItems().setAll(
-                buscarProvinciesPerPaisService.executar(pais)
-        );
-        vista.getCmbProvincia().setValue(provincia);
     }
 
     private void novaPoblacio() {
@@ -102,15 +115,18 @@ public class AdrecaEvents {
             Alerta.error("Primer has de seleccionar una província.");
             return;
         }
-        PoblacioDialog dialog = new PoblacioDialog(provincia);
-        dialog.showAndWait();
-        Poblacio poblacio = dialog.getPoblacio();
-        if (poblacio == null) {
-            return;
+        try {
+            PoblacioDialog dialog = new PoblacioDialog(provincia);
+            dialog.showAndWait();
+            Poblacio poblacio = dialog.getPoblacio();
+            if (poblacio == null) {
+                return;
+            }
+            vista.getCmbPoblacio().getItems().setAll(buscarPoblacionsPerProvinciaService.executar(provincia));
+            vista.getCmbPoblacio().setValue(poblacio);
+        } catch (Exception e) {
+            logger.error("Error creant o carregant una nova població de la província '{}'.", provincia.getNom(), e);
+            Alerta.error("No s'ha pogut crear la població.");
         }
-        vista.getCmbPoblacio().getItems().setAll(
-                buscarPoblacionsPerProvinciaService.executar(provincia)
-        );
-        vista.getCmbPoblacio().setValue(poblacio);
     }
 }

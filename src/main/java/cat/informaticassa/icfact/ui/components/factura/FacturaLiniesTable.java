@@ -10,8 +10,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
@@ -37,29 +35,7 @@ public class FacturaLiniesTable extends TableView<LiniaFactura> {
     public FacturaLiniesTable() {
         setEditable(true);
         setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-        /*
-         * CONCEPTE
-         */
-        TableColumn<LiniaFactura, String> colConcepte =  new TableColumn<>("Concepte");
-        colConcepte.setPrefWidth(350);
-        colConcepte.setCellValueFactory(c -> {
-            LiniaFactura linia = c.getValue();
-            if (linia.getProducte() != null) {
-                return new SimpleStringProperty(
-                        linia.getProducte().getNom()
-                );
-            }
-            return new SimpleStringProperty(
-                    linia.getDescripcio() == null
-                            ? ""
-                            : linia.getDescripcio()
-            );
-        });
-        colConcepte.setCellFactory(column -> new ProducteFacturaTableCell());
-
-        /*
-         * DESCRIPCIÓ
-         */
+        TableColumn<LiniaFactura, String> colConcepte = createColConcepte();
         TableColumn<LiniaFactura, String> colDescripcio = new TableColumn<>("Descripció");
         colDescripcio.setCellValueFactory(c ->
                 new SimpleStringProperty(
@@ -74,10 +50,6 @@ public class FacturaLiniesTable extends TableView<LiniaFactura> {
             linia.setDescripcio(e.getNewValue());
             marcarModificat();
         });
-
-        /*
-         * QUANTITAT
-         */
         TableColumn<LiniaFactura, BigDecimal> colQuantitat = new TableColumn<>("Quantitat");
         colQuantitat.setCellValueFactory(c ->
                 new SimpleObjectProperty<>(c.getValue().getQuantitat()));
@@ -87,64 +59,17 @@ public class FacturaLiniesTable extends TableView<LiniaFactura> {
             linia.setQuantitat(e.getNewValue());
             recalcular(linia);
         });
-
-        /*
-         * PREU
-         */
-        TableColumn<LiniaFactura, BigDecimal> colPreu = new TableColumn<>("Preu");
-        colPreu.setCellValueFactory(c ->
-                new SimpleObjectProperty<>(c.getValue().getPreu()));
-        colPreu.setCellFactory(column ->
-                new TextFieldTableCell<>(
-                        new StringConverter<>() {
-                            @Override
-                            public String toString(
-                                    BigDecimal value) {
-                                if (value == null) {
-                                    return "0.00";
-                                }
-                                return value.setScale(2, RoundingMode.HALF_UP ).toPlainString();
-                            }
-                            @Override
-                            public BigDecimal fromString(
-                                    String value) {
-                                if (value == null ||value.isBlank()) {
-                                    return BigDecimal.ZERO.setScale(2);
-                                }
-                                return new BigDecimal(value.replace(",", ".")).setScale(2, RoundingMode.HALF_UP);
-                            }
-                        }
-                )
-        );
-        colPreu.setOnEditCommit(e -> {
-            LiniaFactura linia = e.getRowValue();
-            BigDecimal preu = e.getNewValue();
-            if (preu == null) {
-                preu = BigDecimal.ZERO;
-            }
-            linia.setPreu(preu.setScale(2,RoundingMode.HALF_UP));
-            recalcular(linia);
-        });
-
-        /*
-         * DESCOMPTE
-         */
+        TableColumn<LiniaFactura, BigDecimal> colPreu = createColPreu();
         TableColumn<LiniaFactura, BigDecimal> colDte = new TableColumn<>("Dte %");
-        colDte.setCellValueFactory(c ->
-                new SimpleObjectProperty<>(c.getValue().getDte()));
+        colDte.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getDte()));
         colDte.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
         colDte.setOnEditCommit(e -> {
             LiniaFactura linia = e.getRowValue();
             linia.setDte(e.getNewValue());
             recalcular(linia);
         });
-
-        /*
-         * IVA
-         */
         TableColumn<LiniaFactura, Iva> colIva = new TableColumn<>("IVA");
-        colIva.setCellValueFactory(c ->
-                new SimpleObjectProperty<>(c.getValue().getIva()) );
+        colIva.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getIva()) );
         colIva.setCellFactory(ComboBoxTableCell.forTableColumn(new StringConverter<>() {
                             @Override
                             public String toString(Iva iva) {
@@ -168,21 +93,71 @@ public class FacturaLiniesTable extends TableView<LiniaFactura> {
             recalcular(linia);
         });
 
-        /*
-         * TOTAL
-         */
         TableColumn<LiniaFactura, BigDecimal> colTotal = new TableColumn<>("Total");
-        colTotal.setCellValueFactory(c ->
-                new SimpleObjectProperty<>(c.getValue().getTotal()));
-
-        /*
-         * COLUMNES
-         */
+        colTotal.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getTotal()));
         getColumns().clear();
-        getColumns().addAll( colConcepte, colQuantitat, colPreu, colDte, colIva, colTotal );
+        getColumns().addAll(List.of(colConcepte, colQuantitat, colPreu, colDte, colIva, colTotal));
         setItems(dades);
         configurarTeclat();
         comprovarUltimaLinia();
+    }
+
+    private TableColumn<LiniaFactura, BigDecimal> createColPreu() {
+        TableColumn<LiniaFactura, BigDecimal> colPreu = new TableColumn<>("Preu");
+        colPreu.setCellValueFactory(c ->
+                new SimpleObjectProperty<>(c.getValue().getPreu()));
+        colPreu.setCellFactory(column ->
+                new TextFieldTableCell<>(
+                        new StringConverter<>() {
+                            @Override
+                            public String toString(
+                                    BigDecimal value) {
+                                if (value == null) {
+                                    return "0.00";
+                                }
+                                return value.setScale(2, RoundingMode.HALF_UP ).toPlainString();
+                            }
+                            @Override
+                            public BigDecimal fromString(
+                                    String value) {
+                                if (value == null ||value.isBlank()) {
+                                    return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+                                }
+                                return new BigDecimal(value.replace(",", ".")).setScale(2, RoundingMode.HALF_UP);
+                            }
+                        }
+                )
+        );
+        colPreu.setOnEditCommit(e -> {
+            LiniaFactura linia = e.getRowValue();
+            BigDecimal preu = e.getNewValue();
+            if (preu == null) {
+                preu = BigDecimal.ZERO;
+            }
+            linia.setPreu(preu.setScale(2,RoundingMode.HALF_UP));
+            recalcular(linia);
+        });
+        return colPreu;
+    }
+
+    private static TableColumn<LiniaFactura, String> createColConcepte() {
+        TableColumn<LiniaFactura, String> colConcepte =  new TableColumn<>("Concepte");
+        colConcepte.setPrefWidth(350);
+        colConcepte.setCellValueFactory(c -> {
+            LiniaFactura linia = c.getValue();
+            if (linia.getProducte() != null) {
+                return new SimpleStringProperty(
+                        linia.getProducte().getNom()
+                );
+            }
+            return new SimpleStringProperty(
+                    linia.getDescripcio() == null
+                            ? ""
+                            : linia.getDescripcio()
+            );
+        });
+        colConcepte.setCellFactory(column -> new ProducteFacturaTableCell());
+        return colConcepte;
     }
 
     public void mostrar(List<LiniaFactura> linies) {
@@ -194,12 +169,6 @@ public class FacturaLiniesTable extends TableView<LiniaFactura> {
     public List<LiniaFactura> obtenirLinies() {
         return dades.stream().filter(linia ->
                         linia.getProducte() != null|| (linia.getDescripcio() != null && !linia.getDescripcio().isBlank())).toList();
-    }
-
-    public void afegirLinia(LiniaFactura linia) {
-        dades.add(linia);
-        comprovarUltimaLinia();
-        refresh();
     }
 
     public void eliminarLinia(LiniaFactura linia) {
@@ -244,7 +213,7 @@ public class FacturaLiniesTable extends TableView<LiniaFactura> {
             dades.add(new LiniaFactura());
             return;
         }
-        LiniaFactura ultima = dades.get(dades.size() - 1);
+        LiniaFactura ultima = dades.getLast();
         boolean buida = ultima.getProducte() == null && (ultima.getDescripcio() == null || ultima.getDescripcio().isBlank());
         if (!buida) {
             dades.add(new LiniaFactura());

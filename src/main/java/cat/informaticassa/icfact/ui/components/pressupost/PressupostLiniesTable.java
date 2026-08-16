@@ -34,17 +34,7 @@ public class PressupostLiniesTable extends TableView<LiniaPressupost> {
     public PressupostLiniesTable() {
         setEditable(true);
         setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-        TableColumn<LiniaPressupost, String> colConcepte = new TableColumn<>("Concepte");
-        colConcepte.setPrefWidth(350);
-        colConcepte.setCellValueFactory(c -> {
-            LiniaPressupost linia = c.getValue();
-            if (linia.getProducte() != null) {
-                return new SimpleStringProperty(linia.getProducte().getNom());
-            }
-            return new SimpleStringProperty( linia.getDescripcio() == null ? "" : linia.getDescripcio());
-        });
-
-        colConcepte.setCellFactory(c -> new ProducteTableCell());
+        TableColumn<LiniaPressupost, String> colConcepte = createColConcepte();
 
         TableColumn<LiniaPressupost, String> colDescripcio = new TableColumn<>("Descripció");
 
@@ -56,74 +46,11 @@ public class PressupostLiniesTable extends TableView<LiniaPressupost> {
         colDescripcio.setOnEditCommit(e ->
                 e.getRowValue().setDescripcio(e.getNewValue()));
 
-        TableColumn<LiniaPressupost, BigDecimal> colQuantitat = new TableColumn<>("Quantitat");
+        TableColumn<LiniaPressupost, BigDecimal> colQuantitat = createColQuantitat();
 
-        colQuantitat.setCellValueFactory(c ->
-                new SimpleObjectProperty<>(c.getValue().getQuantitat()));
+        TableColumn<LiniaPressupost, BigDecimal> colPreu = createColPreu();
 
-        colQuantitat.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-
-        colQuantitat.setOnEditCommit(e -> {
-            LiniaPressupost linia = e.getRowValue();
-            linia.setQuantitat(e.getNewValue());
-            new RecalcularLiniaPressupostService().executar(linia);
-            refresh();
-            if (pressupostPane != null) {
-                pressupostPane.marcarModificat();
-                pressupostPane.actualitzarTotals();
-            }
-        });
-
-        TableColumn<LiniaPressupost, BigDecimal> colPreu = new TableColumn<>("Preu");
-
-        colPreu.setCellValueFactory(c ->
-                new SimpleObjectProperty<>(c.getValue().getPreu()));
-
-        colPreu.setCellFactory(column -> new TextFieldTableCell<>(
-                new BigDecimalStringConverter() {
-                    @Override
-                    public String toString(BigDecimal value) {
-                        if (value == null) {
-                            return "0.00";
-                        }
-                        return value.setScale(2, RoundingMode.HALF_UP).toPlainString();
-                    }
-
-                    @Override
-                    public BigDecimal fromString(String value) {
-                        if (value == null || value.isBlank()) {
-                            return BigDecimal.ZERO.setScale(2);
-                        }
-                        return new BigDecimal(value.replace(",", ".")).setScale(2, RoundingMode.HALF_UP);
-                    }
-                }
-        ));
-
-        colPreu.setOnEditCommit(e -> {
-            LiniaPressupost linia = e.getRowValue();
-            linia.setPreu(e.getNewValue().setScale(2, RoundingMode.HALF_UP));
-            new RecalcularLiniaPressupostService().executar(linia);
-            refresh();
-            if (pressupostPane != null) {
-                pressupostPane.marcarModificat();
-                pressupostPane.actualitzarTotals();
-            }
-        });
-
-        TableColumn<LiniaPressupost, BigDecimal> colDte = new TableColumn<>("Dte %");
-        colDte.setCellValueFactory(c ->
-                new SimpleObjectProperty<>(c.getValue().getDte()));
-        colDte.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
-        colDte.setOnEditCommit(e -> {
-            LiniaPressupost linia = e.getRowValue();
-            linia.setDte(e.getNewValue());
-            new RecalcularLiniaPressupostService().executar(linia);
-            refresh();
-            if (pressupostPane != null) {
-                pressupostPane.marcarModificat();
-                pressupostPane.actualitzarTotals();
-            }
-        });
+        TableColumn<LiniaPressupost, BigDecimal> colDte = createColDte();
 
         TableColumn<LiniaPressupost, Iva> colIva = new TableColumn<>("IVA");
         colIva.setCellValueFactory(c ->
@@ -175,6 +102,99 @@ public class PressupostLiniesTable extends TableView<LiniaPressupost> {
         comprovarUltimaLinia();
     }
 
+    private TableColumn<LiniaPressupost, BigDecimal> createColDte() {
+        TableColumn<LiniaPressupost, BigDecimal> colDte = new TableColumn<>("Dte %");
+        colDte.setCellValueFactory(c ->
+                new SimpleObjectProperty<>(c.getValue().getDte()));
+        colDte.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+        colDte.setOnEditCommit(e -> {
+            LiniaPressupost linia = e.getRowValue();
+            linia.setDte(e.getNewValue());
+            new RecalcularLiniaPressupostService().executar(linia);
+            refresh();
+            if (pressupostPane != null) {
+                pressupostPane.marcarModificat();
+                pressupostPane.actualitzarTotals();
+            }
+        });
+        return colDte;
+    }
+
+    private TableColumn<LiniaPressupost, BigDecimal> createColPreu() {
+        TableColumn<LiniaPressupost, BigDecimal> colPreu = new TableColumn<>("Preu");
+
+        colPreu.setCellValueFactory(c ->
+                new SimpleObjectProperty<>(c.getValue().getPreu()));
+
+        colPreu.setCellFactory(column -> new TextFieldTableCell<>(
+                new BigDecimalStringConverter() {
+                    @Override
+                    public String toString(BigDecimal value) {
+                        if (value == null) {
+                            return "0.00";
+                        }
+                        return value.setScale(2, RoundingMode.HALF_UP).toPlainString();
+                    }
+
+                    @Override
+                    public BigDecimal fromString(String value) {
+                        if (value == null || value.isBlank()) {
+                            return BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+                        }
+                        return new BigDecimal(value.replace(",", ".")).setScale(2, RoundingMode.HALF_UP);
+                    }
+                }
+        ));
+
+        colPreu.setOnEditCommit(e -> {
+            LiniaPressupost linia = e.getRowValue();
+            linia.setPreu(e.getNewValue().setScale(2, RoundingMode.HALF_UP));
+            new RecalcularLiniaPressupostService().executar(linia);
+            refresh();
+            if (pressupostPane != null) {
+                pressupostPane.marcarModificat();
+                pressupostPane.actualitzarTotals();
+            }
+        });
+        return colPreu;
+    }
+
+    private TableColumn<LiniaPressupost, BigDecimal> createColQuantitat() {
+        TableColumn<LiniaPressupost, BigDecimal> colQuantitat = new TableColumn<>("Quantitat");
+
+        colQuantitat.setCellValueFactory(c ->
+                new SimpleObjectProperty<>(c.getValue().getQuantitat()));
+
+        colQuantitat.setCellFactory(TextFieldTableCell.forTableColumn(new BigDecimalStringConverter()));
+
+        colQuantitat.setOnEditCommit(e -> {
+            LiniaPressupost linia = e.getRowValue();
+            linia.setQuantitat(e.getNewValue());
+            new RecalcularLiniaPressupostService().executar(linia);
+            refresh();
+            if (pressupostPane != null) {
+                pressupostPane.marcarModificat();
+                pressupostPane.actualitzarTotals();
+            }
+        });
+        return colQuantitat;
+    }
+
+    private static TableColumn<LiniaPressupost, String> createColConcepte() {
+        TableColumn<LiniaPressupost, String> colConcepte = new TableColumn<>("Concepte");
+        colConcepte.setPrefWidth(350);
+        colConcepte.setCellValueFactory(c -> {
+            LiniaPressupost linia = c.getValue();
+            if (linia.getProducte() != null) {
+                return new SimpleStringProperty(linia.getProducte().getNom());
+            }
+            return new SimpleStringProperty( linia.getDescripcio() == null ? "" : linia.getDescripcio());
+        });
+
+        colConcepte.setCellFactory(c -> new ProducteTableCell());
+        return colConcepte;
+    }
+
     public void mostrar(List<LiniaPressupost> linies) {
         dades.setAll(linies);
         comprovarUltimaLinia();
@@ -193,10 +213,6 @@ public class PressupostLiniesTable extends TableView<LiniaPressupost> {
                 .toList();
     }
 
-    public void afegirLinia(LiniaPressupost linia) {
-        dades.add(linia);
-    }
-
     public void eliminarLinia(LiniaPressupost linia) {
         if (dades.size() == 1) {
             linia.setProducte(null);
@@ -209,6 +225,7 @@ public class PressupostLiniesTable extends TableView<LiniaPressupost> {
             if (pressupostPane != null) {
                 pressupostPane.marcarModificat();
             }
+            assert pressupostPane != null;
             pressupostPane.actualitzarTotals();
             return;
         }
@@ -218,6 +235,7 @@ public class PressupostLiniesTable extends TableView<LiniaPressupost> {
         if (pressupostPane != null) {
             pressupostPane.marcarModificat();
         }
+        assert pressupostPane != null;
         pressupostPane.actualitzarTotals();
     }
 
@@ -237,7 +255,7 @@ public class PressupostLiniesTable extends TableView<LiniaPressupost> {
             dades.add(new LiniaPressupost());
             return;
         }
-        LiniaPressupost ultima = dades.get(dades.size() - 1);
+        LiniaPressupost ultima = dades.getLast();
         boolean buida = ultima.getProducte() == null && (ultima.getDescripcio() == null || ultima.getDescripcio().isBlank());
         if (!buida) {
             dades.add(new LiniaPressupost());

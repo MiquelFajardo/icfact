@@ -4,7 +4,6 @@ import cat.informaticassa.icfact.geografia.model.Pais;
 import cat.informaticassa.icfact.ui.components.dialogs.PaisDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.PoblacioDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.ProvinciaDialog;
-import javafx.stage.Stage;
 
 public class GeografiaEvents {
     private final GeografiaController controller;
@@ -48,7 +47,7 @@ public class GeografiaEvents {
 
         controller.getPagina().getBotoNouPais().setOnAction(e -> {
             PaisDialog dialog = new PaisDialog();
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             controller.carregarPaisos();
             if (dialog.getPais() != null) {
@@ -67,7 +66,7 @@ public class GeografiaEvents {
                 return;
             }
             PaisDialog dialog = new PaisDialog(pais);
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             controller.carregarPaisos();
             controller.getPagina()
@@ -83,7 +82,7 @@ public class GeografiaEvents {
                 return;
             }
             ProvinciaDialog dialog = new ProvinciaDialog(controller.getPaisSeleccionat());
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             controller.carregarProvincies();
             if (dialog.getProvincia() != null) {
@@ -105,7 +104,7 @@ public class GeografiaEvents {
                             controller.getPaisSeleccionat(),
                             controller.getProvinciaSeleccionada()
                     );
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             controller.carregarProvincies();
             if (dialog.getProvincia() != null) {
@@ -124,7 +123,7 @@ public class GeografiaEvents {
             }
             PoblacioDialog dialog = new PoblacioDialog(controller.getProvinciaSeleccionada());
             dialog.initOwner(
-                    (Stage) controller.getPagina().getScene().getWindow()
+                    controller.getPagina().getScene().getWindow()
             );
             dialog.showAndWait();
             controller.carregarPoblacions();
@@ -146,7 +145,7 @@ public class GeografiaEvents {
                             controller.getProvinciaSeleccionada(),
                             controller.getPoblacioSeleccionada()
                     );
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             controller.carregarPoblacions();
             if (dialog.getPoblacio() != null) {

@@ -11,19 +11,17 @@ import java.time.LocalDate;
 public class ValidarFacturaService {
 
     public void executar(Factura factura) {
-
+        if (factura == null) {
+            throw new IllegalArgumentException("La factura no pot ser nul·la.");
+        }
         validarClient(factura);
-
         validarLinies(factura);
-
         validarImports(factura);
-
         validarDates(factura);
     }
 
     private void validarClient(Factura factura) {
         Client client = factura.getClient();
-
         if (client == null || client.getId() == null) {
             throw new IllegalArgumentException("La factura ha de tenir un client.");
         }
@@ -34,27 +32,12 @@ public class ValidarFacturaService {
     }
 
     private void validarLinies(Factura factura) {
-        if (factura.getLinies().isEmpty()) {
-            throw new FacturaSenseLiniesException("La factura ha de tenir almenys una línia.");
-        }
-
+        if (factura.getLinies() == null || factura.getLinies().isEmpty()) throw new FacturaSenseLiniesException("La factura ha de tenir almenys una línia.");
         for (LiniaFactura linia : factura.getLinies()) {
-            if (linia.getQuantitat() == null ||
-                    linia.getQuantitat().compareTo(BigDecimal.ZERO) <= 0) {
-                throw new IllegalArgumentException("La quantitat ha de ser superior a 0.");
-            }
-
-            if (linia.getPreu() == null) {
-                throw new IllegalArgumentException("El preu és obligatori.");
-            }
-
-            if (linia.getDte() == null) {
-                throw new IllegalArgumentException("El descompte és obligatori.");
-            }
-
-            if (linia.getIva() == null) {
-                throw new IllegalArgumentException("L'IVA és obligatori.");
-            }
+            if (linia.getQuantitat() == null || linia.getQuantitat().compareTo(BigDecimal.ZERO) <= 0) throw new IllegalArgumentException("La quantitat ha de ser superior a zero.");
+            if (linia.getPreu() == null)  throw new IllegalArgumentException("El preu és obligatori.");
+            if (linia.getDte() == null || linia.getDte().compareTo(BigDecimal.ZERO) < 0 || linia.getDte().compareTo(BigDecimal.valueOf(100)) > 0) throw new IllegalArgumentException("El descompte ha d'estar entre 0 i 100.");
+            if (linia.getIva() == null) throw new IllegalArgumentException("La línia ha de tenir un IVA.");
         }
     }
 
@@ -62,11 +45,9 @@ public class ValidarFacturaService {
         if (factura.getSubtotal() == null) {
             factura.setSubtotal(BigDecimal.ZERO);
         }
-
         if (factura.getIva() == null) {
             factura.setIva(BigDecimal.ZERO);
         }
-
         if (factura.getTotal() == null) {
             factura.setTotal(BigDecimal.ZERO);
         }

@@ -11,7 +11,10 @@ public class BuscarProvinciesPerPaisService {
     private final ProvinciaRepository repository = new ProvinciaRepository();
 
     public List<Provincia> executar(Pais pais) {
-        return repository.buscarPerPais(pais);
-    }
+        if (pais == null || pais.getId() == null) {
+            return List.of();
+        }
 
+        return repository.buscarPerPaisId(pais.getId());
+    }
 }

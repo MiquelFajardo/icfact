@@ -8,11 +8,15 @@ import cat.informaticassa.icfact.factura.service.ModificarFacturaService;
 import cat.informaticassa.icfact.pdf.service.ObrirPdfService;
 import cat.informaticassa.icfact.ui.components.dialogs.FacturaDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.nio.file.Path;
 
 public class FacturaEvents {
+    private static final Logger logger = LoggerFactory.getLogger(FacturaEvents.class);
     private final FacturaDialog dialog;
-    private final CrearFacturaService crearService =new CrearFacturaService();
+    private final CrearFacturaService crearService = new CrearFacturaService();
     private final ModificarFacturaService modificarService = new ModificarFacturaService();
     private final GenerarPdfFacturaService generarPdfService = new GenerarPdfFacturaService();
     private final ObrirPdfService obrirPdfService =  new ObrirPdfService();
@@ -23,11 +27,9 @@ public class FacturaEvents {
     }
 
     private void inicialitzar() {
-        dialog.getBotoGuardar().setDisable(!dialog.getDirtyTracker().estaModificat());
-        dialog.getBotoGenerarPdf().setDisable(!dialog.getDirtyTracker().estaModificat());
-        dialog.getDirtyTracker()
-                .modificatProperty()
-                .addListener((obs, anterior, modificat) -> {
+        dialog.getBotoGuardar().setDisable(dialog.getDirtyTracker().estaModificat());
+        dialog.getBotoGenerarPdf().setDisable(dialog.getDirtyTracker().estaModificat());
+        dialog.getDirtyTracker().modificatProperty().addListener((obs, anterior, modificat) -> {
                     dialog.getBotoGuardar().setDisable(!modificat);
                     dialog.getBotoGenerarPdf().setDisable(!modificat);
                 });
@@ -44,20 +46,29 @@ public class FacturaEvents {
             } else {
                 factura.setEstat(EstatFactura.ESBORRANY);
             }
+
             if (dialog.esEdicio()) {
                 modificarService.executar(factura);
             } else {
                 crearService.executar(factura);
             }
+
             if (generarPdf) {
                 Path pdf = generarPdfService.executar(factura.getId());
                 obrirPdfService.executar(pdf);
             }
+
             dialog.getDirtyTracker().marcarDesat();
             dialog.setDesadaCorrectament(true);
             dialog.close();
+
         } catch (Exception ex) {
-            Alerta.error(dialog, ex.getMessage());
+            logger.error("Error desant la factura. Generar PDF: {}", generarPdf, ex);
+            String missatge = ex.getMessage();
+            if (missatge == null || missatge.isBlank()) {
+                missatge = "No s'ha pogut desar la factura.";
+            }
+            Alerta.error(dialog, missatge);
         }
     }
 }

@@ -6,17 +6,19 @@ import cat.informaticassa.icfact.producte.service.CrearProducteService;
 import cat.informaticassa.icfact.producte.service.ModificarProducteService;
 import cat.informaticassa.icfact.ui.components.dialogs.ProducteDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProducteEvents {
+    private static final Logger logger = LoggerFactory.getLogger(ProducteEvents.class);
     private final ProducteDialog dialog;
-    private final ProductePane formulari;
     private final ProducteBinder binder;
     private final CrearProducteService crearProducteService = new CrearProducteService();
     private final ModificarProducteService modificarProducteService = new ModificarProducteService();
 
     public ProducteEvents(ProducteDialog dialog) {
         this.dialog = dialog;
-        this.formulari = dialog.getFormulari();
+        ProductePane formulari = dialog.getFormulari();
         this.binder = new ProducteBinder(formulari);
         dialog.getBotoGuardar().setOnAction(e -> guardar());
     }
@@ -35,11 +37,11 @@ public class ProducteEvents {
             }
             dialog.setProducte(producte);
             dialog.close();
-        } catch (ValidacioException e) {
-            Alerta.error(e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Alerta.error("No s'ha pogut desar l'article.");
+        } catch (ValidacioException ex) {
+            Alerta.error(ex.getMessage());
+        } catch (Exception ex) {
+            logger.error("Error inesperat desant el producte.", ex);
+            Alerta.error("No s'ha pogut desar el producte.");
         }
     }
 }

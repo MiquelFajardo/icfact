@@ -8,13 +8,8 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class FooterInformaticassa extends VBox {
-    private static final Logger logger = LoggerFactory.getLogger(FooterInformaticassa.class);
-
-
     public FooterInformaticassa() {
         setAlignment(Pos.CENTER);
         setSpacing(5);

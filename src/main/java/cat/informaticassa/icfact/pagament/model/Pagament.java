@@ -1,8 +1,6 @@
 package cat.informaticassa.icfact.pagament.model;
 
 import cat.informaticassa.icfact.factura.model.Factura;
-import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
-import cat.informaticassa.icfact.infraestructura.model.Activable;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "PAGAMENT")
-public class Pagament implements Activable {
+public class Pagament {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -6,17 +6,19 @@ import cat.informaticassa.icfact.client.service.GuardarClientService;
 import cat.informaticassa.icfact.infraestructura.validacio.exception.ValidacioException;
 import cat.informaticassa.icfact.ui.components.dialogs.ClientDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClientEvents {
+    private static final Logger logger = LoggerFactory.getLogger(ClientEvents.class);
     private final ClientDialog dialog;
-    private final ClientPane formulari;
     private final ClientBinder binder;
     private final GuardarClientService guardarClientService = new GuardarClientService();
     private final ActualitzarClientService actualitzarClientService = new ActualitzarClientService();
 
     public ClientEvents(ClientDialog dialog) {
         this.dialog = dialog;
-        this.formulari = dialog.getFormulari();
+        ClientPane formulari = dialog.getFormulari();
         this.binder = new ClientBinder(formulari);
         dialog.getBotoGuardar().setOnAction(e -> guardar());
     }
@@ -38,7 +40,7 @@ public class ClientEvents {
         } catch (ValidacioException e) {
             Alerta.error(e.getMessage());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error inesperat desant el client.", e);
             Alerta.error("No s'ha pogut desar el client.");
         }
     }

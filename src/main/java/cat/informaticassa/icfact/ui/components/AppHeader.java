@@ -28,13 +28,4 @@ public class AppHeader extends VBox {
         lblSubtitol.setAlignment(Pos.CENTER);
         getChildren().addAll(logo,  lblTitol, lblSubtitol);
     }
-
-    /**
-     * Permet canviar la icona (més endavant amb Ikonli).
-     */
-    public void setIcona(String emoji) {
-        if (!getChildren().isEmpty() && getChildren().getFirst() instanceof Label label) {
-            label.setText(emoji);
-        }
-    }
 }

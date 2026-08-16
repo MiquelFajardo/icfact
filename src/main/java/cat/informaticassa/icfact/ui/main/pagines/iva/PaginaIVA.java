@@ -9,13 +9,15 @@ import lombok.Getter;
 
 @Getter
 public class PaginaIVA extends BorderPane {
+
     private final IvaToolbar toolbar = new IvaToolbar();
     private final IvaTable taula = new IvaTable();
+    private final IvaController controller;
 
     public PaginaIVA() {
         setPadding(new Insets(20));
         setTop(toolbar);
         setCenter(taula);
-        new IvaController(this);
+        controller = new IvaController(this);
     }
 }

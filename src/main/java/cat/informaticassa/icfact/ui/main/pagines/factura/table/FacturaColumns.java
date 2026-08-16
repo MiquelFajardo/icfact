@@ -65,16 +65,4 @@ public class FacturaColumns {
         columna.setPrefWidth(120);
         return columna;
     }
-
-    public static TableColumn<Factura, String> formaPagament() {
-        TableColumn<Factura, String> columna = new TableColumn<>("Forma pagament");
-        columna.setCellValueFactory(d ->
-                new SimpleStringProperty(
-                        d.getValue().getFormaPagament() == null
-                                ? ""
-                                : d.getValue().getFormaPagament().getNom()
-                ));
-        columna.setPrefWidth(180);
-        return columna;
-    }
 }

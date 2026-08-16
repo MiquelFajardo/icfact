@@ -4,6 +4,7 @@ import cat.informaticassa.icfact.factura.model.Factura;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TableRow;
@@ -12,13 +13,14 @@ import javafx.scene.input.MouseButton;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 
 @Getter
 @Setter
-public class FacturaTable extends TableView {
-    private final ObservableList factures = FXCollections.observableArrayList();
+public class FacturaTable extends TableView<Factura> {
+    private final ObservableList<Factura> factures = FXCollections.observableArrayList();
     private Consumer<Factura> onModificar;
     private Consumer<Factura> onObrirPdf;
     private Consumer<Factura> onDuplicar;
@@ -28,9 +30,16 @@ public class FacturaTable extends TableView {
 
     public FacturaTable() {
         setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
-        getColumns().addAll(FacturaColumns.numero(), FacturaColumns.data(), FacturaColumns.client(), FacturaColumns.total(), FacturaColumns.estat());
+        Collections.addAll(
+                getColumns(),
+                FacturaColumns.numero(),
+                FacturaColumns.data(),
+                FacturaColumns.client(),
+                FacturaColumns.total(),
+                FacturaColumns.estat()
+        );
         setItems(factures);
-        setPlaceholder( new javafx.scene.control.Label("No hi ha factures."));
+        setPlaceholder(new Label("No hi ha factures."));
         setRowFactory(tv -> {
             TableRow<Factura> row = new TableRow<>();
             ContextMenu menu = new ContextMenu();
@@ -40,8 +49,7 @@ public class FacturaTable extends TableView {
             MenuItem afegirPagament = new MenuItem("💶 Afegir pagament");
             MenuItem veurePagaments = new MenuItem("💳 Veure pagaments");
             MenuItem anullar = new MenuItem("❌ Anul·lar");
-            menu.getItems().addAll(obrirPdf, modificar, duplicar, afegirPagament, veurePagaments, new SeparatorMenuItem(), anullar);
-
+            menu.getItems().addAll(obrirPdf, modificar, duplicar, afegirPagament, veurePagaments, new SeparatorMenuItem(),anullar);
             menu.setOnShowing(e -> {
                 Factura factura = row.getItem();
                 if (factura == null) {
@@ -52,113 +60,56 @@ public class FacturaTable extends TableView {
                         onObrirPdf.accept(factura);
                     }
                 });
-
                 modificar.setOnAction(ev -> {
                     if (onModificar != null) {
                         onModificar.accept(factura);
                     }
                 });
-
                 duplicar.setOnAction(ev -> {
                     if (onDuplicar != null) {
                         onDuplicar.accept(factura);
                     }
                 });
-
                 afegirPagament.setOnAction(ev -> {
                     if (onAfegirPagament != null) {
                         onAfegirPagament.accept(factura);
                     }
                 });
-
                 veurePagaments.setOnAction(ev -> {
                     if (onVeurePagaments != null) {
                         onVeurePagaments.accept(factura);
                     }
                 });
-
                 anullar.setOnAction(ev -> {
                     if (onAnullar != null) {
                         onAnullar.accept(factura);
                     }
                 });
-            });
-
-            menu.setOnShowing(e -> {
-                Factura factura = row.getItem();
-                if (factura == null) {
-                    return;
-                }
-
-                obrirPdf.setOnAction(ev -> {
-                    if (onObrirPdf != null) {
-                        onObrirPdf.accept(factura);
-                    }
-                });
-
-                modificar.setOnAction(ev -> {
-                    if (onModificar != null) {
-                        onModificar.accept(factura);
-                    }
-                });
-
-                duplicar.setOnAction(ev -> {
-                    if (onDuplicar != null) {
-                        onDuplicar.accept(factura);
-                    }
-                });
-
-                afegirPagament.setOnAction(ev -> {
-                    if (onAfegirPagament != null) {
-                        onAfegirPagament.accept(factura);
-                    }
-                });
-
-                veurePagaments.setOnAction(ev -> {
-                    if (onVeurePagaments != null) {
-                        onVeurePagaments.accept(factura);
-                    }
-                });
-
-                anullar.setOnAction(ev -> {
-                    if (onAnullar != null) {
-                        onAnullar.accept(factura);
-                    }
-                });
-
                 switch (factura.getEstat()) {
-
                     case ESBORRANY -> {
                         obrirPdf.setDisable(true);
+                        modificar.setDisable(false);
+                        duplicar.setDisable(false);
                         afegirPagament.setDisable(true);
                         veurePagaments.setDisable(true);
                         anullar.setDisable(true);
                     }
-
                     case EMESA -> {
                         obrirPdf.setDisable(false);
                         modificar.setDisable(false);
                         duplicar.setDisable(false);
                         afegirPagament.setDisable(false);
 
-                        boolean tePagaments =
-                                factura.getPagaments() != null
-                                        && !factura.getPagaments().isEmpty();
-
+                        boolean tePagaments = factura.getPagaments() != null && !factura.getPagaments().isEmpty();
                         veurePagaments.setDisable(!tePagaments);
                         anullar.setDisable(tePagaments);
                     }
-
                     case COBRADA -> {
                         obrirPdf.setDisable(false);
                         modificar.setDisable(true);
                         duplicar.setDisable(false);
                         afegirPagament.setDisable(true);
-
-                        boolean tePagaments =
-                                factura.getPagaments() != null
-                                        && !factura.getPagaments().isEmpty();
-
+                        boolean tePagaments =  factura.getPagaments() != null && !factura.getPagaments().isEmpty();
                         veurePagaments.setDisable(!tePagaments);
                         anullar.setDisable(true);
                     }
@@ -169,15 +120,10 @@ public class FacturaTable extends TableView {
                         duplicar.setDisable(false);
                         afegirPagament.setDisable(true);
                         anullar.setDisable(true);
-
-                        boolean tePagaments =
-                                factura.getPagaments() != null
-                                        && !factura.getPagaments().isEmpty();
-
+                        boolean tePagaments = factura.getPagaments() != null && !factura.getPagaments().isEmpty();
                         veurePagaments.setDisable(!tePagaments);
                     }
                 }
-
                 if (!factura.isActiu()) {
                     modificar.setDisable(true);
                     duplicar.setDisable(true);
@@ -185,16 +131,12 @@ public class FacturaTable extends TableView {
                     anullar.setDisable(true);
                 }
             });
-
-
-
             row.contextMenuProperty().bind(javafx.beans.binding.Bindings.when(row.emptyProperty()).then((ContextMenu) null).otherwise(menu));
             row.setOnMouseClicked(e -> {
                 if (e.getButton() != MouseButton.PRIMARY) {
                     return;
                 }
-                if (e.getClickCount() == 2
-                        && !row.isEmpty()) {
+                if (e.getClickCount() == 2 && !row.isEmpty()) {
                     if (onModificar != null) {
                         onModificar.accept(row.getItem());
                     }
@@ -203,7 +145,6 @@ public class FacturaTable extends TableView {
             return row;
         });
     }
-
     public void mostrar(List<Factura> factures) {
         this.factures.setAll(factures);
     }

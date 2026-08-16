@@ -8,7 +8,7 @@ public final class DirtyManager {
     }
 
     public static boolean sortir(DirtyPage pagina, Window window) {
-        if (!pagina.getDirtyTracker().estaModificat()) {
+        if (pagina.getDirtyTracker().estaModificat()) {
             return true;
         }
 

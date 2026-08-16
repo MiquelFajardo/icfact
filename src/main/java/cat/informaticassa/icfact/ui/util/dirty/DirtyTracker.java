@@ -15,7 +15,7 @@ public class DirtyTracker {
     }
 
     public boolean estaModificat() {
-        return modificat.get();
+        return !modificat.get();
     }
 
     public BooleanProperty modificatProperty() {

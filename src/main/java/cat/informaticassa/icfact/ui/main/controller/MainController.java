@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact.ui.main.controller;
 
-import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.ui.main.view.MainView;
 import cat.informaticassa.icfact.ui.util.Alerta;
 import cat.informaticassa.icfact.ui.util.MenuPrincipal;

@@ -3,7 +3,6 @@ package cat.informaticassa.icfact.ui.main.components.empresa;
 import cat.informaticassa.icfact.empresa.model.Empresa;
 import cat.informaticassa.icfact.ui.main.components.color.ColorPane;
 import cat.informaticassa.icfact.ui.main.components.pdf.PeuPdfPane;
-import javafx.scene.paint.Color;
 
 public class EmpresaBinder {
     private final DadesEmpresaPane dadesEmpresa;

@@ -9,7 +9,7 @@
 
     <groupId>cat.informaticassa</groupId>
     <artifactId>icfact</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>ICFact</name>
     <description>Aplicació de facturació per a autònoms i petites empreses.</description>
@@ -25,7 +25,7 @@
         <hibernate.version>7.1.1.Final</hibernate.version>
         <sqlite.version>3.50.3.0</sqlite.version>
         <jakarta.persistence.version>3.2.0</jakarta.persistence.version>
-        <logback.version>1.5.18</logback.version>
+        <logback.version>1.6.0</logback.version>
     </properties>
 
     <dependencies>
@@ -90,6 +90,13 @@
             <groupId>com.github.librepdf</groupId>
             <artifactId>openpdf</artifactId>
             <version>2.2.2</version>
+        </dependency>
+
+        <!-- JSON -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.21.5</version>
         </dependency>
 
         <!-- JAVA FX -->

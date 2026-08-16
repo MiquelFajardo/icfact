@@ -1,5 +1,6 @@
 package cat.informaticassa.icfact.app;
 
+@SuppressWarnings("ALL")
 public final class AppConfig {
 
     public static final String NOM_BASE_DADES = "empresa.db";
@@ -9,6 +10,7 @@ public final class AppConfig {
     private AppConfig() {
     }
 
+    @SuppressWarnings("SameReturnValue")
     public static String getBaseDadesProduccio() {
         return NOM_BASE_DADES;
     }

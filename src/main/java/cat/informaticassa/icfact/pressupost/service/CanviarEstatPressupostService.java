@@ -10,12 +10,11 @@ import java.time.LocalDateTime;
 public class CanviarEstatPressupostService {
 
     private final PressupostRepository repository = new PressupostRepository();
-    public Pressupost executar(Long id, EstatPressupost estat) {
+    public void executar(Long id, EstatPressupost estat) {
         Pressupost pressupost = repository.buscarPerIdIncloentInactius(id)
                 .orElseThrow(() -> new PressupostNoExisteixException("El pressupost no existeix."));
         pressupost.setEstat(estat);
         pressupost.setDataModificacio(LocalDateTime.now());
         repository.actualitzar(pressupost);
-        return pressupost;
     }
 }

@@ -90,7 +90,7 @@ public class GenerarPdfFacturaService {
         pdfLinies.afegir(document, factura, empresa);
         pdfTotals.afegir(document, factura, importPagat, empresa);
         pdfFormaPagament.afegir(document, factura, empresa);
-        pdfObservacions.afegir(document, factura.getObservacions(), empresa);
+        pdfObservacions.afegir(document, factura.getObservacions());
         marcaAiguaPdf.dibuixar(writer, factura.getEstat().name());
 
     }

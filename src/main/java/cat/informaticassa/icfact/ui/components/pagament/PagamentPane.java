@@ -1,6 +1,5 @@
 package cat.informaticassa.icfact.ui.components.pagament;
 
-import cat.informaticassa.icfact.pagament.model.Pagament;
 import cat.informaticassa.icfact.ui.main.components.FormLabel;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyBindings;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyTracker;
@@ -76,13 +75,6 @@ public class PagamentPane extends GridPane {
         lblPagat.setText(format(pagat));
         lblResta.setText(format(resta));
         txtImport.setText(resta.max(BigDecimal.ZERO).toPlainString());
-    }
-
-    public void mostrar(Pagament pagament) {
-        txtImport.setText(pagament.getImportPagat() == null ? "" : pagament.getImportPagat().toPlainString());
-        dpData.setValue(pagament.getDataPagament() == null ? LocalDate.now() : pagament.getDataPagament());
-        txtReferencia.setText(pagament.getReferencia() == null ? "" : pagament.getReferencia());
-        txtObservacions.setText(pagament.getObservacions() == null ? "" : pagament.getObservacions());
     }
 
     public void registrarDirty(DirtyTracker tracker) {

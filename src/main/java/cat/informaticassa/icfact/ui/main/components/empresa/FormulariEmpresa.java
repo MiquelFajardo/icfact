@@ -3,7 +3,6 @@ package cat.informaticassa.icfact.ui.main.components.empresa;
 import cat.informaticassa.icfact.ui.components.BotoPrimari;
 import cat.informaticassa.icfact.ui.main.components.color.ColorPane;
 import cat.informaticassa.icfact.ui.components.geografia.adreca.AdrecaBinder;
-import cat.informaticassa.icfact.ui.components.geografia.adreca.AdrecaEvents;
 import cat.informaticassa.icfact.ui.components.geografia.adreca.AdrecaPane;
 import cat.informaticassa.icfact.ui.main.components.pdf.PeuPdfPane;
 import cat.informaticassa.icfact.ui.util.dirty.DirtyTracker;
@@ -24,7 +23,6 @@ public class FormulariEmpresa extends GridPane {
     private final PeuPdfPane peuPdf = new PeuPdfPane();
     private final EmpresaBinder empresaBinder = new EmpresaBinder(dadesEmpresa, color, peuPdf);
     private final AdrecaBinder adrecaBinder = new AdrecaBinder(adreca);
-    private final AdrecaEvents adrecaEvents = new AdrecaEvents(adreca);
     private BotoPrimari botoGuardar;
 
     public FormulariEmpresa() {

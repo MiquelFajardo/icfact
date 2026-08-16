@@ -1,8 +1,6 @@
 package cat.informaticassa.icfact.ui.components.dialogs;
 
 import cat.informaticassa.icfact.factura.model.Factura;
-import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
-import cat.informaticassa.icfact.formaPagament.service.BuscarFormesPagamentService;
 import cat.informaticassa.icfact.pagament.model.Pagament;
 import cat.informaticassa.icfact.pagament.repository.PagamentRepository;
 import cat.informaticassa.icfact.pressupost.model.EstatPressupost;
@@ -12,7 +10,6 @@ import cat.informaticassa.icfact.ui.components.pagament.PagamentPane;
 import lombok.Getter;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 public class PagamentDialog extends DialogBase {
@@ -68,13 +65,5 @@ public class PagamentDialog extends DialogBase {
 
     public BigDecimal getResta() {
         return total.subtract(pagat);
-    }
-
-    public boolean esPressupost() {
-        return pressupost != null;
-    }
-
-    public boolean esFactura() {
-        return factura != null;
     }
 }

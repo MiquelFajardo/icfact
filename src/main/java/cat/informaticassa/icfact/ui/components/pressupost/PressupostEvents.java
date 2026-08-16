@@ -5,17 +5,20 @@ import cat.informaticassa.icfact.pressupost.model.EstatPressupost;
 import cat.informaticassa.icfact.pressupost.model.Pressupost;
 import cat.informaticassa.icfact.pressupost.service.GenerarPdfPressupostService;
 import cat.informaticassa.icfact.pressupost.service.GuardarPressupostService;
-import cat.informaticassa.icfact.ui.components.dialogs.PressupostDialog;
 import cat.informaticassa.icfact.pressupost.service.ModificarPressupostService;
+import cat.informaticassa.icfact.ui.components.dialogs.PressupostDialog;
 import cat.informaticassa.icfact.ui.util.Alerta;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
 
 public class PressupostEvents {
+    private static final Logger logger = LoggerFactory.getLogger(PressupostEvents.class);
     private final PressupostDialog dialog;
     private final GuardarPressupostService guardarService = new GuardarPressupostService();
     private final GenerarPdfPressupostService generarPdfPressupostService = new GenerarPdfPressupostService();
     private final ModificarPressupostService modificarService = new ModificarPressupostService();
+    private final ObrirPdfService obrirPdfService = new ObrirPdfService();
 
     public PressupostEvents(PressupostDialog dialog) {
         this.dialog = dialog;
@@ -23,10 +26,8 @@ public class PressupostEvents {
     }
 
     private void inicialitzar() {
-        dialog.getBotoGuardar().setDisable(!dialog.getDirtyTracker().estaModificat());
-        dialog.getDirtyTracker()
-                .modificatProperty()
-                .addListener((obs, anterior, modificat) -> {
+        dialog.getBotoGuardar().setDisable(dialog.getDirtyTracker().estaModificat());
+        dialog.getDirtyTracker().modificatProperty().addListener((obs, anterior, modificat) -> {
                     dialog.getBotoGuardar().setDisable(!modificat);
                     dialog.getBotoGenerarPdf().setDisable(!modificat);
                 });
@@ -50,12 +51,13 @@ public class PressupostEvents {
             }
             if (generarPdf) {
                 Path pdf = generarPdfPressupostService.executar(pressupost);
-                new ObrirPdfService().executar(pdf);
+                obrirPdfService.executar(pdf);
             }
             dialog.getDirtyTracker().marcarDesat();
             dialog.close();
         } catch (Exception ex) {
-            Alerta.error(dialog, ex.getMessage());
+            logger.error("Error inesperat desant el pressupost.", ex);
+            Alerta.error(dialog,"No s'ha pogut desar el pressupost.");
         }
     }
 }

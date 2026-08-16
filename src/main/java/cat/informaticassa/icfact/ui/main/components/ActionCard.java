@@ -12,53 +12,73 @@ import java.util.Objects;
 
 public class ActionCard extends VBox {
 
+    private static final String ESTIL_NORMAL = """
+            -fx-background-color: #16263D;
+            -fx-background-radius: 12;
+            -fx-border-color: #233A59;
+            -fx-border-width: 1;
+            -fx-border-radius: 12;
+            -fx-cursor: hand;
+            """;
+
+    private static final String ESTIL_HOVER = """
+            -fx-background-color: #1C3150;
+            -fx-background-radius: 12;
+            -fx-border-color: #3B82F6;
+            -fx-border-width: 1;
+            -fx-border-radius: 12;
+            -fx-cursor: hand;
+            -fx-effect: dropshadow(gaussian, rgba(59,130,246,0.18), 12, 0, 0, 3);
+            """;
+
     public ActionCard(String titol, String icona) {
 
         setAlignment(Pos.CENTER);
-        setSpacing(15);
+        setSpacing(12);
 
-        setPadding(new Insets(20));
+        setPadding(new Insets(18));
 
-        setPrefSize(250, 150);
+        setPrefHeight(128);
+        setMinHeight(128);
+        setMaxHeight(128);
 
-        setStyle("""
-                -fx-background-color: #c6c8cc;
-                -fx-background-radius: 12;
-                -fx-border-color: #7d7e80;
-                -fx-border-radius: 12;
-                -fx-cursor: hand;
-                """);
+        setMaxWidth(Double.MAX_VALUE);
 
-        ImageView image = new ImageView(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icons/" + icona))));
+        setStyle(ESTIL_NORMAL);
+
+        ImageView image = new ImageView(
+                new Image(
+                        Objects.requireNonNull(
+                                getClass().getResourceAsStream(
+                                        "/icons/" + icona
+                                )
+                        )
+                )
+        );
+
         image.setFitWidth(42);
         image.setFitHeight(42);
         image.setPreserveRatio(true);
 
         Label label = new Label(titol);
-        label.setFont(Tema.SUBTITOL);
+        label.setFont(Tema.ETIQUETA);
+        label.setStyle("""
+                -fx-font-size: 15px;
+                -fx-font-weight: bold;
+                -fx-text-fill: white;
+                """);
 
-        getChildren().addAll(image, label);
+        getChildren().addAll(
+                image,
+                label
+        );
 
         setOnMouseEntered(e ->
-                setStyle("""
-                        -fx-background-color: #EAF2FF;
-                        -fx-background-radius:12;
-                        -fx-border-color:#3B82F6;
-                        -fx-border-radius:12;
-                        -fx-cursor:hand;
-                        """));
+                setStyle(ESTIL_HOVER)
+        );
 
         setOnMouseExited(e ->
-                setStyle("""
-                        -fx-background-color:#c6c8cc;
-                        -fx-background-radius:12;
-                        -fx-border-color:#7d7e80;
-                        -fx-border-radius:12;
-                        -fx-cursor:hand;
-                        """));
-    }
-
-    public void setOnAction(Runnable action) {
-        setOnMouseClicked(e -> action.run());
+                setStyle(ESTIL_NORMAL)
+        );
     }
 }

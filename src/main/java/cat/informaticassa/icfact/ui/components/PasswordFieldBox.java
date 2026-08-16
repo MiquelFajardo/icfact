@@ -71,11 +71,6 @@ public class PasswordFieldBox extends VBox {
                 : textField.getText();
     }
 
-    public void setText(String text) {
-        passwordField.setText(text);
-        textField.setText(text);
-    }
-
     public void clear() {
         passwordField.clear();
         textField.clear();

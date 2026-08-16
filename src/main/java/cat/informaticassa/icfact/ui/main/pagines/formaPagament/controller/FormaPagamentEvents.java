@@ -2,7 +2,6 @@ package cat.informaticassa.icfact.ui.main.pagines.formaPagament.controller;
 
 import cat.informaticassa.icfact.ui.components.dialogs.FormaPagamentDialog;
 import javafx.animation.PauseTransition;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class FormaPagamentEvents {
@@ -27,14 +26,14 @@ public class FormaPagamentEvents {
 
         controller.getPagina().getToolbar().getBotoNou().setOnAction(e -> {
             FormaPagamentDialog dialog = new FormaPagamentDialog();
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             controller.carregarActius();
         });
 
         controller.getPagina().getTaula().setOnModificar(fp -> {
             FormaPagamentDialog dialog = new FormaPagamentDialog(fp);
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             controller.carregarActius();
         });

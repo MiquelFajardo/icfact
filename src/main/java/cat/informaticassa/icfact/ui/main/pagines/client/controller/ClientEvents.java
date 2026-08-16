@@ -3,13 +3,11 @@ package cat.informaticassa.icfact.ui.main.pagines.client.controller;
 import cat.informaticassa.icfact.ui.components.dialogs.ClientDialog;
 import cat.informaticassa.icfact.ui.navigation.Navegacio;
 import javafx.animation.PauseTransition;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class ClientEvents {
     private final ClientController controller;
     private final PauseTransition pausaBuscar = new PauseTransition(Duration.millis(300));
-
 
     public ClientEvents(ClientController controller) {
         this.controller = controller;
@@ -19,7 +17,6 @@ public class ClientEvents {
     private void inicialitzar() {
         controller.getPagina().getToolbar().getChkActius().setOnAction(e -> filtrar());
         controller.getPagina().getToolbar().getChkInactius().setOnAction(e -> filtrar());
-
         controller.getPagina().getToolbar().getTxtBuscar().textProperty().addListener(
                 (obs, oldValue, newValue) -> {
                     pausaBuscar.stop();
@@ -30,25 +27,20 @@ public class ClientEvents {
 
         controller.getPagina().getToolbar().getBotoNou().setOnAction(e -> {
             ClientDialog dialog = new ClientDialog();
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
         });
 
         controller.getPagina().getTaula().setOnModificar(client -> {
             ClientDialog dialog = new ClientDialog(client);
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             buscar(controller.getPagina().getToolbar().getTxtBuscar().getText());
         });
 
-        controller.getPagina().getTaula().setOnPressupostos(client -> {
-            Navegacio.get().getMainView().mostrarPressupostos(client);
-        });
-
-        controller.getPagina().getTaula().setOnFactures(client -> {
-            Navegacio.get().getMainView().mostrarFactures(client);
-        });;
+        controller.getPagina().getTaula().setOnPressupostos(client -> Navegacio.get().getMainView().mostrarPressupostos(client));
+        controller.getPagina().getTaula().setOnFactures(client -> Navegacio.get().getMainView().mostrarFactures(client));
     }
 
     private void filtrar() {

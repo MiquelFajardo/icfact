@@ -14,6 +14,7 @@ import lombok.Setter;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings("unchecked")
 @Getter
 public class ClientTable extends TableView<Client> {
 
@@ -28,8 +29,10 @@ public class ClientTable extends TableView<Client> {
     @Setter
     private Consumer<Client> onFactures;
 
+    @SuppressWarnings("unchecked")
     public ClientTable() {
         setColumnResizePolicy(CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        //noinspection unchecked
         getColumns().addAll(
                 ClientColumns.nom(),
                 ClientColumns.nif(),

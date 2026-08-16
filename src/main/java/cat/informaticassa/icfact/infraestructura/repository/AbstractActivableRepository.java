@@ -1,18 +1,16 @@
 package cat.informaticassa.icfact.infraestructura.repository;
 
-import cat.informaticassa.icfact.infraestructura.model.Activable;
-
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractActivableRepository<T extends Activable, ID>
+public abstract class AbstractActivableRepository<T, ID>
         extends AbstractRepository<T, ID> {
 
     protected String ordrePerDefecte() {
         return "id";
     }
 
-    @Override
+
     public Optional<T> buscarPerId(ID id) {
         try (var session = obrirSessio()) {
             return session.createQuery("""
@@ -25,7 +23,6 @@ public abstract class AbstractActivableRepository<T extends Activable, ID>
         }
     }
 
-    @Override
     public List<T> buscarTots() {
         try (var session = obrirSessio()) {
             return session.createQuery("""
@@ -52,15 +49,5 @@ public abstract class AbstractActivableRepository<T extends Activable, ID>
                     """.formatted(classe.getSimpleName(), ordrePerDefecte()), classe)
                     .list();
         }
-    }
-
-    public void activar(T entitat) {
-        entitat.setActiu(true);
-        actualitzar(entitat);
-    }
-
-    public void desactivar(T entitat) {
-        entitat.setActiu(false);
-        actualitzar(entitat);
     }
 }

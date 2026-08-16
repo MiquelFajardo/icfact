@@ -8,33 +8,24 @@ import java.math.RoundingMode;
 
 public class RecalcularFacturaService {
 
+    private final RecalcularLiniaFacturaService recalcularLiniaService = new RecalcularLiniaFacturaService();
+
     public void executar(Factura factura) {
+        if (factura == null) throw new IllegalArgumentException("La factura no pot ser nul·la.");
+
         BigDecimal subtotal = BigDecimal.ZERO;
-        BigDecimal iva = BigDecimal.ZERO;
+        BigDecimal total = BigDecimal.ZERO;
 
         for (LiniaFactura linia : factura.getLinies()) {
-            final BigDecimal importLinia = linia.getPreu()
-                    .multiply(linia.getQuantitat());
-
-            final BigDecimal descompte = importLinia
-                    .multiply(linia.getDte())
-                    .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
-
-            final BigDecimal subtotalLinia = importLinia.subtract(descompte);
-
-            final BigDecimal ivaLinia = subtotalLinia
-                    .multiply(linia.getIva().getPercentatge())
-                    .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
-
-            linia.setSubtotal(subtotalLinia);
-            linia.setTotal(subtotalLinia.add(ivaLinia));
-
-            subtotal = subtotal.add(subtotalLinia);
-            iva = iva.add(ivaLinia);
+            recalcularLiniaService.executar(linia);
+            if (linia.getSubtotal() != null) subtotal = subtotal.add(linia.getSubtotal());
+            if (linia.getTotal() != null) total = total.add(linia.getTotal());
         }
 
-        factura.setSubtotal(subtotal);
-        factura.setIva(iva);
-        factura.setTotal(subtotal.add(iva));
+        BigDecimal iva = total.subtract(subtotal);
+
+        factura.setSubtotal(subtotal.setScale(2, RoundingMode.HALF_UP));
+        factura.setIva(iva.setScale(2, RoundingMode.HALF_UP));
+        factura.setTotal(total.setScale(2, RoundingMode.HALF_UP));
     }
 }

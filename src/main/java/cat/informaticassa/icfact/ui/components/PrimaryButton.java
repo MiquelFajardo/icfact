@@ -39,12 +39,4 @@ public class PrimaryButton extends Button {
         setBorder(new Border(new BorderStroke(color, BorderStrokeStyle.SOLID, new CornerRadii(Tema.BORDER_RADIUS), BorderWidths.DEFAULT)));
     }
 
-    /**
-     * Si canvia el color principal de l'empresa,
-     * només caldrà cridar aquest mètode.
-     */
-    public void actualitzarTema() {
-        aplicarEstil(Tema.getColorPrincipal());
-    }
-
 }

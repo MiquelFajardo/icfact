@@ -21,14 +21,6 @@ public class FacturaController {
         buscar("", true, false, clientFiltrat);
     }
 
-    public void carregarInactives() {
-        buscar("", false, true, clientFiltrat);
-    }
-
-    public void carregarTotes() {
-        buscar("", true, true, clientFiltrat);
-    }
-
     public void mostrarFacturesClient(Client client) {
         clientFiltrat = client;
         pagina.getToolbar().getTxtBuscar().setText(client.getNom());

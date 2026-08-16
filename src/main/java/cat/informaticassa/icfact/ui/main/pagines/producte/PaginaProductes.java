@@ -11,13 +11,12 @@ import lombok.Getter;
 public class PaginaProductes extends BorderPane {
     private final ProducteToolbar toolbar = new ProducteToolbar();
     private final ProducteTable taula = new ProducteTable();
+    private final ProducteController controller;
+
     public PaginaProductes() {
-
         setPadding(new Insets(20));
-
         setTop(toolbar);
         setCenter(taula);
-
-        new ProducteController(this);
+        controller = new ProducteController(this);
     }
 }

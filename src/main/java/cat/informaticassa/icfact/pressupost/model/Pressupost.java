@@ -2,7 +2,6 @@ package cat.informaticassa.icfact.pressupost.model;
 
 import cat.informaticassa.icfact.client.model.Client;
 import cat.informaticassa.icfact.formaPagament.model.FormaPagament;
-import cat.informaticassa.icfact.infraestructura.model.Activable;
 import cat.informaticassa.icfact.pagament.model.Pagament;
 import jakarta.persistence.*;
 import lombok.*;
@@ -20,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "PRESSUPOST")
-public class Pressupost implements Activable {
+public class Pressupost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -64,7 +63,7 @@ public class Pressupost implements Activable {
     private FormaPagament formaPagament;
 
     @Builder.Default
-    @OneToMany(mappedBy = "pressupost", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pressupost", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Pagament> pagaments = new ArrayList<>();
     @Column(nullable = false)
     private LocalDateTime dataCreacio;

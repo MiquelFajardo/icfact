@@ -1,7 +1,6 @@
 package cat.informaticassa.icfact.client.model;
 
 import cat.informaticassa.icfact.geografia.model.Adreca;
-import cat.informaticassa.icfact.infraestructura.model.Activable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +19,7 @@ import java.time.LocalDateTime;
                 @UniqueConstraint(columnNames = "nif")
         }
 )
-public class Client implements Activable {
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

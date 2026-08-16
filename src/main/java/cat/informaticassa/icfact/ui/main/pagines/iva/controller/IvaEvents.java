@@ -2,7 +2,6 @@ package cat.informaticassa.icfact.ui.main.pagines.iva.controller;
 
 import cat.informaticassa.icfact.ui.components.dialogs.IvaDialog;
 import javafx.animation.PauseTransition;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class IvaEvents {
@@ -27,14 +26,14 @@ public class IvaEvents {
 
         controller.getPagina().getToolbar().getBotoNou().setOnAction(e -> {
             IvaDialog dialog = new IvaDialog();
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
             controller.carregarActius();
         });
 
         controller.getPagina().getTaula().setOnModificar(iva -> {
             IvaDialog dialog = new IvaDialog(iva);
-            dialog.initOwner((Stage) controller.getPagina().getScene().getWindow());
+            dialog.initOwner(controller.getPagina().getScene().getWindow());
             dialog.showAndWait();
 
             controller.carregarActius();
@@ -50,7 +49,6 @@ public class IvaEvents {
             controller.getPagina().getToolbar().getChkActius().setSelected(true);
             actius = true;
         }
-
         if (actius && inactius) {
             controller.carregarTots();
         } else if (actius) {
@@ -61,10 +59,8 @@ public class IvaEvents {
     }
 
     private void buscar(String text) {
-
         boolean actius = controller.getPagina().getToolbar().getChkActius().isSelected();
         boolean inactius = controller.getPagina().getToolbar().getChkInactius().isSelected();
-
         controller.buscar(text.trim(), actius, inactius);
     }
 }

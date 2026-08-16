@@ -15,6 +15,14 @@ public class IvaController {
         carregarActius();
     }
 
+
+    public void refrescar() {
+        String text = pagina.getToolbar().getTxtBuscar().getText();
+        boolean actius = pagina.getToolbar().getChkActius().isSelected();
+        boolean inactius = pagina.getToolbar().getChkInactius().isSelected();
+        buscar(text, actius, inactius);
+    }
+
     public void carregarActius() {
         pagina.getTaula().mostrar(buscarIvaService.buscarActius());
     }

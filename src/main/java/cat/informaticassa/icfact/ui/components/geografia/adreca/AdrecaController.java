@@ -1,6 +1,7 @@
 package cat.informaticassa.icfact.ui.components.geografia.adreca;
 
 import cat.informaticassa.icfact.geografia.model.Pais;
+import cat.informaticassa.icfact.geografia.model.Poblacio;
 import cat.informaticassa.icfact.geografia.model.Provincia;
 import cat.informaticassa.icfact.geografia.service.pais.BuscarPaisosService;
 import cat.informaticassa.icfact.geografia.service.poblacio.BuscarPoblacionsPerProvinciaService;
@@ -8,7 +9,6 @@ import cat.informaticassa.icfact.geografia.service.provincia.BuscarProvinciesPer
 import cat.informaticassa.icfact.ui.components.dialogs.PaisDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.PoblacioDialog;
 import cat.informaticassa.icfact.ui.components.dialogs.ProvinciaDialog;
-import javafx.stage.Stage;
 
 public class AdrecaController {
     private final AdrecaPane pane;
@@ -42,51 +42,58 @@ public class AdrecaController {
         pane.getCmbProvincia().setValue(null);
         pane.getCmbPoblacio().getItems().clear();
         pane.getCmbPoblacio().setValue(null);
-        pane.getCmbProvincia().setDisable(pais == null);
         pane.getCmbPoblacio().setDisable(true);
         if (pais == null) {
+            pane.getCmbProvincia().setDisable(true);
             return;
         }
-        pane.getCmbProvincia().getItems().setAll(
-                buscarProvinciesService.executar(pais)
-        );
+        pane.getCmbProvincia().getItems().setAll(buscarProvinciesService.executar(pais));
+        pane.getCmbProvincia().setDisable(false);
     }
 
     public void canviProvincia() {
         Provincia provincia = pane.getCmbProvincia().getValue();
         pane.getCmbPoblacio().getItems().clear();
         pane.getCmbPoblacio().setValue(null);
-        pane.getCmbPoblacio().setDisable(provincia == null);
         if (provincia == null) {
+            pane.getCmbPoblacio().setDisable(true);
             return;
         }
         pane.getCmbPoblacio().getItems().setAll(buscarPoblacionsService.executar(provincia));
+        pane.getCmbPoblacio().setDisable(false);
     }
 
     private void nouPais() {
         PaisDialog dialog = new PaisDialog();
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
-        carregarPaisos();
-        if (dialog.getPais() != null) {
-            pane.getCmbPais().setValue(dialog.getPais());
-            canviPais();
+        Pais paisCreat = dialog.getPais();
+        if (paisCreat == null) {
+            return;
         }
+        carregarPaisos();
+        pane.getCmbPais().getItems().stream().filter(pais ->pais.getId().equals(paisCreat.getId())).findFirst().ifPresent(pais -> {
+                    pane.getCmbPais().setValue(pais);
+                    canviPais(); });
     }
-
     private void novaProvincia() {
         Pais pais = pane.getCmbPais().getValue();
         if (pais == null) {
             return;
         }
         ProvinciaDialog dialog = new ProvinciaDialog(pais);
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
-        canviPais();
-        if (dialog.getProvincia() != null) {
-            pane.getCmbProvincia().setValue(dialog.getProvincia());
-            canviProvincia();
+        Provincia provinciaCreada = dialog.getProvincia();
+        if (provinciaCreada == null) {
+            return;
         }
+        canviPais();
+        pane.getCmbProvincia().getItems().stream().filter(provincia -> provincia.getId().equals(provinciaCreada.getId())).findFirst()
+                .ifPresent(provincia -> {
+                    pane.getCmbProvincia().setValue(provincia);
+                    canviProvincia();
+                });
     }
 
     private void novaPoblacio() {
@@ -95,11 +102,14 @@ public class AdrecaController {
             return;
         }
         PoblacioDialog dialog = new PoblacioDialog(provincia);
-        dialog.initOwner((Stage) pane.getScene().getWindow());
+        dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
-        canviProvincia();
-        if (dialog.getPoblacio() != null) {
-            pane.getCmbPoblacio().setValue(dialog.getPoblacio());
+        Poblacio poblacioCreada = dialog.getPoblacio();
+        if (poblacioCreada == null) {
+            return;
         }
+        canviProvincia();
+        pane.getCmbPoblacio().getItems().stream().filter(poblacio -> poblacio.getId().equals(poblacioCreada.getId())).findFirst()
+                .ifPresent(pane.getCmbPoblacio()::setValue);
     }
 }

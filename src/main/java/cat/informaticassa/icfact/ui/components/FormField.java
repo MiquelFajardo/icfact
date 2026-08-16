@@ -10,7 +10,6 @@ import lombok.Getter;
 
 @Getter
 public class FormField extends VBox {
-
     private final Label etiqueta;
     private final TextField textField;
 
@@ -30,26 +29,6 @@ public class FormField extends VBox {
 
     public String getText() {
         return textField.getText();
-    }
-
-    public void setText(String text) {
-        textField.setText(text);
-    }
-
-    public void clear() {
-        textField.clear();
-    }
-
-    public void setPromptText(String text) {
-        textField.setPromptText(text);
-    }
-
-    public void setEditable(boolean editable) {
-        textField.setEditable(editable);
-    }
-
-    public void requestFocusField() {
-        textField.requestFocus();
     }
 
 }

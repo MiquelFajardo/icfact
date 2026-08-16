@@ -89,25 +89,91 @@ public class AdrecaPane extends GridPane {
     }
 
     public void mostrar(Adreca adreca) {
+
         txtCarrer.setText(adreca.getCarrer());
         txtNumero.setText(adreca.getNumero());
         txtPis.setText(adreca.getPis());
         txtPorta.setText(adreca.getPorta());
 
-        if (adreca.getPais() != null) {
-            cmbPais.setValue(adreca.getPais());
-            controller.canviPais();
+        // Netejar seleccions
+        cmbPais.setValue(null);
+
+        cmbProvincia.getItems().clear();
+        cmbProvincia.setValue(null);
+        cmbProvincia.setDisable(true);
+
+        cmbPoblacio.getItems().clear();
+        cmbPoblacio.setValue(null);
+        cmbPoblacio.setDisable(true);
+
+        // -------------------------
+        // PAÍS
+        // -------------------------
+
+        if (adreca.getPais() == null) {
+            return;
         }
 
-        if (adreca.getProvincia() != null) {
-            cmbProvincia.setValue(adreca.getProvincia());
-            controller.canviProvincia();
+        Long paisId = adreca.getPais().getId();
+
+        cmbPais.getItems().stream()
+                .filter(pais -> pais.getId().equals(paisId))
+                .findFirst()
+                .ifPresent(pais -> {
+
+                    cmbPais.setValue(pais);
+
+                    // Carregar províncies
+                    controller.canviPais();
+                });
+
+        // -------------------------
+        // PROVÍNCIA
+        // -------------------------
+
+        if (adreca.getProvincia() == null) {
+            return;
         }
 
-        if (adreca.getPoblacio() != null) {
-            cmbPoblacio.setValue(adreca.getPoblacio());
+        Long provinciaId = adreca.getProvincia().getId();
+
+        cmbProvincia.getItems().stream()
+                .filter(provincia ->
+                        provincia.getId().equals(provinciaId))
+                .findFirst()
+                .ifPresent(provincia -> {
+
+                    cmbProvincia.setValue(provincia);
+
+                    // Carregar poblacions
+                    controller.canviProvincia();
+                });
+
+        // -------------------------
+        // POBLACIÓ
+        // -------------------------
+
+        if (adreca.getPoblacio() == null) {
+            return;
         }
+
+        Long poblacioId = adreca.getPoblacio().getId();
+
+        cmbPoblacio.getItems().stream()
+                .filter(poblacio ->
+                        poblacio.getId().equals(poblacioId))
+                .findFirst()
+                .ifPresent(cmbPoblacio::setValue);
     }
+
+
+
+
+
+
+
+
+
 
     public void actualitzar(Adreca adreca) {
         adreca.setCarrer(txtCarrer.getText());
