@@ -45,9 +45,14 @@ public class ProductePaneController {
         IvaDialog dialog = new IvaDialog();
         dialog.initOwner(pane.getScene().getWindow());
         dialog.showAndWait();
-        carregarIves();
-        if (dialog.getIva() != null) {
-            pane.getCmbIva().setValue(dialog.getIva());
+        Iva ivaCreat = dialog.getIva();
+        if (ivaCreat == null) {
+            return;
         }
+        carregarIves();
+        pane.getCmbIva().getItems().stream()
+                .filter(iva -> iva.getId().equals(ivaCreat.getId()))
+                .findFirst()
+                .ifPresent(pane.getCmbIva()::setValue);
     }
 }

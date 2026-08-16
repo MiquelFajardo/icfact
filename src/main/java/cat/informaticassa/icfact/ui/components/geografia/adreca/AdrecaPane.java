@@ -89,40 +89,91 @@ public class AdrecaPane extends GridPane {
     }
 
     public void mostrar(Adreca adreca) {
+
         txtCarrer.setText(adreca.getCarrer());
         txtNumero.setText(adreca.getNumero());
         txtPis.setText(adreca.getPis());
         txtPorta.setText(adreca.getPorta());
-        if (adreca.getPais() != null) {
-            Long paisId = adreca.getPais().getId();
-            cmbPais.getItems().stream()
-                    .filter(pais -> pais.getId().equals(paisId))
-                    .findFirst()
-                    .ifPresent(pais -> {
-                        cmbPais.setValue(pais);
-                        controller.canviPais();
-                    });
-        }
-        if (adreca.getProvincia() != null) {
-            Long provinciaId = adreca.getProvincia().getId();
 
-            cmbProvincia.getItems().stream()
-                    .filter(provincia -> provincia.getId().equals(provinciaId))
-                    .findFirst()
-                    .ifPresent(provincia -> {
-                        cmbProvincia.setValue(provincia);
-                        controller.canviProvincia();
-                    });
-        }
-        if (adreca.getPoblacio() != null) {
-            Long poblacioId = adreca.getPoblacio().getId();
+        // Netejar seleccions
+        cmbPais.setValue(null);
 
-            cmbPoblacio.getItems().stream()
-                    .filter(poblacio -> poblacio.getId().equals(poblacioId))
-                    .findFirst()
-                    .ifPresent(cmbPoblacio::setValue);
+        cmbProvincia.getItems().clear();
+        cmbProvincia.setValue(null);
+        cmbProvincia.setDisable(true);
+
+        cmbPoblacio.getItems().clear();
+        cmbPoblacio.setValue(null);
+        cmbPoblacio.setDisable(true);
+
+        // -------------------------
+        // PAÍS
+        // -------------------------
+
+        if (adreca.getPais() == null) {
+            return;
         }
+
+        Long paisId = adreca.getPais().getId();
+
+        cmbPais.getItems().stream()
+                .filter(pais -> pais.getId().equals(paisId))
+                .findFirst()
+                .ifPresent(pais -> {
+
+                    cmbPais.setValue(pais);
+
+                    // Carregar províncies
+                    controller.canviPais();
+                });
+
+        // -------------------------
+        // PROVÍNCIA
+        // -------------------------
+
+        if (adreca.getProvincia() == null) {
+            return;
+        }
+
+        Long provinciaId = adreca.getProvincia().getId();
+
+        cmbProvincia.getItems().stream()
+                .filter(provincia ->
+                        provincia.getId().equals(provinciaId))
+                .findFirst()
+                .ifPresent(provincia -> {
+
+                    cmbProvincia.setValue(provincia);
+
+                    // Carregar poblacions
+                    controller.canviProvincia();
+                });
+
+        // -------------------------
+        // POBLACIÓ
+        // -------------------------
+
+        if (adreca.getPoblacio() == null) {
+            return;
+        }
+
+        Long poblacioId = adreca.getPoblacio().getId();
+
+        cmbPoblacio.getItems().stream()
+                .filter(poblacio ->
+                        poblacio.getId().equals(poblacioId))
+                .findFirst()
+                .ifPresent(cmbPoblacio::setValue);
     }
+
+
+
+
+
+
+
+
+
 
     public void actualitzar(Adreca adreca) {
         adreca.setCarrer(txtCarrer.getText());

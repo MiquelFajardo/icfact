@@ -11,25 +11,29 @@ public class PoblacioRepository extends AbstractRepository<Poblacio, Long> {
     public List<Poblacio> buscarPerProvincia(Provincia provincia) {
         try (var session = obrirSessio()) {
             return session.createQuery("""
-                    SELECT p
-                    FROM Poblacio p
-                    JOIN FETCH p.provincia
-                    WHERE p.provincia = :provincia
-                    ORDER BY p.nom
-                    """, Poblacio.class).setParameter("provincia", provincia).list();
+                SELECT p
+                FROM Poblacio p
+                JOIN FETCH p.provincia
+                WHERE p.provincia.id = :provinciaId
+                ORDER BY p.nom
+                """, Poblacio.class)
+                    .setParameter("provinciaId", provincia.getId())
+                    .list();
         }
     }
 
     public Optional<Poblacio> buscarPerNom(Provincia provincia, String nom) {
         try (var session = obrirSessio()) {
             return session.createQuery("""
-                    SELECT p
-                    FROM Poblacio p
-                    JOIN FETCH p.provincia
-                    WHERE p.provincia = :provincia
-                    AND lower(p.nom) = lower(:nom)
-                    """, Poblacio.class)
-                    .setParameter("provincia", provincia).setParameter("nom", nom).uniqueResultOptional();
+                SELECT p
+                FROM Poblacio p
+                JOIN FETCH p.provincia
+                WHERE p.provincia.id = :provinciaId
+                AND lower(p.nom) = lower(:nom)
+                """, Poblacio.class)
+                    .setParameter("provinciaId", provincia.getId())
+                    .setParameter("nom", nom)
+                    .uniqueResultOptional();
         }
     }
 }

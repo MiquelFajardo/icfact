@@ -15,11 +15,18 @@ public class ClientController {
         carregarActius();
     }
 
+    public void refrescar() {
+        carregarActius();
+    }
+
     public void carregarActius() {
         pagina.getTaula().getClients().setAll(buscarClientsService.buscarTots());
     }
 
     public void buscar(String text, boolean actius, boolean inactius) {
+        if (text == null) {
+            text = "";
+        }
         pagina.getTaula().getClients().setAll(buscarClientsService.buscar(text, actius, inactius));
     }
 }

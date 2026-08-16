@@ -76,9 +76,18 @@ public class MainView extends BorderPane {
                 workArea.mostrar(paginaInici);
             }
             case DADES_EMPRESA -> workArea.mostrar(paginaEmpresa);
-            case CLIENTS -> workArea.mostrar(paginaClients);
-            case PRODUCTES -> workArea.mostrar(paginaProductes);
-            case IVA -> workArea.mostrar(paginaIVA);
+            case CLIENTS -> {
+                paginaClients.getController().refrescar();
+                workArea.mostrar(paginaClients);
+            }
+            case PRODUCTES -> {
+                paginaProductes.getController().refrescar();
+                workArea.mostrar(paginaProductes);
+            }
+            case IVA -> {
+                paginaIVA.getController().refrescar();
+                workArea.mostrar(paginaIVA);
+            }
             case FORMA_DE_PAGAMENT -> workArea.mostrar(paginaFormesPagament);
             case PRESSUPOSTOS -> {
                 paginaPressupostos.getController().treureFiltreClient();
@@ -88,7 +97,10 @@ public class MainView extends BorderPane {
                 paginaFactures.getController().treureFiltreClient();
                 workArea.mostrar(paginaFactures);
             }
-            case GEOGRAFIA -> workArea.mostrar(paginaGeografia);
+            case GEOGRAFIA -> {
+                paginaGeografia.refrescar();
+                workArea.mostrar(paginaGeografia);
+            }
             case INFORMES -> {
                 paginaInformes.carregar();
                 workArea.mostrar(paginaInformes);

@@ -15,6 +15,10 @@ public class ProducteController {
         carregarActius();
     }
 
+    public void refrescar() {
+        carregarActius();
+    }
+
     public void carregarActius() {
         pagina.getTaula().mostrar(buscarProductesService.buscarActius());
     }

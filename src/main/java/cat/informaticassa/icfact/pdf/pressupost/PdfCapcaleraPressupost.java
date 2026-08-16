@@ -17,7 +17,6 @@ public class PdfCapcaleraPressupost {
     public void afegir(Document document, Pressupost pressupost, Empresa empresa) {
 
         try {
-
             PdfPTable capcalera = new PdfPTable(2);
             capcalera.setWidthPercentage(100);
 
@@ -109,7 +108,9 @@ public class PdfCapcaleraPressupost {
             ));
 
             dreta.addElement(new Paragraph(
-                    empresa.getDescripcio(),
+                    empresa.getDescripcio() != null
+                            ? empresa.getDescripcio()
+                            : "",
                     normal
             ));
 
@@ -117,58 +118,77 @@ public class PdfCapcaleraPressupost {
             dadesEmpresa.setWidthPercentage(100);
             dadesEmpresa.getDefaultCell().setBorder(Rectangle.NO_BORDER);
 
-            dadesEmpresa.addCell(new Phrase(
-                    empresa.getAdreca().getAdrecaCompleta(),
-                    normal
-            ));
+            // -------------------------
+            // Adreça
+            // -------------------------
 
-            String codiPostal = "";
-            String poblacio = "";
+            if (empresa.getAdreca() != null) {
 
-            if (empresa.getAdreca().getPoblacio() != null) {
+                dadesEmpresa.addCell(new Phrase(
+                        empresa.getAdreca().getAdrecaCompleta(),
+                        normal
+                ));
 
-                codiPostal = empresa.getAdreca()
-                        .getPoblacio()
-                        .getCodiPostal()
-                        .stream()
-                        .findFirst()
-                        .orElse("");
+                String codiPostal = "";
+                String poblacio = "";
 
-                poblacio = empresa.getAdreca()
-                        .getPoblacio()
-                        .getNom();
-            }
+                if (empresa.getAdreca().getPoblacio() != null) {
 
-            String cpPoblacio = codiPostal;
+                    codiPostal = empresa.getAdreca()
+                            .getPoblacio()
+                            .getCodiPostal()
+                            .stream()
+                            .findFirst()
+                            .orElse("");
 
-            if (!poblacio.isBlank()) {
-
-                if (!cpPoblacio.isBlank()) {
-                    cpPoblacio += " - ";
+                    poblacio = empresa.getAdreca()
+                            .getPoblacio()
+                            .getNom();
                 }
 
-                cpPoblacio += poblacio;
+                String cpPoblacio = codiPostal;
+
+                if (!poblacio.isBlank()) {
+
+                    if (!cpPoblacio.isBlank()) {
+                        cpPoblacio += " - ";
+                    }
+
+                    cpPoblacio += poblacio;
+                }
+
+                if (!cpPoblacio.isBlank()) {
+                    dadesEmpresa.addCell(new Phrase(
+                            cpPoblacio,
+                            normal
+                    ));
+                }
             }
 
-            dadesEmpresa.addCell(new Phrase(
-                    cpPoblacio,
-                    normal
-            ));
+            // -------------------------
+            // Contacte
+            // -------------------------
 
-            dadesEmpresa.addCell(new Phrase(
-                    empresa.getTelefon(),
-                    normal
-            ));
+            if (empresa.getTelefon() != null && !empresa.getTelefon().isBlank()) {
+                dadesEmpresa.addCell(new Phrase(
+                        empresa.getTelefon(),
+                        normal
+                ));
+            }
 
-            dadesEmpresa.addCell(new Phrase(
-                    empresa.getWeb(),
-                    normal
-            ));
+            if (empresa.getWeb() != null && !empresa.getWeb().isBlank()) {
+                dadesEmpresa.addCell(new Phrase(
+                        empresa.getWeb(),
+                        normal
+                ));
+            }
 
-            dadesEmpresa.addCell(new Phrase(
-                    empresa.getEmail(),
-                    normal
-            ));
+            if (empresa.getEmail() != null && !empresa.getEmail().isBlank()) {
+                dadesEmpresa.addCell(new Phrase(
+                        empresa.getEmail(),
+                        normal
+                ));
+            }
 
             dreta.addElement(dadesEmpresa);
 

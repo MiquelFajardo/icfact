@@ -18,19 +18,35 @@ public class AdrecaBinder {
         carregarPaisos();
     }
 
+
     public void carregar(Adreca adreca) {
         vista.getCmbPais().getItems().setAll(buscarPaisosService.executar());
-        if (adreca.getPais() != null) {
-            vista.getCmbProvincia().getItems().setAll(
-                    buscarProvinciesPerPaisService.executar(adreca.getPais())
-            );
-        }
-        if (adreca.getProvincia() != null) {
-            vista.getCmbPoblacio().getItems().setAll(
-                    buscarPoblacionsPerProvinciaService.executar(adreca.getProvincia())
-            );
-        }
         vista.mostrar(adreca);
+        if (adreca.getPais() != null) {
+            vista.getCmbPais().getItems().stream().filter(pais -> pais.getId().equals(adreca.getPais().getId()))
+                    .findFirst()
+                    .ifPresent(pais -> {
+                        vista.getCmbPais().setValue(pais);
+                        vista.getController().canviPais();
+                    });
+        }
+
+        if (adreca.getProvincia() != null) {
+            vista.getCmbProvincia().getItems().stream()
+                    .filter(provincia -> provincia.getId().equals(adreca.getProvincia().getId()))
+                    .findFirst()
+                    .ifPresent(provincia -> {
+                        vista.getCmbProvincia().setValue(provincia);
+                        vista.getController().canviProvincia();
+                    });
+        }
+
+        if (adreca.getPoblacio() != null) {
+            vista.getCmbPoblacio().getItems().stream()
+                    .filter(poblacio -> poblacio.getId().equals(adreca.getPoblacio().getId()))
+                    .findFirst()
+                    .ifPresent(vista.getCmbPoblacio()::setValue);
+        }
     }
 
     public void actualitzar(Adreca adreca) {
